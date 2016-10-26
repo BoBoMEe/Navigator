@@ -1,14 +1,17 @@
 package com.bobomee.android.tab_navigator;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.BounceInterpolator;
 import android.widget.TextView;
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import com.bobomee.android.navigator.adapter.TabAdapter;
 import com.bobomee.android.navigator.interfaces.ITabGroup;
@@ -28,9 +31,9 @@ public class MainActivity extends AppCompatActivity {
   public static final int TAB_PIC = 0x02;
   public static final int TAB_USER = 0x03;
   private static final String TAG = MainActivity.class.getSimpleName();
-  @InjectView(R.id.vp_main) ViewPager mViewPager;
-  @InjectView(R.id.tg_tab) TabContainer mTabGroup;
-  @InjectView(R.id.tab_container) TabContainer mTabContainer;
+  @BindView(R.id.vp_main) ViewPager mViewPager;
+  @BindView(R.id.tg_tab) TabContainer mTabGroup;
+  @BindView(R.id.tab_container) TabContainer mTabContainer;
 
   private TabAdapter<String> mTabAdapter;
 
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     //绑定当前界面
-    ButterKnife.inject(this);
+    ButterKnife.bind(this);
 
     initView();
   }
@@ -53,22 +56,20 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void initTabGroup() {
-    mTabGroup.addOnCheckedChangeListener(new ITabGroup.OnCheckedChangeListener() {
-      @Override public void onCheckedChanged(ITabGroup group, int checkedId) {
-        switch (checkedId) {
-          case R.id.tab_chat:
-            setCurrentFragment(TAB_CHAT);
-            break;
-          case R.id.tb_pic:
-            setCurrentFragment(TAB_PIC);
-            break;
-          case R.id.tb_app:
-            setCurrentFragment(TAB_APP);
-            break;
-          case R.id.tb_user:
-            setCurrentFragment(TAB_USER);
-            break;
-        }
+    mTabGroup.addOnCheckedChangeListener((group, checkedId) -> {
+      switch (checkedId) {
+        case R.id.tab_chat:
+          setCurrentFragment(TAB_CHAT);
+          break;
+        case R.id.tb_pic:
+          setCurrentFragment(TAB_PIC);
+          break;
+        case R.id.tb_app:
+          setCurrentFragment(TAB_APP);
+          break;
+        case R.id.tb_user:
+          setCurrentFragment(TAB_USER);
+          break;
       }
     });
   }
@@ -103,9 +104,18 @@ public class MainActivity extends AppCompatActivity {
         commonTabView.setId(position);
         if (position == 0) commonTabView.setChecked(true);
 
-        commonTabView.addOnCheckedChangeListener(new ITabView.OnCheckedChangeListener() {
-          @Override public void onCheckedChanged(ITabView tabView, boolean isChecked) {
-            Log.d(TAG, "onCheckedChanged");
+        commonTabView.addOnCheckedChangeListener((tabView, isChecked) -> {
+          Log.d(TAG, "onCheckedChanged");
+          if (isChecked) {
+            View vtabView = (View) tabView;
+            ObjectAnimator scaleX = ObjectAnimator.ofFloat(vtabView, View.SCALE_X, 1f, .5f, 1f);
+            ObjectAnimator scaleY = ObjectAnimator.ofFloat(vtabView, View.SCALE_Y, 1f, .5f, 1f);
+            ObjectAnimator alpha = ObjectAnimator.ofFloat(vtabView, View.ALPHA, 1f, .5f, 1f);
+
+            AnimatorSet animatorSet = new AnimatorSet();
+            animatorSet.playTogether(scaleX, scaleY, alpha);
+            animatorSet.setInterpolator(new BounceInterpolator());
+            animatorSet.start();
           }
         });
 
