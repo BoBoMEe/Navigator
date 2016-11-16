@@ -36,6 +36,7 @@
         />
 
 
+
     <com.bobomee.android.navigator.view.TabContainer
         android:id="@+id/tg_tab"
         android:layout_width="match_parent"
@@ -45,7 +46,7 @@
         app:checkedTab="@+id/tab_chat"
         >
 
-        <com.bobomee.android.tab_navigator.MTabView
+        <com.bobomee.android.tab_navigator.tabview.MTabView
             style="@style/TabView"
             android:id="@id/tab_chat"
             app:imgDimension="@dimen/tab_img_size"
@@ -55,7 +56,7 @@
             app:textSize="@dimen/tab_view_text_size"
             app:textString="聊天" />
 
-        <com.bobomee.android.tab_navigator.MTabView
+        <com.bobomee.android.tab_navigator.tabview.MTabView
             style="@style/TabView"
             android:id="@+id/tb_app"
             app:imgDimension="@dimen/tab_img_size"
@@ -65,7 +66,7 @@
             app:textSize="@dimen/tab_view_text_size"
             app:textString="应用" />
 
-        <com.bobomee.android.tab_navigator.MTabView
+        <com.bobomee.android.tab_navigator.tabview.MTabView
             style="@style/TabView"
             android:id="@+id/tb_pic"
             app:imgDrawable="@drawable/tab_pic"
@@ -74,7 +75,7 @@
             app:textSize="@dimen/tab_view_text_size"
             app:textString="图片" />
 
-        <com.bobomee.android.tab_navigator.MTabView
+        <com.bobomee.android.tab_navigator.tabview.MTabView
             android:id="@+id/tb_user"
             style="@style/TabView"
             app:imgDrawable="@drawable/tab_user"

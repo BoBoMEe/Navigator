@@ -1,4 +1,4 @@
-package com.bobomee.android.tab_navigator;
+package com.bobomee.android.tab_navigator.vp;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

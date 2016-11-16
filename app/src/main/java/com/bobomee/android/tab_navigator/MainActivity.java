@@ -18,6 +18,8 @@ import com.bobomee.android.navigator.interfaces.ITabGroup;
 import com.bobomee.android.navigator.interfaces.ITabView;
 import com.bobomee.android.navigator.view.TabContainer;
 import com.bobomee.android.navigator.view.TabView;
+import com.bobomee.android.tab_navigator.vp.ContentFragmentAdapter;
+import com.bobomee.android.tab_navigator.vp.MainTabFragment;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -102,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
         commonTabView.setContentView(inflate);
         commonTabView.setId(position);
+        commonTabView.setShouldKeep(true);
         if (position == 0) commonTabView.setChecked(true);
 
         commonTabView.addOnCheckedChangeListener((tabView, isChecked) -> {

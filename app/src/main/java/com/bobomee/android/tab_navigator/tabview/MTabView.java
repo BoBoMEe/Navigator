@@ -1,4 +1,4 @@
-package com.bobomee.android.tab_navigator;
+package com.bobomee.android.tab_navigator.tabview;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bobomee.android.navigator.view.TabView;
+import com.bobomee.android.tab_navigator.R;
 
 public class MTabView extends TabView {
 

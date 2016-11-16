@@ -27,6 +27,11 @@ public class TabView extends RelativeLayout implements ITabView {
 
   private boolean mBroadcasting;//是否调用checkedListener中
   private boolean mChecked;//是否checked状态
+  private boolean shouldKeep;
+
+  public void setShouldKeep(boolean _shouldKeep) {
+    shouldKeep = _shouldKeep;
+  }
 
   private GestureDetector gestureDetector;
 
@@ -75,7 +80,7 @@ public class TabView extends RelativeLayout implements ITabView {
             listener.onCheckedChanged(this, mChecked);
           }
         }
-      }
+      }//可以用于提示上一个tab 改变状态 -->
       if (mOnCheckedChangeWidgetListener != null) {
         mOnCheckedChangeWidgetListener.onCheckedChanged(this, mChecked);
       }
@@ -96,9 +101,7 @@ public class TabView extends RelativeLayout implements ITabView {
   @Override public void toggle() {
     // we override to prevent toggle when the radio is already
     // checked (as opposed to check boxes widgets)
-    if (!isChecked()) {
-      setChecked(!mChecked);
-    }
+    if (!shouldKeep || !isChecked()) setChecked(!mChecked);
   }
 
   ///////////////////////////////////////touchevent///////////////
@@ -217,6 +220,7 @@ public class TabView extends RelativeLayout implements ITabView {
   }
 
   public void setContentView(View _contentView) {
+    removeAllViews();
     addView(_contentView);
   }
 }

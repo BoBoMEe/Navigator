@@ -203,12 +203,15 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
       }
 
       mProtectFromCheckedChange = true;
+      int id = tabView.getId();
+      if (mCheckedId == id) {
+        mCheckedId = View.NO_ID;
+      }
       if (mCheckedId != -1) {
         setCheckedStateForView(mCheckedId, false);
       }
       mProtectFromCheckedChange = false;
 
-      int id = tabView.getId();
       setCheckedId(id);
     }
   }
