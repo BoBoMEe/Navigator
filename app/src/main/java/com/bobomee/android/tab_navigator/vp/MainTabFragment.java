@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import com.bobomee.android.tab_navigator.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +13,7 @@ import com.bobomee.android.tab_navigator.R;
  * create an instance of this fragment.
  * <p>
  * Copyright (c) 2016 isanwenyu@163.com. All rights reserved.<br>
+ * modify by BoBoMEe(wbwjx115@gmail.com)
  */
 public class MainTabFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,9 +52,14 @@ public class MainTabFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.vp_content_view,container,false);
 
-        view.setBackgroundColor(mBgColorId);
+      View view = new View(getContext());
+      ViewGroup.MarginLayoutParams marginLayoutParams =
+          new ViewGroup.MarginLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+              ViewGroup.LayoutParams.MATCH_PARENT);
+      view.setLayoutParams(marginLayoutParams);
+
+      view.setBackgroundColor(getResources().getColor(mBgColorId));
 
         return view;
     }

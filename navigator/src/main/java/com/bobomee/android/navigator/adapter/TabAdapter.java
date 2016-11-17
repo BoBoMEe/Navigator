@@ -19,12 +19,13 @@ public abstract class TabAdapter<T extends Object> extends AdapterBase<T> {
     super(mStrs);
   }
 
-  @SuppressWarnings("unchecked") public void addItem(T _t) {
+  public void addItem(T _t) {
     this.mDatas.add(_t);
     notifyDataSetChanged();
   }
 
   public void remove(T _t) {
+    if (this.mDatas.indexOf(_t) < 0) return;
     this.mDatas.remove(_t);
     notifyDataSetChanged();
   }

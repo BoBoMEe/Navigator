@@ -27,7 +27,7 @@ public class TabView extends RelativeLayout implements ITabView {
 
   private boolean mBroadcasting;//是否调用checkedListener中
   private boolean mChecked;//是否checked状态
-  private boolean shouldKeep;
+  private boolean shouldKeep;//是否保持check状态
 
   public void setShouldKeep(boolean _shouldKeep) {
     shouldKeep = _shouldKeep;
@@ -45,10 +45,6 @@ public class TabView extends RelativeLayout implements ITabView {
 
   public TabView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
-    init();
-  }
-
-  private void init() {
     setGravity(Gravity.CENTER);
     initTouchEvent();
   }

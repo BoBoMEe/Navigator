@@ -18,6 +18,8 @@ import com.bobomee.android.navigator.interfaces.ITabGroup;
 import com.bobomee.android.navigator.interfaces.ITabView;
 import com.bobomee.android.navigator.view.TabContainer;
 import com.bobomee.android.navigator.view.TabView;
+import com.bobomee.android.tab_navigator.tabview.DropTabView;
+import com.bobomee.android.tab_navigator.tabview.ItemTabView;
 import com.bobomee.android.tab_navigator.vp.ContentFragmentAdapter;
 import com.bobomee.android.tab_navigator.vp.MainTabFragment;
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ import java.util.List;
 /**
  * 主界面<br>
  * Copyright (c) 2016 isanwenyu@163.com. All rights reserved.
+ *
+ * modify by BoBoMEe(wbwjx115@gmail.com)
  */
 public class MainActivity extends AppCompatActivity {
   public static final int TAB_CHAT = 0x00;
@@ -36,8 +40,11 @@ public class MainActivity extends AppCompatActivity {
   @BindView(R.id.vp_main) ViewPager mViewPager;
   @BindView(R.id.tg_tab) TabContainer mTabGroup;
   @BindView(R.id.tab_container) TabContainer mTabContainer;
+  @BindView(R.id.tab_container1) TabContainer mTabContainer1;
+  @BindView(R.id.tab_container2) TabContainer mTabContainer2;
 
   private TabAdapter<String> mTabAdapter;
+  private List<String> mTitles;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -45,7 +52,16 @@ public class MainActivity extends AppCompatActivity {
     //绑定当前界面
     ButterKnife.bind(this);
 
+    initData();
+
     initView();
+  }
+
+  private void initData() {
+    mTitles = new ArrayList<>();
+    for (int i = 0; i < 4; ++i) {
+      mTitles.add("第" + i + "个");
+    }
   }
 
   /**
@@ -55,6 +71,35 @@ public class MainActivity extends AppCompatActivity {
     initViewPager();
     initTabGroup();
     initTabContainer();
+    initTabContainer1();
+    initTabContainer2();
+
+  }
+
+  private void initTabContainer1() {
+    mTabContainer1.setTabAdapter(new TabAdapter<String>(mTitles) {
+      @Override public View getView(int position, ViewGroup parent, String object) {
+        ItemTabView itemTabView = new ItemTabView(getApplicationContext());
+
+        itemTabView.setText(object);
+        itemTabView.setId(position);
+
+        return itemTabView;
+      }
+    });
+  }
+
+  private void initTabContainer2() {
+    mTabContainer2.setTabAdapter(new TabAdapter<String>(mTitles) {
+      @Override public View getView(int position, ViewGroup parent, String object) {
+        DropTabView dropdownButton = new DropTabView(getApplicationContext());
+
+        dropdownButton.setText(object);
+        dropdownButton.setId(position);
+
+        return dropdownButton;
+      }
+    });
   }
 
   private void initTabGroup() {
@@ -77,10 +122,6 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void initTabContainer() {
-    List<String> mTitles = new ArrayList<>();
-    for (int i = 0; i < 4; ++i) {
-      mTitles.add("第" + i + "个");
-    }
 
     mTabContainer.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
       @Override public void onChildViewAdded(View parent, View child) {

@@ -1,87 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_main"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <Button
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/add"
-        android:text="add_item"
-        />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/remove"
-        android:text="remove_item"
-        />
-
-    <com.bobomee.android.navigator.view.TabContainer
-        android:id="@+id/tab_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:elevation="10dp"
-        />
-
-
-
-    <com.bobomee.android.navigator.view.TabContainer
-        android:id="@+id/tg_tab"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:elevation="10dp"
-        app:checkedTab="@+id/tab_chat"
         >
 
-        <com.bobomee.android.tab_navigator.tabview.MTabView
-            style="@style/TabView"
-            android:id="@id/tab_chat"
-            app:imgDimension="@dimen/tab_img_size"
-            app:imgDrawable="@drawable/tab_chat"
-            app:imgMargin="@dimen/tab_img_margin"
-            app:textColor="@color/tab_chat_text_selector"
-            app:textSize="@dimen/tab_view_text_size"
-            app:textString="聊天" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
 
-        <com.bobomee.android.tab_navigator.tabview.MTabView
-            style="@style/TabView"
-            android:id="@+id/tb_app"
-            app:imgDimension="@dimen/tab_img_size"
-            app:imgDrawable="@drawable/tab_app"
-            app:imgMargin="@dimen/tab_img_margin"
-            app:textColor="@color/tab_app_text_selector"
-            app:textSize="@dimen/tab_view_text_size"
-            app:textString="应用" />
+            <Button
+                android:id="@+id/add"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="add_item"
+                />
 
-        <com.bobomee.android.tab_navigator.tabview.MTabView
-            style="@style/TabView"
-            android:id="@+id/tb_pic"
-            app:imgDrawable="@drawable/tab_pic"
-            app:imgMargin="@dimen/tab_img_margin"
-            app:textColor="@color/tab_pic_text_selector"
-            app:textSize="@dimen/tab_view_text_size"
-            app:textString="图片" />
+            <Button
+                android:id="@+id/remove"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="remove_item"
+                />
 
-        <com.bobomee.android.tab_navigator.tabview.MTabView
-            android:id="@+id/tb_user"
-            style="@style/TabView"
-            app:imgDrawable="@drawable/tab_user"
-            app:imgMargin="@dimen/tab_img_margin"
-            app:textColor="@color/tab_user_text_selector"
-            app:textSize="@dimen/tab_view_text_size"
-            app:textString="我" />
-    </com.bobomee.android.navigator.view.TabContainer>
-</LinearLayout>
+        </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_main"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            />
+
+        <com.bobomee.android.navigator.view.TabContainer
+            android:id="@+id/tab_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:elevation="10dp"
+            />
+
+        <include layout="@layout/include_in_xml"/>
+
+        <com.bobomee.android.navigator.view.TabContainer
+            android:id="@+id/tab_container1"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@android:color/white"
+            android:elevation="10dp"
+            />
+
+        <com.bobomee.android.navigator.view.TabContainer
+            android:id="@+id/tab_container2"
+            android:layout_below="@id/tab_container"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/white"
+            android:elevation="10dp"
+            />
+
+    </LinearLayout>
+
+
+</ScrollView>

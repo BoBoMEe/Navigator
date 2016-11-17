@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+  <com.bobomee.android.navigator.view.TabContainer
+      android:id="@+id/tg_tab"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:background="@android:color/white"
+      android:elevation="10dp"
+      app:checkedTab="@+id/tab_chat"
+      >
+
+    <com.bobomee.android.tab_navigator.tabview.ImageTabView
+        android:id="@id/tab_chat"
+        app:imgDimension="@dimen/tab_img_size"
+        app:imgDrawable="@drawable/tab_chat"
+        app:imgMargin="@dimen/tab_img_margin"
+        app:textColor="@color/tab_chat_text_selector"
+        app:textSize="@dimen/tab_view_text_size"
+        app:textString="聊天"
+        style="@style/TabView"
+        />
+
+    <com.bobomee.android.tab_navigator.tabview.ImageTabView
+        android:id="@+id/tb_app"
+        app:imgDimension="@dimen/tab_img_size"
+        app:imgDrawable="@drawable/tab_app"
+        app:imgMargin="@dimen/tab_img_margin"
+        app:textColor="@color/tab_app_text_selector"
+        app:textSize="@dimen/tab_view_text_size"
+        app:textString="应用"
+        style="@style/TabView"
+        />
+
+    <com.bobomee.android.tab_navigator.tabview.ImageTabView
+        android:id="@+id/tb_pic"
+        app:imgDrawable="@drawable/tab_pic"
+        app:imgMargin="@dimen/tab_img_margin"
+        app:textColor="@color/tab_pic_text_selector"
+        app:textSize="@dimen/tab_view_text_size"
+        app:textString="图片"
+        style="@style/TabView"
+        />
+
+    <com.bobomee.android.tab_navigator.tabview.ImageTabView
+        android:id="@+id/tb_user"
+        app:imgDrawable="@drawable/tab_user"
+        app:imgMargin="@dimen/tab_img_margin"
+        app:textColor="@color/tab_user_text_selector"
+        app:textSize="@dimen/tab_view_text_size"
+        app:textString="我"
+        style="@style/TabView"
+        />
+  </com.bobomee.android.navigator.view.TabContainer>
+</merge>

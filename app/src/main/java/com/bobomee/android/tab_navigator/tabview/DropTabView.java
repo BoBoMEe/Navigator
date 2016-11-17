@@ -16,19 +16,19 @@ import com.bobomee.android.tab_navigator.R;
  * @description
  */
 
-public class DropdownButton extends TabView {
+public class DropTabView extends TabView {
   TextView textView;
   View bottomLine;
 
-  public DropdownButton(Context context) {
+  public DropTabView(Context context) {
     this(context, null);
   }
 
-  public DropdownButton(Context context, AttributeSet attrs) {
+  public DropTabView(Context context, AttributeSet attrs) {
     this(context, attrs, 0);
   }
 
-  public DropdownButton(Context context, AttributeSet attrs, int defStyleAttr) {
+  public DropTabView(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
     init();
   }
@@ -49,11 +49,9 @@ public class DropdownButton extends TabView {
     Drawable icon;
     if (checked) {
       icon = getResources().getDrawable(R.drawable.ic_dropdown_actived);
-      textView.setTextColor(getResources().getColor(R.color.green));
       bottomLine.setVisibility(VISIBLE);
     } else {
       icon = getResources().getDrawable(R.drawable.ic_dropdown_normal);
-      textView.setTextColor(getResources().getColor(R.color.black));
       bottomLine.setVisibility(GONE);
     }
     textView.setCompoundDrawablesWithIntrinsicBounds(null, null, icon, null);

@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.bobomee.android.navigator.view.TabView;
 import com.bobomee.android.tab_navigator.R;
 
-public class MTabView extends TabView {
+public class ImageTabView extends TabView {
 
   public static final int IMG_DEFAULT_SIZE = 30;
   public static final int TEXT_DEFAULT_SIZE = 14;
@@ -38,15 +38,15 @@ public class MTabView extends TabView {
 
   private Drawable mImgDrawable;//图片资源
 
-  public MTabView(Context context) {
+  public ImageTabView(Context context) {
     this(context, null);
   }
 
-  public MTabView(Context context, AttributeSet attrs) {
+  public ImageTabView(Context context, AttributeSet attrs) {
     this(context, attrs, 0);
   }
 
-  public MTabView(Context context, AttributeSet attrs, int defStyle) {
+  public ImageTabView(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
     init(attrs, defStyle);
   }
@@ -104,7 +104,7 @@ public class MTabView extends TabView {
     return mTextSize;
   }
 
-  public MTabView setTextSize(float mTextSize) {
+  public ImageTabView setTextSize(float mTextSize) {
     if (mTextSize > 0) {
       this.mTextSize = mTextSize;
       mTabTextView.setTextSize(mTextSize);
@@ -116,7 +116,7 @@ public class MTabView extends TabView {
     return mImgDimension;
   }
 
-  public MTabView setImgDimension(float mImgDimension) {
+  public ImageTabView setImgDimension(float mImgDimension) {
     if (mImgDimension > 0) {
       this.mImgDimension = mImgDimension;
       //如果自定义
@@ -131,7 +131,7 @@ public class MTabView extends TabView {
     return mImgDrawable;
   }
 
-  public MTabView setImgDrawable(Drawable mImgDrawable) {
+  public ImageTabView setImgDrawable(Drawable mImgDrawable) {
     if (mImgDrawable != null) {
       this.mImgDrawable = mImgDrawable;
       mTabImgView.setImageDrawable(mImgDrawable);
@@ -151,7 +151,7 @@ public class MTabView extends TabView {
     return mTextString;
   }
 
-  public MTabView setTextString(String mTextString) {
+  public ImageTabView setTextString(String mTextString) {
     this.mTextString = mTextString;
     mTabTextView.setText(mTextString);
     return this;
@@ -161,7 +161,7 @@ public class MTabView extends TabView {
     return mTextColor;
   }
 
-  public MTabView setTextColor(ColorStateList mTextColor) {
+  public ImageTabView setTextColor(ColorStateList mTextColor) {
     if (mTextColor != null) {
       this.mTextColor = mTextColor;
       mTabTextView.setTextColor(mTextColor);
@@ -173,7 +173,7 @@ public class MTabView extends TabView {
     return mImgMargin;
   }
 
-  public MTabView setImgMargin(float mImgMargin) {
+  public ImageTabView setImgMargin(float mImgMargin) {
     this.mImgMargin = mImgMargin;
     ViewGroup.MarginLayoutParams marginLayoutParams = (ViewGroup.MarginLayoutParams) mTabImgView.getLayoutParams();
     marginLayoutParams.setMargins(((int) mImgMargin), ((int) mImgMargin), ((int) mImgMargin),
