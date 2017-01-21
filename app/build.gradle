@@ -38,7 +38,8 @@ dependencies {
   compile 'com.android.support:appcompat-v7:24.2.1'
   testCompile 'junit:junit:4.12'
   compile project(':navigator')
-
   compile 'com.jakewharton:butterknife:8.0.1'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.0.1'
+  compile 'com.android.support:recyclerview-v7:24.2.1'
+  compile 'com.bobomee.android:common:1.4.9'
 }

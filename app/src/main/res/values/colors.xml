@@ -6,4 +6,5 @@
 
     <item name="green" type="color">#FF3BBD79</item>
     <color name="black">#222222</color>
+    <color name="white">#fff</color>
 </resources>

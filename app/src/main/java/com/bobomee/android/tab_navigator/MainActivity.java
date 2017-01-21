@@ -14,12 +14,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.bobomee.android.navigator.adapter.TabAdapter;
-import com.bobomee.android.navigator.interfaces.ITabGroup;
 import com.bobomee.android.navigator.interfaces.ITabView;
 import com.bobomee.android.navigator.view.TabContainer;
 import com.bobomee.android.navigator.view.TabView;
-import com.bobomee.android.tab_navigator.tabview.DropTabView;
-import com.bobomee.android.tab_navigator.tabview.ItemTabView;
 import com.bobomee.android.tab_navigator.vp.ContentFragmentAdapter;
 import com.bobomee.android.tab_navigator.vp.MainTabFragment;
 import java.util.ArrayList;
@@ -28,7 +25,7 @@ import java.util.List;
 /**
  * 主界面<br>
  * Copyright (c) 2016 isanwenyu@163.com. All rights reserved.
- *
+ * <p>
  * modify by BoBoMEe(wbwjx115@gmail.com)
  */
 public class MainActivity extends AppCompatActivity {
@@ -40,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
   @BindView(R.id.vp_main) ViewPager mViewPager;
   @BindView(R.id.tg_tab) TabContainer mTabGroup;
   @BindView(R.id.tab_container) TabContainer mTabContainer;
-  @BindView(R.id.tab_container1) TabContainer mTabContainer1;
-  @BindView(R.id.tab_container2) TabContainer mTabContainer2;
 
   private TabAdapter<String> mTabAdapter;
   private List<String> mTitles;
@@ -69,56 +64,8 @@ public class MainActivity extends AppCompatActivity {
    */
   private void initView() {
     initViewPager();
-    initTabGroup();
+    setTabContainerListener(mTabGroup);
     initTabContainer();
-    initTabContainer1();
-    initTabContainer2();
-
-  }
-
-  private void initTabContainer1() {
-    mTabContainer1.setTabAdapter(new TabAdapter<String>(mTitles) {
-      @Override public View getView(int position, ViewGroup parent, String object) {
-        ItemTabView itemTabView = new ItemTabView(getApplicationContext());
-
-        itemTabView.setText(object);
-        itemTabView.setId(position);
-
-        return itemTabView;
-      }
-    });
-  }
-
-  private void initTabContainer2() {
-    mTabContainer2.setTabAdapter(new TabAdapter<String>(mTitles) {
-      @Override public View getView(int position, ViewGroup parent, String object) {
-        DropTabView dropdownButton = new DropTabView(getApplicationContext());
-
-        dropdownButton.setText(object);
-        dropdownButton.setId(position);
-
-        return dropdownButton;
-      }
-    });
-  }
-
-  private void initTabGroup() {
-    mTabGroup.addOnCheckedChangeListener((group, checkedId) -> {
-      switch (checkedId) {
-        case R.id.tab_chat:
-          setCurrentFragment(TAB_CHAT);
-          break;
-        case R.id.tb_pic:
-          setCurrentFragment(TAB_PIC);
-          break;
-        case R.id.tb_app:
-          setCurrentFragment(TAB_APP);
-          break;
-        case R.id.tb_user:
-          setCurrentFragment(TAB_USER);
-          break;
-      }
-    });
   }
 
   private void initTabContainer() {
@@ -167,22 +114,24 @@ public class MainActivity extends AppCompatActivity {
       }
     });
 
-    mTabContainer.addOnCheckedChangeListener(new ITabGroup.OnCheckedChangeListener() {
-      @Override public void onCheckedChanged(ITabGroup group, int checkedId) {
-        switch (checkedId) {
-          case TAB_CHAT:
-            setCurrentFragment(TAB_CHAT);
-            break;
-          case TAB_PIC:
-            setCurrentFragment(TAB_PIC);
-            break;
-          case TAB_APP:
-            setCurrentFragment(TAB_APP);
-            break;
-          case TAB_USER:
-            setCurrentFragment(TAB_USER);
-            break;
-        }
+    setTabContainerListener(mTabContainer);
+  }
+
+  private void setTabContainerListener(TabContainer mTabGroup) {
+    mTabGroup.addOnCheckedChangeListener((group, checkedId) -> {
+      switch (checkedId) {
+        case R.id.tab_chat:
+          setCurrentFragment(TAB_CHAT);
+          break;
+        case R.id.tb_pic:
+          setCurrentFragment(TAB_PIC);
+          break;
+        case R.id.tb_app:
+          setCurrentFragment(TAB_APP);
+          break;
+        case R.id.tb_user:
+          setCurrentFragment(TAB_USER);
+          break;
       }
     });
   }
@@ -227,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
   /**
    * 改变fragment状态
    */
-  public void setCurrentFragment(final int position) {
+  private void setCurrentFragment(final int position) {
     Log.i(TAG, "position:" + position);
     //不使用切换动画 避免与自定义动画冲突
     mViewPager.setCurrentItem(position, false);

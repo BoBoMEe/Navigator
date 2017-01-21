@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TabViewDemo</string>
+    <string name="tab_sample">Tab_Sample</string>
+    <string name="drop_filter_sample">Drop_filter_sample</string>
 </resources>
