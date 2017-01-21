@@ -9,7 +9,7 @@ import java.util.List;
  * @description
  */
 
-public abstract class TabAdapter<T extends Object> extends AdapterBase<T> {
+public abstract class TabAdapter<T> extends AdapterBase<T> {
 
   protected TabAdapter(List<T> mDatas) {
     super(mDatas);

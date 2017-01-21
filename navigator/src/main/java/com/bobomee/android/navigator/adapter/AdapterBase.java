@@ -13,7 +13,7 @@ import java.util.List;
  * @description
  */
 
-abstract class AdapterBase<T extends Object> implements IAdapter<T> {
+abstract class AdapterBase<T> implements IAdapter<T> {
   private final DataSetObservable mDataSetObservable = new DataSetObservable();
 
   public void registerDataSetObserver(DataSetObserver observer) {
