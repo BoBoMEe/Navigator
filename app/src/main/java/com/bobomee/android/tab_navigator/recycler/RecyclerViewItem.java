@@ -20,6 +20,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.bobomee.android.common.adapter.CommonRcvAdapter;
 import com.bobomee.android.common.adapter.interfaces.AdapterItem;
 import com.bobomee.android.common.util.StringUtil;
@@ -43,7 +44,7 @@ public class RecyclerViewItem {
     }
 
     @Override public void bindViews(View root) {
-
+      ButterKnife.bind(this,root);
     }
 
     @Override public void setViews(String pS) {

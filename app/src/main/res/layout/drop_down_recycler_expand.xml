@@ -22,11 +22,19 @@
     >
 
 
-  <com.bobomee.android.navigator.view.TabContainer
-      android:id="@+id/drop_tab_container"
+  <LinearLayout
+      android:layout_height="wrap_content"
       android:layout_width="match_parent"
-      android:layout_height="50dp"
-      />
+      android:orientation="vertical"
+      >
+    <com.bobomee.android.navigator.view.TabContainer
+        android:id="@+id/drop_tab_container"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        />
+
+    <include layout="@layout/expandable_layout"/>
+  </LinearLayout>
 
 
   <com.bobomee.android.navigator.view.TabContainer

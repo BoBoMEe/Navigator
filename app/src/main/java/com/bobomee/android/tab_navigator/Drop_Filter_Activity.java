@@ -19,12 +19,20 @@ package com.bobomee.android.tab_navigator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bobomee.android.navigator.adapter.TabAdapter;
+import com.bobomee.android.navigator.expandable.ExpandableRelativeLayout;
+import com.bobomee.android.navigator.interfaces.ITabGroup;
+import com.bobomee.android.navigator.interfaces.ITabGroup.OnCheckedChangeListener;
 import com.bobomee.android.navigator.view.TabContainer;
+import com.bobomee.android.tab_navigator.recycler.DividerItemDecoration;
+import com.bobomee.android.tab_navigator.recycler.RecyclerViewItem;
 import com.bobomee.android.tab_navigator.tabview.DropTabView;
 import com.bobomee.android.tab_navigator.tabview.ItemTabView;
 import java.util.ArrayList;
@@ -40,6 +48,8 @@ public class Drop_Filter_Activity extends AppCompatActivity {
 
   @BindView(R.id.drop_tab_container) TabContainer mDropTabContainer;
   @BindView(R.id.tab_container1) TabContainer mTabContainer1;
+  @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
+  @BindView(R.id.expandable_layout) ExpandableRelativeLayout mExpandableLayout;
   private List<String> mTitles;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,6 +61,14 @@ public class Drop_Filter_Activity extends AppCompatActivity {
 
     initTabContainer();
     initTabContainer1();
+
+    initRecyclerView();
+  }
+
+  private void initRecyclerView() {
+    mRecyclerView.addItemDecoration(new DividerItemDecoration(this));
+    mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    mRecyclerView.setAdapter(RecyclerViewItem.sStringCommonRcvAdapter());
   }
 
   private void initTabContainer() {
@@ -64,6 +82,18 @@ public class Drop_Filter_Activity extends AppCompatActivity {
         return dropdownButton;
       }
     });
+
+    mDropTabContainer.addOnCheckedChangeListener(new OnCheckedChangeListener() {
+      @Override public void onCheckedChanged(ITabGroup group, int checkedId) {
+        if (mExpandableLayout.isExpanded()) {
+          mExpandableLayout.collapse();
+        } else {
+          mExpandableLayout.expand();
+        }
+      }
+    });
+    
+    mExpandableLayout.collapse();
   }
 
   private void initTabContainer1() {
