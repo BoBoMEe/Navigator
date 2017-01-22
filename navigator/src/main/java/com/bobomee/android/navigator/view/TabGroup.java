@@ -24,10 +24,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import com.bobomee.android.navigator.R;
-import com.bobomee.android.navigator.interfaces.ITabGroup;
-import com.bobomee.android.navigator.interfaces.ITabView;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <pre>
@@ -42,11 +38,11 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
   // holds the checked id; the selection is empty by default
   private int mCheckedId = -1;
   // tracks children  tab views checked state
-  private ITabView.OnCheckedChangeListener mChildOnCheckedChangeListener;
+  private OnTabViewCheckedChangeListener mChildOnCheckedChangeListener;
   // when true, mOnCheckedChangeListener discards events
   private boolean mProtectFromCheckedChange = false;
-  private List<OnCheckedChangeListener> mOnCheckedChangeListeners;
   private PassThroughHierarchyChangeListener mPassThroughListener;
+  private TabGroupCheckedChange mTabGroupCheckedChange;
 
   /**
    * {@inheritDoc}
@@ -149,14 +145,7 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
 
   public void setCheckedId(int id) {
     mCheckedId = id;
-    if (null != mOnCheckedChangeListeners) {
-      for (int i = 0, z = mOnCheckedChangeListeners.size(); i < z; i++) {
-        ITabGroup.OnCheckedChangeListener listener = mOnCheckedChangeListeners.get(i);
-        if (null != listener) {
-          listener.onCheckedChanged(this, mCheckedId);
-        }
-      }
-    }
+    if (null != mTabGroupCheckedChange) mTabGroupCheckedChange.onCheckedChanged(this, mCheckedId);
   }
 
   private void setCheckedStateForView(int viewId, boolean checked) {
@@ -195,7 +184,7 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
   }
 
   //////////////////////////////////////////////////listener//////
-  private class CheckedStateTracker implements ITabView.OnCheckedChangeListener {
+  private class CheckedStateTracker implements OnTabViewCheckedChangeListener {
     public void onCheckedChanged(ITabView tabView, boolean isChecked) {
       // prevents from infinite recursion
       if (mProtectFromCheckedChange) {
@@ -240,12 +229,11 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
           child.setId(id);
         }
 
-        //FIXME 初始的select状态
         if (((ITabView) child).isChecked()) {
           mCheckedId = child.getId();
         }
 
-        ((ITabView) child).setOnCheckedChangeWidgetListener(mChildOnCheckedChangeListener);
+        ((ITabView) child).addOnCheckedChangeListener(mChildOnCheckedChangeListener);
       }
 
       if (mOnHierarchyChangeListener != null) {
@@ -258,7 +246,7 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
      */
     public void onChildViewRemoved(View parent, View child) {
       if (parent == TabGroup.this && child instanceof ITabView) {
-        ((ITabView) child).setOnCheckedChangeWidgetListener(null);
+        ((ITabView) child).removeOnCheckedChangeListener(null);
       }
 
       if (mOnHierarchyChangeListener != null) {
@@ -281,10 +269,10 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
    *
    * @param listener the callback to call on checked state change
    */
-  public void addOnCheckedChangeListener(ITabGroup.OnCheckedChangeListener listener) {
-    if (mOnCheckedChangeListeners == null) {
-      mOnCheckedChangeListeners = new ArrayList<>();
+  public void addOnCheckedChangeListener(OnTabGroupCheckedChangeListener listener) {
+    if (null == mTabGroupCheckedChange) {
+      mTabGroupCheckedChange = new TabGroupCheckedChange();
     }
-    mOnCheckedChangeListeners.add(listener);
+    mTabGroupCheckedChange.addListener(listener);
   }
 }

@@ -9,9 +9,6 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
-import com.bobomee.android.navigator.interfaces.ITabView;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created on 2016/10/24.上午9:53.
@@ -22,18 +19,15 @@ import java.util.List;
 
 public class TabView extends RelativeLayout implements ITabView {
 
-  private List<OnCheckedChangeListener> mOnCheckedChangeListeners;
-  private ITabView.OnCheckedChangeListener mOnCheckedChangeWidgetListener;
-
   private boolean mBroadcasting;//是否调用checkedListener中
   private boolean mChecked;//是否checked状态
   private boolean shouldKeep;//是否保持check状态
+  private TabViewCheckedChange mTabViewCheckedChange;
+  private GestureDetector gestureDetector;
 
   public void setShouldKeep(boolean _shouldKeep) {
     shouldKeep = _shouldKeep;
   }
-
-  private GestureDetector gestureDetector;
 
   public TabView(Context context) {
     this(context, null);
@@ -68,19 +62,7 @@ public class TabView extends RelativeLayout implements ITabView {
       }
 
       mBroadcasting = true;
-
-      if (null != mOnCheckedChangeListeners) {
-        for (int i = 0, z = mOnCheckedChangeListeners.size(); i < z; i++) {
-          ITabView.OnCheckedChangeListener listener = mOnCheckedChangeListeners.get(i);
-          if (null != listener) {
-            listener.onCheckedChanged(this, mChecked);
-          }
-        }
-      }//可以用于提示上一个tab 改变状态 -->
-      if (mOnCheckedChangeWidgetListener != null) {
-        mOnCheckedChangeWidgetListener.onCheckedChanged(this, mChecked);
-      }
-
+      if (null != mTabViewCheckedChange) mTabViewCheckedChange.onCheckedChanged(this, mChecked);
       mBroadcasting = false;
     }
   }
@@ -137,22 +119,16 @@ public class TabView extends RelativeLayout implements ITabView {
    *
    * @param listener the callback to call on checked state change
    */
-  public void addOnCheckedChangeListener(ITabView.OnCheckedChangeListener listener) {
-    if (mOnCheckedChangeListeners == null) {
-      mOnCheckedChangeListeners = new ArrayList<>();
+  public void addOnCheckedChangeListener(OnTabViewCheckedChangeListener listener) {
+    if (null == mTabViewCheckedChange) {
+      mTabViewCheckedChange = new TabViewCheckedChange();
     }
-    mOnCheckedChangeListeners.add(listener);
+    mTabViewCheckedChange.addListener(listener);
   }
 
-  /**
-   * Register a callback to be invoked when the checked state of this button
-   * changes. This callback is used for internal purpose only.
-   *
-   * @param listener the callback to call on checked state change
-   * @hide
-   */
-  public void setOnCheckedChangeWidgetListener(ITabView.OnCheckedChangeListener listener) {
-    mOnCheckedChangeWidgetListener = listener;
+  @Override public void removeOnCheckedChangeListener(OnTabViewCheckedChangeListener listener) {
+    if (null == mTabViewCheckedChange) return;
+    mTabViewCheckedChange.removeListener(listener);
   }
 
   ///////////////////////////////////state////////////
@@ -174,16 +150,15 @@ public class TabView extends RelativeLayout implements ITabView {
   }
 
   static class SavedState extends BaseSavedState {
-    public static final Creator<SavedState> CREATOR =
-        new Creator<SavedState>() {
-          public SavedState createFromParcel(Parcel in) {
-            return new SavedState(in);
-          }
+    public static final Creator<SavedState> CREATOR = new Creator<SavedState>() {
+      public SavedState createFromParcel(Parcel in) {
+        return new SavedState(in);
+      }
 
-          public SavedState[] newArray(int size) {
-            return new SavedState[size];
-          }
-        };
+      public SavedState[] newArray(int size) {
+        return new SavedState[size];
+      }
+    };
     boolean checked;
 
     /**
@@ -198,7 +173,7 @@ public class TabView extends RelativeLayout implements ITabView {
      */
     private SavedState(Parcel in) {
       super(in);
-      checked = (Boolean) in.readValue(null);
+      checked = (Boolean) in.readValue(getClass().getClassLoader());
     }
 
     @Override public void writeToParcel(Parcel out, int flags) {

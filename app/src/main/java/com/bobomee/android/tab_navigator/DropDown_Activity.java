@@ -25,8 +25,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bobomee.android.navigator.adapter.TabAdapter;
 import com.bobomee.android.navigator.expandable.ExpandableRelativeLayout;
-import com.bobomee.android.navigator.interfaces.ITabGroup;
-import com.bobomee.android.navigator.interfaces.ITabGroup.OnCheckedChangeListener;
+import com.bobomee.android.navigator.view.ITabGroup;
+import com.bobomee.android.navigator.view.OnTabGroupCheckedChangeListener;
 import com.bobomee.android.navigator.view.TabContainer;
 import com.bobomee.android.tab_navigator.tabview.DropTabView;
 import com.bobomee.android.tab_navigator.tabview.ItemTabView;
@@ -70,7 +70,7 @@ public class DropDown_Activity extends AppCompatActivity {
       }
     });
 
-    mDropTabContainer.addOnCheckedChangeListener(new OnCheckedChangeListener() {
+    mDropTabContainer.addOnCheckedChangeListener(new OnTabGroupCheckedChangeListener() {
       @Override public void onCheckedChanged(ITabGroup group, int checkedId) {
         if (mExpandableLayout.isExpanded()) {
           mExpandableLayout.collapse();

@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.bobomee.android.navigator.adapter.TabAdapter;
-import com.bobomee.android.navigator.interfaces.ITabView;
+import com.bobomee.android.navigator.view.ITabView;
 import com.bobomee.android.navigator.view.TabContainer;
 import com.bobomee.android.navigator.view.TabView;
 import com.bobomee.android.tab_navigator.vp.ContentFragmentAdapter;
