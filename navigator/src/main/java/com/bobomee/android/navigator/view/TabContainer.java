@@ -5,7 +5,8 @@ import android.database.DataSetObserver;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.view.View;
-import com.bobomee.android.navigator.adapter.TabAdapter;
+import com.bobomee.android.navigator.R;
+import com.bobomee.android.navigator.adapter.IAdapter;
 
 /**
  * Created on 2016/10/24.下午11:29.
@@ -52,9 +53,9 @@ public class TabContainer extends TabGroup {
     invalidate();
   }
 
-  private TabAdapter mTAdapter;
+  private IAdapter mTAdapter;
 
-  public void setTabAdapter(TabAdapter _tAdapter) {
+  public <T> void setTabAdapter(IAdapter<T> _tAdapter) {
     if (mTAdapter == _tAdapter) {
       return;
     }

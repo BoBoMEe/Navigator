@@ -29,10 +29,10 @@ public class TabViewCheckedChange extends ListenerImpl<OnTabViewCheckedChangeLis
 
   public void onCheckedChanged(ITabView tabView, boolean isChecked) {
     List<OnTabViewCheckedChangeListener> lFrom = from();
-    if (lFrom != null && !lFrom.isEmpty()) {
+    if (lFrom != null&& !lFrom.isEmpty()) {
       for (OnTabViewCheckedChangeListener lOnTabViewCheckedChangeListener : lFrom) {
-        if (null != lOnTabViewCheckedChangeListener) {
-          lOnTabViewCheckedChangeListener.onCheckedChanged(tabView, isChecked);
+        if (null != lOnTabViewCheckedChangeListener){
+          lOnTabViewCheckedChangeListener.onCheckedChanged(tabView,isChecked);
         }
       }
     }

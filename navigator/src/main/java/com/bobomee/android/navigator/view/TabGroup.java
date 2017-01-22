@@ -42,7 +42,7 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
   // when true, mOnCheckedChangeListener discards events
   private boolean mProtectFromCheckedChange = false;
   private PassThroughHierarchyChangeListener mPassThroughListener;
-  private TabGroupCheckedChange mTabGroupCheckedChange;
+  private TabGroupCheckedChange mTabGroupCheckedChange = new TabGroupCheckedChange();
 
   /**
    * {@inheritDoc}
@@ -90,15 +90,18 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
    * {@inheritDoc}
    */
   @Override protected void onFinishInflate() {
-    super.onFinishInflate();
 
-    // checks the appropriate  tab view as requested in the XML file
-    if (mCheckedId != -1) {
-      mProtectFromCheckedChange = true;
-      setCheckedStateForView(mCheckedId, true);
-      mProtectFromCheckedChange = false;
-      setCheckedId(mCheckedId);
+    if (!isInEditMode()) {
+      // checks the appropriate  tab view as requested in the XML file
+      if (mCheckedId != -1) {
+        mProtectFromCheckedChange = true;
+        setCheckedStateForView(mCheckedId, true);
+        mProtectFromCheckedChange = false;
+        setCheckedId(mCheckedId);
+      }
     }
+
+    super.onFinishInflate();
   }
 
   @Override public void addView(View child, int index, ViewGroup.LayoutParams params) {
@@ -143,9 +146,9 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
     setCheckedId(id);
   }
 
-  public void setCheckedId(int id) {
-    mCheckedId = id;
-    if (null != mTabGroupCheckedChange) mTabGroupCheckedChange.onCheckedChanged(this, mCheckedId);
+  public void setCheckedId(int viewId) {
+    mCheckedId = viewId;
+    mTabGroupCheckedChange.onCheckedChanged(this, getViewPosition(viewId), mCheckedId);
   }
 
   private void setCheckedStateForView(int viewId, boolean checked) {
@@ -154,6 +157,23 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
       ((ITabView) checkedView).setChecked(checked);
     }
   }
+
+  private int getViewPosition(int viewId) {
+    int result = -1;
+    View lViewById = findViewById(viewId);
+    if (null != lViewById) {
+      int lChildCount = getChildCount();
+      for (int lI = 0; lI < lChildCount; lI++) {
+        View lChildAt = getChildAt(lI);
+        if (lChildAt.equals(lViewById)) {
+          result = lI;
+        }
+      }
+    }
+
+    return result;
+  }
+  
 
   /**
    * <p>Returns the identifier of the selected  tab view in this group.
@@ -270,9 +290,6 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
    * @param listener the callback to call on checked state change
    */
   public void addOnCheckedChangeListener(OnTabGroupCheckedChangeListener listener) {
-    if (null == mTabGroupCheckedChange) {
-      mTabGroupCheckedChange = new TabGroupCheckedChange();
-    }
     mTabGroupCheckedChange.addListener(listener);
   }
 }

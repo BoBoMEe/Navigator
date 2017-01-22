@@ -11,7 +11,7 @@ import android.view.ViewGroup;
  * @description
  */
 
-interface IAdapter<T> {
+public interface IAdapter<T> {
 
   void registerDataSetObserver(DataSetObserver observer);
 
@@ -26,4 +26,6 @@ interface IAdapter<T> {
   T getItem(int position);
 
   View getView(int position, ViewGroup parent, T object);
+
+  View getDropView(int position, ViewGroup parent, T object);
 }

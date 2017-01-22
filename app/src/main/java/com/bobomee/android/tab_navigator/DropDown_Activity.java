@@ -21,9 +21,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.bobomee.android.navigator.adapter.TabAdapter;
+import com.bobomee.android.navigator.adapter.AdapterBase;
 import com.bobomee.android.navigator.expandable.ExpandableRelativeLayout;
 import com.bobomee.android.navigator.view.ITabGroup;
 import com.bobomee.android.navigator.view.OnTabGroupCheckedChangeListener;
@@ -59,7 +60,7 @@ public class DropDown_Activity extends AppCompatActivity {
   }
 
   private void initTabContainer() {
-    mDropTabContainer.setTabAdapter(new TabAdapter<String>(mTitles) {
+    mDropTabContainer.setTabAdapter(new AdapterBase<String>(mTitles) {
       @Override public View getView(int position, ViewGroup parent, String object) {
         DropTabView dropdownButton = new DropTabView(getApplicationContext());
 
@@ -71,7 +72,9 @@ public class DropDown_Activity extends AppCompatActivity {
     });
 
     mDropTabContainer.addOnCheckedChangeListener(new OnTabGroupCheckedChangeListener() {
-      @Override public void onCheckedChanged(ITabGroup group, int checkedId) {
+      @Override public void onCheckedChanged(ITabGroup group, int position, int checkedId) {
+        Toast.makeText(DropDown_Activity.this, String.valueOf(checkedId), Toast.LENGTH_SHORT)
+            .show();
         if (mExpandableLayout.isExpanded()) {
           mExpandableLayout.collapse();
         } else {
@@ -84,7 +87,7 @@ public class DropDown_Activity extends AppCompatActivity {
   }
 
   private void initTabContainer1() {
-    mTabContainer1.setTabAdapter(new TabAdapter<String>(mTitles) {
+    mTabContainer1.setTabAdapter(new AdapterBase<String>(mTitles) {
       @Override public View getView(int position, ViewGroup parent, String object) {
         ItemTabView itemTabView = new ItemTabView(getApplicationContext());
 

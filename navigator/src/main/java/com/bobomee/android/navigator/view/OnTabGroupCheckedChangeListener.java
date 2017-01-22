@@ -34,5 +34,5 @@ public interface OnTabGroupCheckedChangeListener {
    * @param group the group in which the checked tab view has changed
    * @param checkedId the unique identifier of the newly checked tab view
    */
-  void onCheckedChanged(ITabGroup group, int checkedId);
+  void onCheckedChanged(ITabGroup group, int position, int checkedId);
 }
