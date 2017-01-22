@@ -16,28 +16,33 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
     >
 
 
-  <com.bobomee.android.navigator.expandable.ExpandableRelativeLayout
-      android:id="@+id/expandable_layout"
+  <LinearLayout
+      android:layout_height="wrap_content"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      app:ael_duration="350"
-      app:ael_expanded="false"
-      app:ael_interpolator="fastOutSlowIn"
-      app:ael_orientation="vertical"
+      android:orientation="vertical"
       >
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <com.bobomee.android.navigator.view.TabContainer
+        android:id="@+id/drop_tab_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"
+        android:layout_height="50dp"
         />
-  </com.bobomee.android.navigator.expandable.ExpandableRelativeLayout>
 
+    <include layout="@layout/drop_down_layout"/>
+  </LinearLayout>
+
+
+  <com.bobomee.android.navigator.view.TabContainer
+      android:id="@+id/tab_container1"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:layout_alignParentBottom="true"
+      android:background="@android:color/white"
+      android:elevation="10dp"
+      />
 </RelativeLayout>

@@ -46,10 +46,10 @@ public class NavigateActivity extends AppCompatActivity {
   @OnClick({ R.id.tab_view, R.id.filter_view }) public void onClick(View view) {
     switch (view.getId()) {
       case R.id.tab_view:
-        start(MainActivity.class);
+        start(TabView_Activity.class);
         break;
       case R.id.filter_view:
-        start(Drop_Filter_Activity.class);
+        start(DropDown_Activity.class);
         break;
     }
   }

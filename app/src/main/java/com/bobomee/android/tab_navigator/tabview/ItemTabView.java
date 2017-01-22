@@ -34,7 +34,7 @@ public class ItemTabView extends TabView {
   }
 
   private void init() {
-    View view =  LayoutInflater.from(getContext()).inflate(R.layout.item_view_check_layout,this, true);
+    View view =  LayoutInflater.from(getContext()).inflate(R.layout.layout_tab_txt_checkbox,this, true);
     textView = (TextView) view.findViewById(R.id.textView);
     mImageView = (ImageView) view.findViewById(R.id.image);
   }

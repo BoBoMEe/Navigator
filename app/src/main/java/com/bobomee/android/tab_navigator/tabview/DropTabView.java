@@ -34,7 +34,7 @@ public class DropTabView extends TabView {
   }
 
   private void init() {
-    View view =  LayoutInflater.from(getContext()).inflate(R.layout.dropdown_tab_button,this, true);
+    View view =  LayoutInflater.from(getContext()).inflate(R.layout.layout_tab_drop_down,this, true);
     textView = (TextView) view.findViewById(R.id.textView);
     bottomLine = view.findViewById(R.id.bottomLine);
   }

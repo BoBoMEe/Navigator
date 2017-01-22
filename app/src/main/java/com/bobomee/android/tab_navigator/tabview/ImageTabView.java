@@ -84,7 +84,7 @@ public class ImageTabView extends TabView {
    * 初始化界面
    */
   private void initView() {
-    View inflate = LayoutInflater.from(getContext()).inflate(R.layout.layout_tab_view, null);
+    View inflate = LayoutInflater.from(getContext()).inflate(R.layout.layout_tab_txt_image, null);
     mTabImgView = (ImageView) inflate.findViewById(R.id.iv_tab_img);
     mTabTextView = (TextView) inflate.findViewById(R.id.tv_tab_text);
 

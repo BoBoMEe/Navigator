@@ -28,12 +28,12 @@ import java.util.List;
  * <p>
  * modify by BoBoMEe(wbwjx115@gmail.com)
  */
-public class MainActivity extends AppCompatActivity {
+public class TabView_Activity extends AppCompatActivity {
   public static final int TAB_CHAT = 0x00;
   public static final int TAB_APP = 0x01;
   public static final int TAB_PIC = 0x02;
   public static final int TAB_USER = 0x03;
-  private static final String TAG = MainActivity.class.getSimpleName();
+  private static final String TAG = TabView_Activity.class.getSimpleName();
   @BindView(R.id.vp_main) ViewPager mViewPager;
   @BindView(R.id.tg_tab) TabContainer mTabGroup;
   @BindView(R.id.tab_container) TabContainer mTabContainer;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_tab_view_sample);
     //绑定当前界面
     ButterKnife.bind(this);
 
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
 
         TabView commonTabView = new TabView(parent.getContext());
 
-        View inflate = View.inflate(MainActivity.this, R.layout.layout_tab_text, null);
+        View inflate = View.inflate(TabView_Activity.this, R.layout.layout_tab_text, null);
         TextView textView = (TextView) inflate.findViewById(R.id.tv_tab_text);
         textView.setText(object);
 
