@@ -32,6 +32,8 @@ public interface OnTabGroupCheckedChangeListener {
    * selection is cleared, checkedId is -1.</p>
    *
    * @param group the group in which the checked tab view has changed
+   * @param checkedId the unique identifier of the newly checked tab view
    */
-  void onCheckedChanged(ITabGroup group, int checkedPos,int unCheckedPos);
+  void onCheckedChange(ITabGroup group, int checkedId);
+  
 }

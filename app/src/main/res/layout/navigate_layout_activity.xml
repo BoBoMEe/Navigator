@@ -38,12 +38,6 @@
           android:layout_height="80dp"
           android:text="@string/tab_sample"
           />
-      <Button
-          android:id="@+id/filter_view"
-          android:layout_width="match_parent"
-          android:layout_height="80dp"
-          android:text="@string/drop_filter_sample"
-          />
 
       <Button
           android:id="@+id/menu_view"

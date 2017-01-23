@@ -21,11 +21,8 @@ import android.database.DataSetObserver;
 import android.os.Build.VERSION_CODES;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RelativeLayout;
-import com.bobomee.android.navigator.R;
 import com.bobomee.android.navigator.adapter.IAdapter;
 import com.bobomee.android.navigator.expandable.ExpandableRelativeLayout;
 
@@ -35,7 +32,7 @@ import com.bobomee.android.navigator.expandable.ExpandableRelativeLayout;
  * @author bobomee.
  */
 
-public class ExpandableContainer extends RelativeLayout {
+public class ExpandableContainer extends ExpandableRelativeLayout {
 
   private DataSetObserver mDataSetObserver = new DataSetObserver() {
     @Override public void onChanged() {
@@ -46,7 +43,6 @@ public class ExpandableContainer extends RelativeLayout {
       super.onInvalidated();
     }
   };
-  private ExpandableRelativeLayout mExpandableRelativeLayout;
 
   public ExpandableContainer(Context context) {
     this(context, null);
@@ -58,22 +54,12 @@ public class ExpandableContainer extends RelativeLayout {
 
   public ExpandableContainer(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
-    init();
   }
 
   @RequiresApi(api = VERSION_CODES.LOLLIPOP)
   public ExpandableContainer(Context context, AttributeSet attrs, int defStyleAttr,
       int defStyleRes) {
     super(context, attrs, defStyleAttr, defStyleRes);
-    init();
-  }
-
-  private void init() {
-    View lInflate =
-        LayoutInflater.from(getContext()).inflate(R.layout.drop_down_layout, this, true);
-
-    mExpandableRelativeLayout =
-        (ExpandableRelativeLayout) lInflate.findViewById(R.id.expandable_layout);
   }
 
   @SuppressWarnings("unchecked") private void onChage() {
@@ -81,12 +67,11 @@ public class ExpandableContainer extends RelativeLayout {
 
     for (int i = 0; i < mTAdapter.getCount(); ++i) {
       View tabView = mTAdapter.getDropView(i, this, mTAdapter.getItem(i));
-      tabView.setVisibility(GONE);
-
       RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(-1, -2);
-
-      mExpandableRelativeLayout.addView(tabView, i, layoutParams);
+      addView(tabView, i, layoutParams);
     }
+
+    collapse();
 
     invalidate();
   }
@@ -110,8 +95,22 @@ public class ExpandableContainer extends RelativeLayout {
     }
   }
 
-  public void switchPosition(int position, int unchecked) {
+  public void checkState(int position, boolean checked) {
 
-    Log.d("BoBoMEe", "switchPosition: position : " + position + ",unchecked : " + unchecked);
+    int lChildCount = getChildCount();
+    for (int i = 0; i < lChildCount; i++) {
+      View lChildAt = getChildAt(i);
+      if (i == position) {
+        lChildAt.setVisibility(checked ? VISIBLE : GONE);
+      } else {
+        lChildAt.setVisibility(GONE);
+      }
+    }
+
+    if (checked) {
+      expand();
+    } else {
+      collapse();
+    }
   }
 }

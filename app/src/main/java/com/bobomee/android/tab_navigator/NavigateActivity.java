@@ -35,7 +35,6 @@ import butterknife.OnClick;
 public class NavigateActivity extends AppCompatActivity {
 
   @BindView(R.id.tab_view) Button mTabView;
-  @BindView(R.id.filter_view) Button mFilterView;
   @BindView(R.id.menu_view) Button mMenuView;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,13 +43,10 @@ public class NavigateActivity extends AppCompatActivity {
     ButterKnife.bind(this);
   }
 
-  @OnClick({ R.id.tab_view, R.id.filter_view, R.id.menu_view }) public void onClick(View view) {
+  @OnClick({ R.id.tab_view, R.id.menu_view }) public void onClick(View view) {
     switch (view.getId()) {
       case R.id.tab_view:
         start(TabView_Activity.class);
-        break;
-      case R.id.filter_view:
-        start(DropDown_Activity.class);
         break;
       case R.id.menu_view:
         start(DropDownMenu_Activity.class);

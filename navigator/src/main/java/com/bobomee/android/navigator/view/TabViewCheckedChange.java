@@ -27,12 +27,12 @@ import java.util.List;
 
 public class TabViewCheckedChange extends ListenerImpl<OnTabViewCheckedChangeListener> {
 
-  public void onCheckedChanged(ITabView tabView, boolean isChecked) {
+  public void onCheckedChange(ITabView tabView, boolean isChecked) {
     List<OnTabViewCheckedChangeListener> lFrom = from();
     if (lFrom != null&& !lFrom.isEmpty()) {
       for (OnTabViewCheckedChangeListener lOnTabViewCheckedChangeListener : lFrom) {
         if (null != lOnTabViewCheckedChangeListener){
-          lOnTabViewCheckedChangeListener.onCheckedChanged(tabView,isChecked);
+          lOnTabViewCheckedChangeListener.onCheckedChange(tabView,isChecked);
         }
       }
     }

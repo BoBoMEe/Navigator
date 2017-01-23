@@ -62,7 +62,7 @@ public class TabView extends RelativeLayout implements ITabView {
       }
 
       mBroadcasting = true;
-      if (null != mTabViewCheckedChange) mTabViewCheckedChange.onCheckedChanged(this, mChecked);
+      if (null != mTabViewCheckedChange) mTabViewCheckedChange.onCheckedChange(this, mChecked);
       mBroadcasting = false;
     }
   }

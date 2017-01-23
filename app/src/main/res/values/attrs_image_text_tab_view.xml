@@ -1,5 +1,5 @@
 <resources>
-    <declare-styleable name="TabView">
+    <declare-styleable name="ImageTabView">
         <attr name="textString" format="string" />
         <attr name="textColor" format="color|reference" />
         <attr name="textSize" format="dimension" />

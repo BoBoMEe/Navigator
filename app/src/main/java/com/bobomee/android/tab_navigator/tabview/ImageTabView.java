@@ -54,11 +54,11 @@ public class ImageTabView extends TabView {
   private void init(AttributeSet attrs, int defStyle) {
     // Load attributes
     final TypedArray a =
-        getContext().obtainStyledAttributes(attrs, R.styleable.TabView, defStyle, 0);
+        getContext().obtainStyledAttributes(attrs, R.styleable.ImageTabView, defStyle, 0);
 
-    mTextString = a.getString(R.styleable.TabView_textString);
-    mTextColor = a.getColorStateList(R.styleable.TabView_textColor);
-    mTextSize = a.getDimensionPixelSize(R.styleable.TabView_textSize, -1);
+    mTextString = a.getString(R.styleable.ImageTabView_textString);
+    mTextColor = a.getColorStateList(R.styleable.ImageTabView_textColor);
+    mTextSize = a.getDimensionPixelSize(R.styleable.ImageTabView_textSize, -1);
     //文字大小 特殊处理
     if (mTextSize != -1) {
       mTextSize = px2sp(getContext(), mTextSize);
@@ -67,11 +67,11 @@ public class ImageTabView extends TabView {
     }
     // Use getDimensionPixelSize or getDimensionPixelOffset when dealing with
     // values that should fall on pixel boundaries.
-    mImgDimension = a.getDimension(R.styleable.TabView_imgDimension, mImgDimension);
-    mImgMargin = a.getDimension(R.styleable.TabView_imgMargin, mImgMargin);
+    mImgDimension = a.getDimension(R.styleable.ImageTabView_imgDimension, mImgDimension);
+    mImgMargin = a.getDimension(R.styleable.ImageTabView_imgMargin, mImgMargin);
 
-    if (a.hasValue(R.styleable.TabView_imgDrawable)) {
-      mImgDrawable = a.getDrawable(R.styleable.TabView_imgDrawable);
+    if (a.hasValue(R.styleable.ImageTabView_imgDrawable)) {
+      mImgDrawable = a.getDrawable(R.styleable.ImageTabView_imgDrawable);
     }
 
     a.recycle();

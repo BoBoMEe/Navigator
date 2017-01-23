@@ -10,7 +10,6 @@
       android:theme="@style/AppTheme">
     <activity android:name=".TabView_Activity"/>
 
-    <activity android:name=".DropDown_Activity"/>
     <activity android:name=".DropDownMenu_Activity"/>
 
     <activity android:name=".NavigateActivity">

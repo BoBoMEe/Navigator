@@ -29,5 +29,5 @@ public interface OnTabViewCheckedChangeListener {
    * @param tabView The TabView whose state has changed.
    * @param isChecked The new checked state of TabView.
    */
-  void onCheckedChanged(ITabView tabView, boolean isChecked);
+  void onCheckedChange(ITabView tabView, boolean isChecked);
 }

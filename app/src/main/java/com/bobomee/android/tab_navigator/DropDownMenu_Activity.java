@@ -19,7 +19,6 @@ package com.bobomee.android.tab_navigator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -27,8 +26,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bobomee.android.navigator.adapter.AdapterBase;
 import com.bobomee.android.navigator.dropdown.DropDownMenu;
-import com.bobomee.android.navigator.view.ITabGroup;
-import com.bobomee.android.navigator.view.OnTabGroupCheckedChangeListener;
 import com.bobomee.android.navigator.view.TabContainer;
 import com.bobomee.android.tab_navigator.tabview.DropTabView;
 import com.bobomee.android.tab_navigator.tabview.ItemTabView;
@@ -70,20 +67,16 @@ public class DropDownMenu_Activity extends AppCompatActivity {
       }
 
       @Override public View getDropView(int position, ViewGroup parent, String object) {
-        TextView lTextView = new TextView(parent.getContext());
 
-        lTextView.setText(object + ",,,,," + String.valueOf(position));
+        TextView inflate =
+            (TextView) View.inflate(DropDownMenu_Activity.this, R.layout.drop_down_text_layout,
+                null);
 
-        return lTextView;
+        inflate.setText(getResources().getString(R.string.drop_content) +"\n"+ String.valueOf(position));
+
+        return inflate;
       }
     });
-
-    mDropDownMenu.getTabContainer()
-        .addOnCheckedChangeListener(new OnTabGroupCheckedChangeListener() {
-          @Override public void onCheckedChanged(ITabGroup group, int position, int checkedId) {
-
-          }
-        });
   }
 
   private void initTabContainer1() {

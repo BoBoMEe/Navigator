@@ -19,15 +19,16 @@ package com.bobomee.android.navigator.dropdown;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import com.bobomee.android.navigator.R;
 import com.bobomee.android.navigator.adapter.AdapterBase;
 import com.bobomee.android.navigator.view.ITabGroup;
-import com.bobomee.android.navigator.view.ITabView;
 import com.bobomee.android.navigator.view.OnTabGroupCheckedChangeListener;
 import com.bobomee.android.navigator.view.TabContainer;
 import com.bobomee.android.navigator.view.TabGroup;
+import com.bobomee.android.navigator.view.TabView;
 
 /**
  * Created on 2017/1/22.下午2:14.
@@ -59,7 +60,7 @@ public class DropDownMenu extends LinearLayoutCompat {
 
     setOrientation(VERTICAL);
 
-    View lInflate =
+    final View lInflate =
         LayoutInflater.from(getContext()).inflate(R.layout.drop_down_menu_layout, this, true);
 
     mTabContainer = (TabContainer) lInflate.findViewById(R.id.drop_tab_container);
@@ -67,9 +68,19 @@ public class DropDownMenu extends LinearLayoutCompat {
         (ExpandableContainer) lInflate.findViewById(R.id.expandable_layout_container);
 
     mTabContainer.addOnCheckedChangeListener(new OnTabGroupCheckedChangeListener() {
-      @Override public void onCheckedChanged(ITabGroup group, int position, int uncheckedId) {
+      @Override public void onCheckedChange(ITabGroup group, int checkedId) {
+        TabGroup lTabGroup = (TabGroup) group;
+        TabView lITabView = (TabView) lTabGroup.findViewById(checkedId);
 
-        mExpandableRelativeLayout.switchPosition(position, uncheckedId);
+        if (null != lITabView){
+          boolean lChecked = lITabView.isChecked();
+
+          int lPosition = lTabGroup.indexOfChild(lITabView);
+
+          Log.d("BoBoMEe", "onCheckedChange: lPosition : " + lPosition + " , lChecked : " + lChecked);
+
+          mExpandableRelativeLayout.checkState(lPosition, lChecked);
+        }
       }
     });
   }

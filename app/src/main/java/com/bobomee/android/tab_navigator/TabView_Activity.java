@@ -14,9 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.bobomee.android.navigator.adapter.AdapterBase;
-import com.bobomee.android.navigator.view.ITabGroup;
 import com.bobomee.android.navigator.view.ITabView;
-import com.bobomee.android.navigator.view.OnTabGroupCheckedChangeListener;
 import com.bobomee.android.navigator.view.TabContainer;
 import com.bobomee.android.navigator.view.TabView;
 import com.bobomee.android.tab_navigator.vp.ContentFragmentAdapter;
@@ -95,10 +93,8 @@ public class TabView_Activity extends AppCompatActivity {
         commonTabView.setContentView(inflate);
         commonTabView.setId(position);
         commonTabView.setShouldKeep(true);
-        if (position == 0) commonTabView.setChecked(true);
 
         commonTabView.addOnCheckedChangeListener((tabView, isChecked) -> {
-          Log.d(TAG, "onCheckedChanged  tab: " + tabView.getId() + ",,, isChecked : " + isChecked);
           if (isChecked) {
             View vtabView = (View) tabView;
             ObjectAnimator scaleX = ObjectAnimator.ofFloat(vtabView, View.SCALE_X, 1f, .5f, 1f);
@@ -117,27 +113,29 @@ public class TabView_Activity extends AppCompatActivity {
     });
 
     setTabContainerListener(mTabContainer);
+
+    mTabContainer.setCheckedStateForView(0, true);
   }
 
   private void setTabContainerListener(TabContainer mTabGroup) {
-    mTabGroup.addOnCheckedChangeListener(new OnTabGroupCheckedChangeListener() {
-      @Override public void onCheckedChanged(ITabGroup group, int position, int checkedId) {
-        switch (checkedId) {
-          case R.id.tab_chat:
-            setCurrentFragment(TAB_CHAT);
-            break;
-          case R.id.tb_pic:
-            setCurrentFragment(TAB_PIC);
-            break;
-          case R.id.tb_app:
-            setCurrentFragment(TAB_APP);
-            break;
-          case R.id.tb_user:
-            setCurrentFragment(TAB_USER);
-            break;
-        }
-      }
-    });
+    //mTabGroup.addOnCheckedChangeListener(new OnTabGroupCheckedChangeListener() {
+    //  @Override public void onCheckedChange(ITabGroup group, int position, int checkedId) {
+    //    switch (checkedId) {
+    //      case R.id.tab_chat:
+    //        setCurrentFragment(TAB_CHAT);
+    //        break;
+    //      case R.id.tb_pic:
+    //        setCurrentFragment(TAB_PIC);
+    //        break;
+    //      case R.id.tb_app:
+    //        setCurrentFragment(TAB_APP);
+    //        break;
+    //      case R.id.tb_user:
+    //        setCurrentFragment(TAB_USER);
+    //        break;
+    //    }
+    //  }
+    //});
   }
 
   @OnClick(R.id.add) public void setAddEvent() {
