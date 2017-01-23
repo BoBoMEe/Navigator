@@ -27,12 +27,12 @@ import java.util.List;
 
 public class TabGroupCheckedChange extends ListenerImpl<OnTabGroupCheckedChangeListener> {
 
-  public void onCheckedChanged(ITabGroup group,  int position, int checkedId) {
+  public void onCheckedChanged(ITabGroup group, int position, int uncheck) {
     List<OnTabGroupCheckedChangeListener> lFrom = from();
     if (lFrom != null && !lFrom.isEmpty()) {
       for (OnTabGroupCheckedChangeListener lOnTabGroupCheckedChangeListener : lFrom) {
         if (null != lOnTabGroupCheckedChangeListener) {
-          lOnTabGroupCheckedChangeListener.onCheckedChanged(group, position, checkedId);
+          lOnTabGroupCheckedChangeListener.onCheckedChanged(group, position, uncheck);
         }
       }
     }

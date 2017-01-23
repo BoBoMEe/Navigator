@@ -16,18 +16,19 @@
   -->
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
-  <com.bobomee.android.navigator.view.TabContainer
-      android:id="@+id/drop_tab_container"
-      android:layout_width="match_parent"
-      android:layout_height="50dp"
-      />
 
-  <com.bobomee.android.navigator.dropdown.ExpandableContainer
-      android:id="@+id/expandable_layout_container"
+  <com.bobomee.android.navigator.expandable.ExpandableRelativeLayout
+      android:id="@+id/expandable_layout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      app:ael_duration="350"
+      app:ael_expanded="false"
+      app:ael_interpolator="fastOutSlowIn"
+      app:ael_orientation="vertical"
       />
 
-</merge>                                                
+
+</merge>

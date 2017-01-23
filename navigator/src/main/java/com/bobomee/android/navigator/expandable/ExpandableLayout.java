@@ -23,7 +23,7 @@ import android.support.annotation.Nullable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-public interface ExpandableLayout {
+public interface ExpandableLayout extends Expandable{
 
     /**
      * Duration of expand animation
@@ -52,11 +52,6 @@ public interface ExpandableLayout {
 
     /**
      * Starts animation the state of the view to the inverse of its current state.
-     */
-    void toggle();
-
-    /**
-     * Starts animation the state of the view to the inverse of its current state.
      *
      * @param duration
      * @param interpolator use the default interpolator if the argument is null.
@@ -65,21 +60,11 @@ public interface ExpandableLayout {
 
     /**
      * Starts expand animation.
-     */
-    void expand();
-
-    /**
-     * Starts expand animation.
      *
      * @param duration
      * @param interpolator use the default interpolator if the argument is null.
      */
     void expand(final long duration, @Nullable final TimeInterpolator interpolator);
-
-    /**
-     * Starts collapse animation.
-     */
-    void collapse();
 
     /**
      * Starts collapse animation.
@@ -110,13 +95,6 @@ public interface ExpandableLayout {
      * @param expanded The layout is visible if expanded is true
      */
     void setExpanded(final boolean expanded);
-
-    /**
-     * Gets state of expanse.
-     *
-     * @return true if the layout is visible
-     */
-    boolean isExpanded();
 
     /**
      * The time interpolator used in calculating the elapsed fraction of this animation. The

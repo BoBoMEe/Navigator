@@ -98,7 +98,7 @@ public class TabView_Activity extends AppCompatActivity {
         if (position == 0) commonTabView.setChecked(true);
 
         commonTabView.addOnCheckedChangeListener((tabView, isChecked) -> {
-          Log.d(TAG, "onCheckedChanged");
+          Log.d(TAG, "onCheckedChanged  tab: " + tabView.getId() + ",,, isChecked : " + isChecked);
           if (isChecked) {
             View vtabView = (View) tabView;
             ObjectAnimator scaleX = ObjectAnimator.ofFloat(vtabView, View.SCALE_X, 1f, .5f, 1f);

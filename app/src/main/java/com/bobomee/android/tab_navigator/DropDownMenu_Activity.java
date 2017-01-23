@@ -19,13 +19,14 @@ package com.bobomee.android.tab_navigator;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bobomee.android.navigator.adapter.AdapterBase;
-import com.bobomee.android.navigator.expandable.ExpandableRelativeLayout;
+import com.bobomee.android.navigator.dropdown.DropDownMenu;
 import com.bobomee.android.navigator.view.ITabGroup;
 import com.bobomee.android.navigator.view.OnTabGroupCheckedChangeListener;
 import com.bobomee.android.navigator.view.TabContainer;
@@ -40,27 +41,25 @@ import java.util.List;
  * @author bobomee.
  */
 
-public class DropDown_Activity extends AppCompatActivity {
+public class DropDownMenu_Activity extends AppCompatActivity {
 
-  @BindView(R.id.drop_tab_container) TabContainer mDropTabContainer;
   @BindView(R.id.tab_container1) TabContainer mTabContainer1;
-  @BindView(R.id.expandable_layout) ExpandableRelativeLayout mExpandableLayout;
+  @BindView(R.id.drop_down_menu) DropDownMenu mDropDownMenu;
   private List<String> mTitles;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_drop_down_sample);
+    setContentView(R.layout.activity_drop_down_menu_sample);
     ButterKnife.bind(this);
 
     initData();
 
     initTabContainer();
     initTabContainer1();
-
   }
 
   private void initTabContainer() {
-    mDropTabContainer.setTabAdapter(new AdapterBase<String>(mTitles) {
+    mDropDownMenu.setTabAdapter(new AdapterBase<String>(mTitles) {
       @Override public View getView(int position, ViewGroup parent, String object) {
         DropTabView dropdownButton = new DropTabView(getApplicationContext());
 
@@ -69,21 +68,22 @@ public class DropDown_Activity extends AppCompatActivity {
 
         return dropdownButton;
       }
-    });
 
-    mDropTabContainer.addOnCheckedChangeListener(new OnTabGroupCheckedChangeListener() {
-      @Override public void onCheckedChanged(ITabGroup group, int position, int checkedId) {
-        Toast.makeText(DropDown_Activity.this, String.valueOf(position), Toast.LENGTH_SHORT)
-            .show();
-        if (mExpandableLayout.isExpanded()) {
-          mExpandableLayout.collapse();
-        } else {
-          mExpandableLayout.expand();
-        }
+      @Override public View getDropView(int position, ViewGroup parent, String object) {
+        TextView lTextView = new TextView(parent.getContext());
+
+        lTextView.setText(object + ",,,,," + String.valueOf(position));
+
+        return lTextView;
       }
     });
-    
-    mExpandableLayout.collapse();
+
+    mDropDownMenu.getTabContainer()
+        .addOnCheckedChangeListener(new OnTabGroupCheckedChangeListener() {
+          @Override public void onCheckedChanged(ITabGroup group, int position, int checkedId) {
+
+          }
+        });
   }
 
   private void initTabContainer1() {

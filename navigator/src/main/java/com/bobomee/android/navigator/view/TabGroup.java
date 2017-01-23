@@ -147,8 +147,10 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
   }
 
   public void setCheckedId(int viewId) {
+
+    mTabGroupCheckedChange.onCheckedChanged(this, getViewPosition(viewId),
+        getViewPosition(mCheckedId));
     mCheckedId = viewId;
-    mTabGroupCheckedChange.onCheckedChanged(this, getViewPosition(viewId), mCheckedId);
   }
 
   private void setCheckedStateForView(int viewId, boolean checked) {

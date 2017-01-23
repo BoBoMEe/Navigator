@@ -44,6 +44,13 @@
           android:layout_height="80dp"
           android:text="@string/drop_filter_sample"
           />
+
+      <Button
+          android:id="@+id/menu_view"
+          android:layout_width="match_parent"
+          android:layout_height="80dp"
+          android:text="@string/drop_down_menu_sample"
+          />
     </LinearLayout>
 
   </ScrollView>

@@ -14,24 +14,36 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.navigator.view;
+package com.bobomee.android.navigator.expandable;
 
 /**
- * Created on 2017/1/22.下午2:20.
+ * Created on 2017/1/22.下午8:05.
  *
  * @author bobomee.
  */
 
-/**
- * <p>Interface definition for a callback to be invoked when the checked
- * tab view changed in this group.</p>
- */
-public interface OnTabGroupCheckedChangeListener {
+public interface Expandable {
+
   /**
-   * <p>Called when the checked  tab view has changed. When the
-   * selection is cleared, checkedId is -1.</p>
-   *
-   * @param group the group in which the checked tab view has changed
+   * Starts animation the state of the view to the inverse of its current state.
    */
-  void onCheckedChanged(ITabGroup group, int checkedPos,int unCheckedPos);
+  void toggle();
+
+  /**
+   * Starts expand animation.
+   */
+  void expand();
+
+  /**
+   * Starts collapse animation.
+   */
+  void collapse();
+
+  /**
+   * Gets state of expanse.
+   *
+   * @return true if the layout is visible
+   */
+  boolean isExpanded();
+
 }

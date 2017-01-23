@@ -20,13 +20,14 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import com.bobomee.android.navigator.R;
 import com.bobomee.android.navigator.adapter.AdapterBase;
-import com.bobomee.android.navigator.expandable.ExpandableRelativeLayout;
 import com.bobomee.android.navigator.view.ITabGroup;
 import com.bobomee.android.navigator.view.ITabView;
 import com.bobomee.android.navigator.view.OnTabGroupCheckedChangeListener;
 import com.bobomee.android.navigator.view.TabContainer;
+import com.bobomee.android.navigator.view.TabGroup;
 
 /**
  * Created on 2017/1/22.下午2:14.
@@ -35,10 +36,10 @@ import com.bobomee.android.navigator.view.TabContainer;
  */
 
 public class DropDownMenu extends LinearLayoutCompat {
-  
+
   private TabContainer mTabContainer;
-  private ExpandableRelativeLayout mExpandableRelativeLayout;
-  
+  private ExpandableContainer mExpandableRelativeLayout;
+
   public DropDownMenu(Context context) {
     super(context);
     init();
@@ -55,19 +56,36 @@ public class DropDownMenu extends LinearLayoutCompat {
   }
 
   private void init() {
-    LayoutInflater inflater = LayoutInflater.from(getContext());
-    inflater.inflate(R.layout.drop_down_menu_layout, this, true);
-    
-    mTabContainer = (TabContainer) findViewById(R.id.drop_tab_container);
-    mExpandableRelativeLayout = (ExpandableRelativeLayout) findViewById(R.id.expandable_layout);
-    
 
-    
+    setOrientation(VERTICAL);
+
+    View lInflate =
+        LayoutInflater.from(getContext()).inflate(R.layout.drop_down_menu_layout, this, true);
+
+    mTabContainer = (TabContainer) lInflate.findViewById(R.id.drop_tab_container);
+    mExpandableRelativeLayout =
+        (ExpandableContainer) lInflate.findViewById(R.id.expandable_layout_container);
+
+    mTabContainer.addOnCheckedChangeListener(new OnTabGroupCheckedChangeListener() {
+      @Override public void onCheckedChanged(ITabGroup group, int position, int uncheckedId) {
+
+        mExpandableRelativeLayout.switchPosition(position, uncheckedId);
+      }
+    });
   }
 
-  public <T> void setTabAdapter(AdapterBase<T> _tAdapter){
-    if (null != mTabContainer){
+  public <T> void setTabAdapter(final AdapterBase<T> _tAdapter) {
+    if (null != mTabContainer) {
       mTabContainer.setTabAdapter(_tAdapter);
+      mExpandableRelativeLayout.setTabAdapter(_tAdapter);
     }
+  }
+
+  public ExpandableContainer getExpandableRelativeLayout() {
+    return mExpandableRelativeLayout;
+  }
+
+  public TabContainer getTabContainer() {
+    return mTabContainer;
   }
 }

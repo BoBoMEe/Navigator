@@ -30,4 +30,5 @@ public interface ITabGroup {
   void addOnCheckedChangeListener(OnTabGroupCheckedChangeListener listener);
 
   void setOnHierarchyChangeListener(ViewGroup.OnHierarchyChangeListener listener);
+  
 }
