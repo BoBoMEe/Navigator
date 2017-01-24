@@ -71,8 +71,6 @@ public class ExpandableContainer extends ExpandableRelativeLayout {
       addView(tabView, i, layoutParams);
     }
 
-    collapse();
-
     invalidate();
   }
 

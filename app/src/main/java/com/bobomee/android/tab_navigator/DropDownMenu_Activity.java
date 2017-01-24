@@ -25,6 +25,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bobomee.android.navigator.adapter.AdapterBase;
+import com.bobomee.android.navigator.adapter.AdapterDropBase;
 import com.bobomee.android.navigator.dropdown.DropDownMenu;
 import com.bobomee.android.navigator.view.TabContainer;
 import com.bobomee.android.tab_navigator.tabview.DropTabView;
@@ -56,7 +57,7 @@ public class DropDownMenu_Activity extends AppCompatActivity {
   }
 
   private void initTabContainer() {
-    mDropDownMenu.setTabAdapter(new AdapterBase<String>(mTitles) {
+    mDropDownMenu.setTabAdapter(new AdapterDropBase<String>(mTitles) {
       @Override public View getView(int position, ViewGroup parent, String object) {
         DropTabView dropdownButton = new DropTabView(getApplicationContext());
 
@@ -77,6 +78,8 @@ public class DropDownMenu_Activity extends AppCompatActivity {
         return inflate;
       }
     });
+    
+    mDropDownMenu.setExpanded(false);
   }
 
   private void initTabContainer1() {

@@ -20,10 +20,11 @@ import android.animation.TimeInterpolator;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import com.bobomee.android.navigator.dropdown.Expandable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-public interface ExpandableLayout extends Expandable{
+public interface ExpandableLayout extends Expandable {
 
     /**
      * Duration of expand animation
@@ -81,28 +82,4 @@ public interface ExpandableLayout extends Expandable{
      */
     void setListener(@NonNull final ExpandableLayoutListener listener);
 
-    /**
-     * Sets the length of the animation.
-     * The default duration is 300 milliseconds.
-     *
-     * @param duration
-     */
-    void setDuration(final int duration);
-
-    /**
-     * Sets state of expanse.
-     *
-     * @param expanded The layout is visible if expanded is true
-     */
-    void setExpanded(final boolean expanded);
-
-    /**
-     * The time interpolator used in calculating the elapsed fraction of this animation. The
-     * interpolator determines whether the animation runs with linear or non-linear motion,
-     * such as acceleration and deceleration.
-     * The default value is  {@link android.view.animation.AccelerateDecelerateInterpolator}
-     *
-     * @param interpolator
-     */
-    void setInterpolator(@NonNull final TimeInterpolator interpolator);
 }

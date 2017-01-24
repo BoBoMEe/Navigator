@@ -67,8 +67,5 @@ public abstract class TAdapter<T> implements IAdapter<T> {
   @Override public T getItem(int position) {
     return mDatas.get(position);
   }
-
-  @Override public View getDropView(int position, ViewGroup parent, T object) {
-    return getView(position, parent, object);
-  }
+  
 }

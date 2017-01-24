@@ -14,7 +14,10 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.navigator.expandable;
+package com.bobomee.android.navigator.dropdown;
+
+import android.animation.TimeInterpolator;
+import android.support.annotation.NonNull;
 
 /**
  * Created on 2017/1/22.下午8:05.
@@ -46,4 +49,29 @@ public interface Expandable {
    */
   boolean isExpanded();
 
+  /**
+   * Sets state of expanse.
+   *
+   * @param expanded The layout is visible if expanded is true
+   */
+  void setExpanded(final boolean expanded);
+
+
+  /**
+   * Sets the length of the animation.
+   * The default duration is 300 milliseconds.
+   *
+   * @param duration
+   */
+  void setDuration(final int duration);
+
+  /**
+   * The time interpolator used in calculating the elapsed fraction of this animation. The
+   * interpolator determines whether the animation runs with linear or non-linear motion,
+   * such as acceleration and deceleration.
+   * The default value is  {@link android.view.animation.AccelerateDecelerateInterpolator}
+   *
+   * @param interpolator
+   */
+  void setInterpolator(@NonNull final TimeInterpolator interpolator);
 }
