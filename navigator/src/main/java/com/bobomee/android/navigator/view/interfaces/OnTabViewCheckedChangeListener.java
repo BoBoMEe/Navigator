@@ -14,26 +14,22 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.navigator.view;
+package com.bobomee.android.navigator.view.interfaces;
+
+import com.bobomee.android.navigator.view.interfaces.ITabView;
 
 /**
- * Created on 2017/1/22.下午2:20.
+ * Created on 2017/1/22.下午2:23.
  *
  * @author bobomee.
  */
 
-/**
- * <p>Interface definition for a callback to be invoked when the checked
- * tab view changed in this group.</p>
- */
-public interface OnTabGroupCheckedChangeListener {
+public interface OnTabViewCheckedChangeListener {
   /**
-   * <p>Called when the checked  tab view has changed. When the
-   * selection is cleared, checkedId is -1.</p>
+   * Called when the checked state of a TabView has changed.
    *
-   * @param group the group in which the checked tab view has changed
-   * @param checkedId the unique identifier of the newly checked tab view
+   * @param tabView The TabView whose state has changed.
+   * @param isChecked The new checked state of TabView.
    */
-  void onCheckedChange(ITabGroup group, int checkedId);
-  
+  void onCheckedChange(ITabView tabView, boolean isChecked);
 }

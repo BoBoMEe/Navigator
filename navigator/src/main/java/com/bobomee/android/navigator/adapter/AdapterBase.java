@@ -17,7 +17,7 @@ public abstract class AdapterBase<T> extends AdapterDropBase<T> {
     super(mDatas);
   }
 
-  public AdapterBase(T[] mStrs) {
+  protected AdapterBase(T[] mStrs) {
     super(mStrs);
   }
 

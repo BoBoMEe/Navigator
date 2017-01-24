@@ -14,7 +14,9 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.navigator.expandable;
+package com.bobomee.android.navigator.expandable.interfaces;
+
+import com.bobomee.android.navigator.expandable.interfaces.ExpandableLayoutListener;
 
 public abstract class ExpandableLayoutListenerAdapter implements ExpandableLayoutListener {
     /**

@@ -5,8 +5,7 @@ import android.database.DataSetObserver;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.view.View;
-import com.bobomee.android.navigator.R;
-import com.bobomee.android.navigator.adapter.IAdapter;
+import com.bobomee.android.navigator.adapter.interfaces.IAdapter;
 
 /**
  * Created on 2016/10/24.下午11:29.

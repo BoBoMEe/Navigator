@@ -23,7 +23,7 @@ import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.RelativeLayout;
-import com.bobomee.android.navigator.adapter.IAdapter;
+import com.bobomee.android.navigator.adapter.interfaces.IAdapter;
 import com.bobomee.android.navigator.expandable.ExpandableRelativeLayout;
 
 /**

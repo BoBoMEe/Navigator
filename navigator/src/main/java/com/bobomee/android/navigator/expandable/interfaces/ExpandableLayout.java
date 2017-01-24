@@ -14,13 +14,13 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.navigator.expandable;
+package com.bobomee.android.navigator.expandable.interfaces;
 
 import android.animation.TimeInterpolator;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.bobomee.android.navigator.dropdown.Expandable;
+import com.bobomee.android.navigator.dropdown.interfaces.Expandable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 

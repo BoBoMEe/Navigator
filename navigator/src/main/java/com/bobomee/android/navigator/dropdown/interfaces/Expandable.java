@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.navigator.dropdown;
+package com.bobomee.android.navigator.dropdown.interfaces;
 
 import android.animation.TimeInterpolator;
 import android.support.annotation.NonNull;

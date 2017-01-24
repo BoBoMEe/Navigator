@@ -14,20 +14,21 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.navigator.view;
+package com.bobomee.android.navigator.view.interfaces;
+
+import android.view.ViewGroup;
 
 /**
- * Created on 2017/1/22.下午2:23.
+ * Created on 2016/10/24.下午11:55.
  *
  * @author bobomee.
+ * @description
  */
 
-public interface OnTabViewCheckedChangeListener {
-  /**
-   * Called when the checked state of a TabView has changed.
-   *
-   * @param tabView The TabView whose state has changed.
-   * @param isChecked The new checked state of TabView.
-   */
-  void onCheckedChange(ITabView tabView, boolean isChecked);
+public interface ITabGroup {
+
+  void addOnCheckedChangeListener(OnTabGroupCheckedChangeListener listener);
+
+  void setOnHierarchyChangeListener(ViewGroup.OnHierarchyChangeListener listener);
+  
 }

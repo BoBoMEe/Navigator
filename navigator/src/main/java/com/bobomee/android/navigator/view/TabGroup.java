@@ -24,6 +24,11 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import com.bobomee.android.navigator.R;
+import com.bobomee.android.navigator.view.interfaces.ITabGroup;
+import com.bobomee.android.navigator.view.interfaces.ITabView;
+import com.bobomee.android.navigator.view.interfaces.OnTabGroupCheckedChangeListener;
+import com.bobomee.android.navigator.view.interfaces.OnTabViewCheckedChangeListener;
+import com.bobomee.android.navigator.view.interfaces.TabGroupCheckedChange;
 
 /**
  * <pre>

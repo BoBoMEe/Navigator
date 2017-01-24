@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.navigator.expandable;
+package com.bobomee.android.navigator.expandable.interfaces;
 
 public interface ExpandableLayoutListener {
     /**

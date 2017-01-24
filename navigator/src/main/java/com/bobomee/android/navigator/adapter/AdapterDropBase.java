@@ -16,6 +16,7 @@
 
 package com.bobomee.android.navigator.adapter;
 
+import com.bobomee.android.navigator.adapter.interfaces.TAdapter;
 import java.util.List;
 
 /**
@@ -31,7 +32,7 @@ public abstract class AdapterDropBase<T> extends TAdapter<T> {
     super(mDatas);
   }
 
-  public AdapterDropBase(T[] mStrs) {
+  protected AdapterDropBase(T[] mStrs) {
     super(mStrs);
   }
 

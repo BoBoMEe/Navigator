@@ -33,6 +33,8 @@ import android.view.ViewTreeObserver;
 import android.view.animation.LinearInterpolator;
 import android.widget.RelativeLayout;
 import com.bobomee.android.navigator.R;
+import com.bobomee.android.navigator.expandable.interfaces.ExpandableLayout;
+import com.bobomee.android.navigator.expandable.interfaces.ExpandableLayoutListener;
 import java.util.ArrayList;
 import java.util.List;
 
