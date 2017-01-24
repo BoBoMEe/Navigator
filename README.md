@@ -3,79 +3,182 @@
 Android首页底部常用tab切换控件,借鉴了`Adapter`和`AdapterView`的写法,可动态增减tab
 
 ## Features
+
 - TabViews in TabContainer only one can be checked
 
-> `TabGroup` 参考 `RadioGroup` api基本一致 <br>
-> `TabGroup` 继承自 `LinearLayoutCompat`,可配置 `divider` <br>
-> `TabView` 参考 `CompoundButton` 实现 `checkable` <br>
-> `TabContainer` 添加方式采用了`Adapter`方式,可动态配置`TabView`和个数
+> `TabGroup` ： 类似于 `RadioGroup` ，它们的  `API` 基本相同 <br>
+> `TabGroup` ： 继承自 `LinearLayoutCompat`,支持配置 `divider` <br>
+> `TabView`  ： 类似于 `CompoundButton` ，实现了 `checkable` <br>
+> `ExpandableRelativeLayout` : 一个可 `expandable` 的 `RelativeLayout`.
+
+> `TabContainer` ： 继承自`TabGroup`, 使用了 `Adapter` 模式，对应`getView`方法，可以动态增减`TabView` 。
+> `ExpandableContainer` :  继承自 `ExpandableRelativeLayout`，使用了 `Adapter` 模式，对应`getDropView`方法。
+> `DropDownMenu` ： 包含了 `TabContainer`和`ExpandableContainer`，用以实现下拉筛选菜单功能。
+
 
 ## Quick Overview
 
 ![image](gif/demo.gif)
 
-## Usage
+## Simple
 - xml
 
 ```
-<com.bobomee.android.navigator.view.TabContainer
-        android:id="@+id/tab_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:elevation="10dp"
-        />
-        
+<com.bobomee.android.navigator.dropdown.TabContainer
+      android:id="@+id/tab_container1"
+      android:layout_width="match_parent"
+      android:layout_height="50dp"
+      android:layout_alignParentBottom="true"
+      android:background="@android:color/white"
+      android:elevation="10dp"
+      />
 ```
 
 - code
 
 ```
+mTabContainer1.setTabAdapter(new AdapterBase<String>(mTitles) {
+      @Override public View getView(int position, ViewGroup parent, String object) {
+        ItemTabView itemTabView = new ItemTabView(getApplicationContext());
 
-       List<String> mTitles = new ArrayList<>();
-           for (int i = 0; i < 4; ++i) {
-             mTitles.add("第" + i + "个");
-           }
-       
-           mTabContainer.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
-             //...
-           });
-       
-           mTabContainer.setTabAdapter(mTabAdapter = new TabAdapter<String>(mTitles) {
-       
-             @Override public View getView(int position, ViewGroup parent, String object) {
-       
-               TabView commonTabView = new TabView(parent.getContext());
-       
-               View inflate = View.inflate(MainActivity.this, R.layout.layout_tab_text, null);
-               TextView textView = (TextView) inflate.findViewById(R.id.tv_tab_text);
-               textView.setText(object);
-       
-               commonTabView.setContentView(inflate);
-               commonTabView.setId(position);
-               if (position == 0) commonTabView.setChecked(true);
-       
-               commonTabView.addOnCheckedChangeListener(new ITabView.OnCheckedChangeListener() {
-                 @Override public void onCheckedChanged(ITabView tabView, boolean isChecked) {
-                   Log.d(TAG, "onCheckedChanged");
-                 }
-               });
-       
-               return commonTabView;
-             }
-           });
-       
-           mTabContainer.addOnCheckedChangeListener(new ITabGroup.OnCheckedChangeListener() {
-             @Override public void onCheckedChanged(TabGroup group, int checkedId) {
-              //...
-             }
-           });
-       
+        itemTabView.setText(object);
+        itemTabView.setId(position);
+
+        return itemTabView;
+      }
+   });    
 ```
+
+## Extend
+
+
+```java
+mDropDownMenu.setTabAdapter(new AdapterDropBase<String>(mTitles) {
+      // tabview 的 getView 方法。
+      @Override public View getView(int position, ViewGroup parent, String object) {
+        DropTabView dropdownButton = new DropTabView(getApplicationContext());
+
+        dropdownButton.setText(object);
+        dropdownButton.setId(position);
+        // 添加 tabView 的 check 状态监听器 。
+        dropdownButton.addOnCheckedChangeListener(new OnTabViewCheckedChangeListener() {
+          @Override public void onCheckedChange(ITabView tabView, boolean isChecked) {
+            TabView lTabView = (TabView) tabView;
+            ViewGroup lViewGroup = (ViewGroup) lTabView.getParent();
+            int index = lViewGroup.indexOfChild(lTabView);
+
+            Log.d("BoBoMEe", "Tab CheckedChange, index :  " + index + " ,isChecked : " + isChecked);
+          }
+        });
+
+        dropdownButton.removeOnCheckedChangeListener(new OnTabViewCheckedChangeListener() {
+          @Override public void onCheckedChange(ITabView tabView, boolean isChecked) {
+
+          }
+        });
+
+        return dropdownButton;
+      }
+      // 下拉菜单的 getView 方法。
+      @Override public View getDropView(int position, ViewGroup parent, String object) {
+
+        TextView inflate =
+            (TextView) View.inflate(DropDownMenu_Activity.this, R.layout.drop_down_text_layout,
+                null);
+
+        inflate.setText(getResources().getString(R.string.drop_content) +"\n"+ String.valueOf(position));
+
+        return inflate;
+      }
+    });
+    
+    // 设置初始状态 为 收缩状态
+    mDropDownMenu.setExpanded(false);
+
+    TabContainer lTabContainer = mDropDownMenu.getTabContainer();
+    ExpandableContainer lExpandableRelativeLayout = mDropDownMenu.getExpandableRelativeLayout();
+
+    // 添加 状态 监听器
+    lExpandableRelativeLayout.addExpandableLayoutListener(new ExpandableLayoutListenerAdapter() {
+      @Override public void onAnimationEnd() {
+        super.onAnimationEnd();
+        Log.d("BoBoMEe", "onAnimationEnd: ");
+      }
+
+      @Override public void onAnimationStart() {
+        super.onAnimationStart();
+        Log.d("BoBoMEe", "onAnimationStart: ");
+      }
+
+      @Override public void onClosed() {
+        super.onClosed();
+        Log.d("BoBoMEe", "onClosed: ");
+      }
+
+      @Override public void onOpened() {
+        super.onOpened();
+        Log.d("BoBoMEe", "onOpened: ");
+      }
+
+      @Override public void onPreClose() {
+        super.onPreClose();
+        Log.d("BoBoMEe", "onPreClose: ");
+      }
+
+      @Override public void onPreOpen() {
+        super.onPreOpen();
+        Log.d("BoBoMEe", "onPreOpen: ");
+      }
+    });
+
+    lExpandableRelativeLayout.removeExpandableLayoutListener(new ExpandableLayoutListenerAdapter() {
+    });
+
+    /// 添加 Container 的 check 状态监听器
+    lTabContainer.addOnCheckedChangeListener((group, checkedId) -> {
+
+      TabGroup tabGroup = (TabGroup) group;
+      TabView tabview = (TabView) tabGroup.findViewById(checkedId);
+      int index = tabGroup.indexOfChild(tabview);
+      boolean lChecked = tabview.isChecked();
+
+      Log.d("BoBoMEe", "Container CheckedChange , index : " + index + " , lChecked : " + lChecked);
+    });
+
+    lTabContainer.removeOnCheckedChangeListener((group, checkedId) -> {
+
+    });
+
+    // 设置 Container 的 布局监听器
+    lTabContainer.setOnHierarchyChangeListener(new OnHierarchyChangeListener() {
+      @Override public void onChildViewAdded(View parent, View child) {
+        Log.d("BoBoMEe", "onChildViewAdded: ");
+      }
+
+      @Override public void onChildViewRemoved(View parent, View child) {
+        Log.d("BoBoMEe", "onChildViewRemoved: ");
+      }
+    });
+
+    mDropDownMenu.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+      @Override public void onGlobalLayout() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+          mDropDownMenu.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+        } else {
+          mDropDownMenu.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+        }
+        // 设置下拉菜单 初始状态
+        lTabContainer.setCheckedStateForView(true, 0);
+        lExpandableRelativeLayout.checkState(0, true);
+      }
+    });
+```
+
 
 ## Thanks
 
 [isanwenyu/TabView](https://github.com/isanwenyu/TabView)
+
 
  
 ## License

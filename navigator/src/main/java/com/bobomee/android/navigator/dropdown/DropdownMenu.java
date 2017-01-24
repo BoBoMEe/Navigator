@@ -27,11 +27,10 @@ import android.view.View;
 import com.bobomee.android.navigator.R;
 import com.bobomee.android.navigator.adapter.interfaces.IAdapter;
 import com.bobomee.android.navigator.dropdown.interfaces.Expandable;
-import com.bobomee.android.navigator.view.interfaces.ITabGroup;
-import com.bobomee.android.navigator.view.interfaces.OnTabGroupCheckedChangeListener;
-import com.bobomee.android.navigator.view.TabContainer;
-import com.bobomee.android.navigator.view.TabGroup;
-import com.bobomee.android.navigator.view.TabView;
+import com.bobomee.android.navigator.tab.TabGroup;
+import com.bobomee.android.navigator.tab.TabView;
+import com.bobomee.android.navigator.tab.interfaces.ITabGroup;
+import com.bobomee.android.navigator.tab.interfaces.OnTabGroupCheckedChangeListener;
 
 /**
  * Created on 2017/1/22.下午2:14.
@@ -80,8 +79,6 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
 
           int lPosition = lTabGroup.indexOfChild(lITabView);
 
-          Log.d("BoBoMEe",
-              "onCheckedChange: lPosition : " + lPosition + " , lChecked : " + lChecked);
           if (null != mExpandableRelativeLayout) {
             mExpandableRelativeLayout.checkState(lPosition, lChecked);
           }

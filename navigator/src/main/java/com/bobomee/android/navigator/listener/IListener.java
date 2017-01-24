@@ -26,5 +26,5 @@ public interface IListener<ListenerType> {
 
   void addListener(ListenerType _listenerType);
 
-  void removeListener(ListenerType _listenerType);
+  boolean removeListener(ListenerType _listenerType);
 }

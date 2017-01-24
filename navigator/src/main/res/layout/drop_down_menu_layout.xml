@@ -18,7 +18,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     >
 
-  <com.bobomee.android.navigator.view.TabContainer
+  <com.bobomee.android.navigator.dropdown.TabContainer
       android:id="@+id/drop_tab_container"
       android:layout_width="match_parent"
       android:layout_height="50dp"

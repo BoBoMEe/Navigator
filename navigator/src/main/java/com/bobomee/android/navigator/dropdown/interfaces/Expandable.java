@@ -56,12 +56,9 @@ public interface Expandable {
    */
   void setExpanded(final boolean expanded);
 
-
   /**
    * Sets the length of the animation.
    * The default duration is 300 milliseconds.
-   *
-   * @param duration
    */
   void setDuration(final int duration);
 
@@ -70,8 +67,6 @@ public interface Expandable {
    * interpolator determines whether the animation runs with linear or non-linear motion,
    * such as acceleration and deceleration.
    * The default value is  {@link android.view.animation.AccelerateDecelerateInterpolator}
-   *
-   * @param interpolator
    */
   void setInterpolator(@NonNull final TimeInterpolator interpolator);
 }

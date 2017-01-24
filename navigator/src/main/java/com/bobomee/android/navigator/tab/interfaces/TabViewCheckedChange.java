@@ -14,11 +14,9 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.navigator.view.interfaces;
+package com.bobomee.android.navigator.tab.interfaces;
 
 import com.bobomee.android.navigator.listener.ListenerImpl;
-import com.bobomee.android.navigator.view.interfaces.ITabView;
-import com.bobomee.android.navigator.view.interfaces.OnTabViewCheckedChangeListener;
 import java.util.List;
 
 /**
@@ -31,10 +29,10 @@ public class TabViewCheckedChange extends ListenerImpl<OnTabViewCheckedChangeLis
 
   public void onCheckedChange(ITabView tabView, boolean isChecked) {
     List<OnTabViewCheckedChangeListener> lFrom = from();
-    if (lFrom != null&& !lFrom.isEmpty()) {
+    if (lFrom != null && !lFrom.isEmpty()) {
       for (OnTabViewCheckedChangeListener lOnTabViewCheckedChangeListener : lFrom) {
-        if (null != lOnTabViewCheckedChangeListener){
-          lOnTabViewCheckedChangeListener.onCheckedChange(tabView,isChecked);
+        if (null != lOnTabViewCheckedChangeListener) {
+          lOnTabViewCheckedChangeListener.onCheckedChange(tabView, isChecked);
         }
       }
     }

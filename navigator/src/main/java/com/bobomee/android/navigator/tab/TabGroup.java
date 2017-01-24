@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.bobomee.android.navigator.view;
+package com.bobomee.android.navigator.tab;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -24,11 +24,11 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import com.bobomee.android.navigator.R;
-import com.bobomee.android.navigator.view.interfaces.ITabGroup;
-import com.bobomee.android.navigator.view.interfaces.ITabView;
-import com.bobomee.android.navigator.view.interfaces.OnTabGroupCheckedChangeListener;
-import com.bobomee.android.navigator.view.interfaces.OnTabViewCheckedChangeListener;
-import com.bobomee.android.navigator.view.interfaces.TabGroupCheckedChange;
+import com.bobomee.android.navigator.tab.interfaces.ITabGroup;
+import com.bobomee.android.navigator.tab.interfaces.ITabView;
+import com.bobomee.android.navigator.tab.interfaces.OnTabGroupCheckedChangeListener;
+import com.bobomee.android.navigator.tab.interfaces.OnTabViewCheckedChangeListener;
+import com.bobomee.android.navigator.tab.interfaces.TabGroupCheckedChange;
 
 /**
  * <pre>
@@ -161,11 +161,17 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
   private void setCheckedId(int viewId) {
     mCheckedId = viewId;
     mTabGroupCheckedChange.onCheckedChange(this, viewId);
-    
   }
 
   public void setCheckedStateForView(int viewId, boolean checked) {
     View checkedView = findViewById(viewId);
+    if (checkedView != null && checkedView instanceof ITabView) {
+      ((ITabView) checkedView).setChecked(checked);
+    }
+  }
+
+  public void setCheckedStateForView(boolean checked, int position) {
+    View checkedView = getChildAt(position);
     if (checkedView != null && checkedView instanceof ITabView) {
       ((ITabView) checkedView).setChecked(checked);
     }
@@ -277,6 +283,10 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
   @Override public void setOnHierarchyChangeListener(OnHierarchyChangeListener listener) {
     // the user listener is delegated to our pass-through listener
     mPassThroughListener.mOnHierarchyChangeListener = listener;
+  }
+
+  @Override public boolean removeOnCheckedChangeListener(OnTabGroupCheckedChangeListener listener) {
+    return mTabGroupCheckedChange.removeListener(listener);
   }
 
   /**

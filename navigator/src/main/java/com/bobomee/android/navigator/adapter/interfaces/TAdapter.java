@@ -18,7 +18,6 @@ package com.bobomee.android.navigator.adapter.interfaces;
 
 import android.database.DataSetObservable;
 import android.database.DataSetObserver;
-import com.bobomee.android.navigator.adapter.interfaces.IAdapter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -82,5 +81,4 @@ public abstract class TAdapter<T> implements IAdapter<T> {
   @Override public T getItem(int position) {
     return mDatas.get(position);
   }
-  
 }

@@ -29,7 +29,7 @@
       />
 
 
-  <com.bobomee.android.navigator.view.TabContainer
+  <com.bobomee.android.navigator.dropdown.TabContainer
       android:id="@+id/tab_container1"
       android:layout_width="match_parent"
       android:layout_height="50dp"

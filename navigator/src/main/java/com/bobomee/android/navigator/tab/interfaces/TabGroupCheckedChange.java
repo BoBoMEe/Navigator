@@ -14,11 +14,9 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.navigator.view.interfaces;
+package com.bobomee.android.navigator.tab.interfaces;
 
 import com.bobomee.android.navigator.listener.ListenerImpl;
-import com.bobomee.android.navigator.view.interfaces.ITabGroup;
-import com.bobomee.android.navigator.view.interfaces.OnTabGroupCheckedChangeListener;
 import java.util.List;
 
 /**

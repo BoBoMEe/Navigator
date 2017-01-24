@@ -16,18 +16,28 @@
 
 package com.bobomee.android.tab_navigator;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.OnHierarchyChangeListener;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bobomee.android.navigator.adapter.AdapterBase;
 import com.bobomee.android.navigator.adapter.AdapterDropBase;
 import com.bobomee.android.navigator.dropdown.DropDownMenu;
-import com.bobomee.android.navigator.view.TabContainer;
+import com.bobomee.android.navigator.dropdown.ExpandableContainer;
+import com.bobomee.android.navigator.dropdown.TabContainer;
+import com.bobomee.android.navigator.expandable.interfaces.ExpandableLayoutListenerAdapter;
+import com.bobomee.android.navigator.tab.TabGroup;
+import com.bobomee.android.navigator.tab.TabView;
+import com.bobomee.android.navigator.tab.interfaces.ITabView;
+import com.bobomee.android.navigator.tab.interfaces.OnTabViewCheckedChangeListener;
 import com.bobomee.android.tab_navigator.tabview.DropTabView;
 import com.bobomee.android.tab_navigator.tabview.ItemTabView;
 import java.util.ArrayList;
@@ -64,6 +74,22 @@ public class DropDownMenu_Activity extends AppCompatActivity {
         dropdownButton.setText(object);
         dropdownButton.setId(position);
 
+        dropdownButton.addOnCheckedChangeListener(new OnTabViewCheckedChangeListener() {
+          @Override public void onCheckedChange(ITabView tabView, boolean isChecked) {
+            TabView lTabView = (TabView) tabView;
+            ViewGroup lViewGroup = (ViewGroup) lTabView.getParent();
+            int index = lViewGroup.indexOfChild(lTabView);
+
+            Log.d("BoBoMEe", "Tab CheckedChange, index :  " + index + " ,isChecked : " + isChecked);
+          }
+        });
+
+        dropdownButton.removeOnCheckedChangeListener(new OnTabViewCheckedChangeListener() {
+          @Override public void onCheckedChange(ITabView tabView, boolean isChecked) {
+
+          }
+        });
+
         return dropdownButton;
       }
 
@@ -80,6 +106,86 @@ public class DropDownMenu_Activity extends AppCompatActivity {
     });
     
     mDropDownMenu.setExpanded(false);
+
+    TabContainer lTabContainer = mDropDownMenu.getTabContainer();
+    ExpandableContainer lExpandableRelativeLayout = mDropDownMenu.getExpandableRelativeLayout();
+
+    //////
+    lExpandableRelativeLayout.addExpandableLayoutListener(new ExpandableLayoutListenerAdapter() {
+      @Override public void onAnimationEnd() {
+        super.onAnimationEnd();
+        Log.d("BoBoMEe", "onAnimationEnd: ");
+      }
+
+      @Override public void onAnimationStart() {
+        super.onAnimationStart();
+        Log.d("BoBoMEe", "onAnimationStart: ");
+      }
+
+      @Override public void onClosed() {
+        super.onClosed();
+        Log.d("BoBoMEe", "onClosed: ");
+      }
+
+      @Override public void onOpened() {
+        super.onOpened();
+        Log.d("BoBoMEe", "onOpened: ");
+      }
+
+      @Override public void onPreClose() {
+        super.onPreClose();
+        Log.d("BoBoMEe", "onPreClose: ");
+      }
+
+      @Override public void onPreOpen() {
+        super.onPreOpen();
+        Log.d("BoBoMEe", "onPreOpen: ");
+      }
+    });
+
+    lExpandableRelativeLayout.removeExpandableLayoutListener(new ExpandableLayoutListenerAdapter() {
+    });
+
+    ////////
+    lTabContainer.addOnCheckedChangeListener((group, checkedId) -> {
+
+      TabGroup tabGroup = (TabGroup) group;
+      TabView tabview = (TabView) tabGroup.findViewById(checkedId);
+      int index = tabGroup.indexOfChild(tabview);
+      boolean lChecked = tabview.isChecked();
+
+      Log.d("BoBoMEe", "Container CheckedChange , index : " + index + " , lChecked : " + lChecked);
+    });
+
+    lTabContainer.removeOnCheckedChangeListener((group, checkedId) -> {
+
+    });
+
+    ////
+    lTabContainer.setOnHierarchyChangeListener(new OnHierarchyChangeListener() {
+      @Override public void onChildViewAdded(View parent, View child) {
+        Log.d("BoBoMEe", "onChildViewAdded: ");
+      }
+
+      @Override public void onChildViewRemoved(View parent, View child) {
+        Log.d("BoBoMEe", "onChildViewRemoved: ");
+      }
+    });
+
+    /////
+    mDropDownMenu.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+      @Override public void onGlobalLayout() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+          mDropDownMenu.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+        } else {
+          mDropDownMenu.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+        }
+
+        lTabContainer.setCheckedStateForView(true, 0);
+        lExpandableRelativeLayout.checkState(0, true);
+      }
+    });
+    
   }
 
   private void initTabContainer1() {

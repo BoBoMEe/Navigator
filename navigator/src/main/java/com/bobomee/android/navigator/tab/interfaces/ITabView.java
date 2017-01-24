@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.navigator.view.interfaces;
+package com.bobomee.android.navigator.tab.interfaces;
 
 import android.widget.Checkable;
 

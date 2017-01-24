@@ -1,4 +1,4 @@
-package com.bobomee.android.navigator.view;
+package com.bobomee.android.navigator.tab;
 
 import android.content.Context;
 import android.os.Parcel;
@@ -9,9 +9,9 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
-import com.bobomee.android.navigator.view.interfaces.ITabView;
-import com.bobomee.android.navigator.view.interfaces.OnTabViewCheckedChangeListener;
-import com.bobomee.android.navigator.view.interfaces.TabViewCheckedChange;
+import com.bobomee.android.navigator.tab.interfaces.ITabView;
+import com.bobomee.android.navigator.tab.interfaces.OnTabViewCheckedChangeListener;
+import com.bobomee.android.navigator.tab.interfaces.TabViewCheckedChange;
 
 /**
  * Created on 2016/10/24.上午9:53.

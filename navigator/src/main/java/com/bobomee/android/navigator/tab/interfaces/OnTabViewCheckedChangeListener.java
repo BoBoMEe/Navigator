@@ -14,9 +14,7 @@
  *  limitations under the License.
  */
 
-package com.bobomee.android.navigator.view.interfaces;
-
-import com.bobomee.android.navigator.view.interfaces.ITabView;
+package com.bobomee.android.navigator.tab.interfaces;
 
 /**
  * Created on 2017/1/22.下午2:23.

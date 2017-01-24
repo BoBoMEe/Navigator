@@ -26,60 +26,61 @@ import java.lang.annotation.RetentionPolicy;
 
 public interface ExpandableLayout extends Expandable {
 
-    /**
-     * Duration of expand animation
-     */
-    int DEFAULT_DURATION = 300;
-    /**
-     * Visibility of the layout when the layout attaches
-     */
-    boolean DEFAULT_EXPANDED = false;
-    /**
-     * Orientation of child views
-     */
-    int HORIZONTAL = 0;
-    /**
-     * Orientation of child views
-     */
-    int VERTICAL = 1;
+  /**
+   * Duration of expand animation
+   */
+  int DEFAULT_DURATION = 300;
+  /**
+   * Visibility of the layout when the layout attaches
+   */
+  boolean DEFAULT_EXPANDED = false;
+  /**
+   * Orientation of child views
+   */
+  int HORIZONTAL = 0;
+  /**
+   * Orientation of child views
+   */
+  int VERTICAL = 1;
 
-    /**
-     * Orientation of layout
-     */
-    @Retention(RetentionPolicy.SOURCE)
-    @IntDef({HORIZONTAL, VERTICAL})
-    @interface Orientation {
-    }
+  /**
+   * Orientation of layout
+   */
+  @Retention(RetentionPolicy.SOURCE) @IntDef({ HORIZONTAL, VERTICAL }) @interface Orientation {
+  }
 
-    /**
-     * Starts animation the state of the view to the inverse of its current state.
-     *
-     * @param duration
-     * @param interpolator use the default interpolator if the argument is null.
-     */
-    void toggle(final long duration, @Nullable final TimeInterpolator interpolator);
+  /**
+   * Starts animation the state of the view to the inverse of its current state.
+   *
+   * @param interpolator use the default interpolator if the argument is null.
+   */
+  void toggle(final long duration, @Nullable final TimeInterpolator interpolator);
 
-    /**
-     * Starts expand animation.
-     *
-     * @param duration
-     * @param interpolator use the default interpolator if the argument is null.
-     */
-    void expand(final long duration, @Nullable final TimeInterpolator interpolator);
+  /**
+   * Starts expand animation.
+   *
+   * @param interpolator use the default interpolator if the argument is null.
+   */
+  void expand(final long duration, @Nullable final TimeInterpolator interpolator);
 
-    /**
-     * Starts collapse animation.
-     *
-     * @param duration
-     * @param interpolator use the default interpolator if the argument is null.
-     */
-    void collapse(final long duration, @Nullable final TimeInterpolator interpolator);
+  /**
+   * Starts collapse animation.
+   *
+   * @param interpolator use the default interpolator if the argument is null.
+   */
+  void collapse(final long duration, @Nullable final TimeInterpolator interpolator);
 
-    /**
-     * Sets the expandable layout listener.
-     *
-     * @param listener ExpandableLayoutListener
-     */
-    void setListener(@NonNull final ExpandableLayoutListener listener);
+  /**
+   * Sets the expandable layout listener.
+   *
+   * @param listener ExpandableLayoutListener
+   */
+  void addExpandableLayoutListener(@NonNull final ExpandableLayoutListener listener);
 
+  /**
+   * Sets the expandable layout listener.
+   *
+   * @param listener ExpandableLayoutListener
+   */
+  boolean removeExpandableLayoutListener(@NonNull final ExpandableLayoutListener listener);
 }

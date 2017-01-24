@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.bobomee.android.navigator.view.TabView;
+import com.bobomee.android.navigator.tab.TabView;
 import com.bobomee.android.tab_navigator.R;
 
 public class ImageTabView extends TabView {

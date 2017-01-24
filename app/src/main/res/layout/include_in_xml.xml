@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-  <com.bobomee.android.navigator.view.TabContainer
+  <com.bobomee.android.navigator.dropdown.TabContainer
       android:id="@+id/tg_tab"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -55,5 +55,5 @@
         app:textString="我"
         style="@style/TabView"
         />
-  </com.bobomee.android.navigator.view.TabContainer>
+  </com.bobomee.android.navigator.dropdown.TabContainer>
 </merge>

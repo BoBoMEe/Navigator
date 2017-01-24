@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.bobomee.android.navigator.view.TabView;
+import com.bobomee.android.navigator.tab.TabView;
 import com.bobomee.android.tab_navigator.R;
 
 /**
