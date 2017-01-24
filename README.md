@@ -1,10 +1,9 @@
 # Android Tab_Navigator
 
 Android首页底部常用tab切换控件,借鉴了`Adapter`和`AdapterView`的写法,可动态增减tab
+可配合 `ExpandableLayout`,快速实现 下拉筛选菜单。
 
 ## Features
-
-- TabViews in TabContainer only one can be checked
 
 > `TabGroup` ： 类似于 `RadioGroup` ，它们的  `API` 基本相同 <br>
 > `TabGroup` ： 继承自 `LinearLayoutCompat`,支持配置 `divider` <br>
@@ -12,13 +11,20 @@ Android首页底部常用tab切换控件,借鉴了`Adapter`和`AdapterView`的�
 > `ExpandableRelativeLayout` : 一个可 `expandable` 的 `RelativeLayout`.
 
 > `TabContainer` ： 继承自`TabGroup`, 使用了 `Adapter` 模式，对应`getView`方法，可以动态增减`TabView` 。
-> `ExpandableContainer` :  继承自 `ExpandableRelativeLayout`，使用了 `Adapter` 模式，对应`getDropView`方法。
+> `ExpandableContainer` ：  继承自 `ExpandableRelativeLayout`，使用了 `Adapter` 模式，对应`getDropView`方法。
 > `DropDownMenu` ： 包含了 `TabContainer`和`ExpandableContainer`，用以实现下拉筛选菜单功能。
 
 
 ## Quick Overview
 
 ![image](gif/demo.gif)
+
+
+## Import
+
+```groovy
+compile 'com.bobomee.android:tabnavigator:1.0'
+```
 
 ## Simple
 - xml
@@ -178,7 +184,7 @@ mDropDownMenu.setTabAdapter(new AdapterDropBase<String>(mTitles) {
 ## Thanks
 
 [isanwenyu/TabView](https://github.com/isanwenyu/TabView)
-
+[aakira/ExpandableLayout](https://github.com/aakira/ExpandableLayout)
 
  
 ## License
