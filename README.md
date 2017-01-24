@@ -19,13 +19,6 @@ Android首页底部常用tab切换控件,借鉴了`Adapter`和`AdapterView`的�
 
 ![image](gif/demo.gif)
 
-
-## Import
-
-```groovy
-compile 'com.bobomee.android:tabnavigator:1.0'
-```
-
 ## Simple
 - xml
 
@@ -186,6 +179,10 @@ mDropDownMenu.setTabAdapter(new AdapterDropBase<String>(mTitles) {
 [isanwenyu/TabView](https://github.com/isanwenyu/TabView)
 [aakira/ExpandableLayout](https://github.com/aakira/ExpandableLayout)
 
+
+## TODO
+
+- Jcenter
  
 ## License
 
