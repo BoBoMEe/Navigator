@@ -53,6 +53,7 @@ public interface ExpandableLayout extends Expandable {
    * Starts animation the state of the view to the inverse of its current state.
    *
    * @param interpolator use the default interpolator if the argument is null.
+   * @param duration   toggle duration
    */
   void toggle(final long duration, @Nullable final TimeInterpolator interpolator);
 
@@ -60,6 +61,7 @@ public interface ExpandableLayout extends Expandable {
    * Starts expand animation.
    *
    * @param interpolator use the default interpolator if the argument is null.
+   * @param duration expand duration
    */
   void expand(final long duration, @Nullable final TimeInterpolator interpolator);
 
@@ -67,6 +69,7 @@ public interface ExpandableLayout extends Expandable {
    * Starts collapse animation.
    *
    * @param interpolator use the default interpolator if the argument is null.
+   * @param duration collapse duration
    */
   void collapse(final long duration, @Nullable final TimeInterpolator interpolator);
 
@@ -81,6 +84,7 @@ public interface ExpandableLayout extends Expandable {
    * Sets the expandable layout listener.
    *
    * @param listener ExpandableLayoutListener
+   * @return remove success or not
    */
   boolean removeExpandableLayoutListener(@NonNull final ExpandableLayoutListener listener);
 }

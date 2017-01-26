@@ -30,6 +30,13 @@ dependencies {
   testCompile 'junit:junit:4.12'
 }
 
-
-//引入bintrayUpload.gradle脚本
-//apply from: "bintrayUpload.gradle"
+buildscript {
+  repositories {
+    jcenter()
+  }
+  dependencies {
+    classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+    classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.6'
+  }
+}
+apply from: './bintray.gradle'

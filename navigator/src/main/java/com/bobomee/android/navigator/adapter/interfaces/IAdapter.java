@@ -24,7 +24,6 @@ import android.view.ViewGroup;
  * Created on 2016/10/24.下午9:04.
  *
  * @author bobomee.
- * @description
  */
 
 public interface IAdapter<T> {

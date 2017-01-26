@@ -28,7 +28,6 @@ import com.bobomee.android.navigator.tab.TabGroup;
  * Created on 2016/10/24.下午11:29.
  *
  * @author bobomee.
- * @description
  */
 
 public class TabContainer extends TabGroup {

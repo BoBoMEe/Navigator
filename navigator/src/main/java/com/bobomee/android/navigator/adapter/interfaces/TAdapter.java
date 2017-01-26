@@ -26,7 +26,6 @@ import java.util.List;
  * Created on 2016/10/24.下午11:19.
  *
  * @author bobomee.
- * @description
  */
 
 public abstract class TAdapter<T> implements IAdapter<T> {

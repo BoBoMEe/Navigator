@@ -17,7 +17,6 @@ import com.bobomee.android.navigator.tab.interfaces.TabViewCheckedChange;
  * Created on 2016/10/24.上午9:53.
  *
  * @author bobomee.
- * @description
  */
 
 public class TabView extends RelativeLayout implements ITabView {

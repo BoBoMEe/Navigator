@@ -319,6 +319,7 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
 
   /**
    * @see #move(int, long, TimeInterpolator)
+   * @param position move child at position
    */
   public void move(int position) {
     move(position, duration, interpolator);
@@ -329,6 +330,8 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
    * Sets 0 to duration if you want to move immediately.
    *
    * @param interpolator use the default interpolator if the argument is null.
+   * @param position  move child at position
+   * @param duration  move time 
    */
   public void move(int position, long duration, @Nullable TimeInterpolator interpolator) {
     if (isAnimating || 0 > position || layoutSize < position) return;
@@ -358,6 +361,7 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
    *
    * @param index index child view index
    * @param interpolator use the default interpolator if the argument is null.
+   * @param duration move child duration
    */
   public void moveChild(int index, long duration, @Nullable TimeInterpolator interpolator) {
     if (isAnimating) return;
@@ -403,6 +407,7 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
    * Gets the height from top of layout if orientation is vertical.
    *
    * @see #closePosition
+   * @return closePosition
    */
   public int getClosePosition() {
     return closePosition;
@@ -413,6 +418,7 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
    *
    * @see #closePosition
    * @see #setClosePositionIndex(int)
+   * @param position the close position
    */
   public void setClosePosition(final int position) {
     this.closePosition = position;
@@ -420,6 +426,7 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
 
   /**
    * Gets the current position.
+   * @return current position
    */
   public int getCurrentPosition() {
     return isVertical() ? getMeasuredHeight() : getMeasuredWidth();
@@ -430,6 +437,7 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
    *
    * @see #closePosition
    * @see #setClosePosition(int)
+   * @param childIndex close position of child 
    */
   public void setClosePositionIndex(final int childIndex) {
     this.closePosition = getChildPosition(childIndex);

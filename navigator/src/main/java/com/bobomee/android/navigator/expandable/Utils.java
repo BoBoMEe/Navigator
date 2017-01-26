@@ -46,6 +46,8 @@ public class Utils {
 
   /**
    * Creates interpolator.
+   * @return  a timeinterpolator
+   * @param interpolatorType a int value from 0 to 10
    */
   public static TimeInterpolator createInterpolator(
       @IntRange(from = 0, to = 10) final int interpolatorType) {

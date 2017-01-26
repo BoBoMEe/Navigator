@@ -8,7 +8,6 @@ import java.util.List;
  * Created on 2016/10/24.下午11:22.
  *
  * @author bobomee.
- * @description
  */
 
 public abstract class AdapterBase<T> extends AdapterDropBase<T> {

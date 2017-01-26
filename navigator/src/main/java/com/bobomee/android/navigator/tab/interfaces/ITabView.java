@@ -22,7 +22,6 @@ import android.widget.Checkable;
  * Created on 2016/10/24.下午11:52.
  *
  * @author bobomee.
- * @description
  */
 
 public interface ITabView extends Checkable {
@@ -33,6 +32,7 @@ public interface ITabView extends Checkable {
 
   /**
    * {@link android.view.View#setId(int)}
+   * @return  get the id of view
    */
   int getId();
 }
