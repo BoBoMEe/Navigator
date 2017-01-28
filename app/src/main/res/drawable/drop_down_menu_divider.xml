@@ -14,14 +14,13 @@
   ~  See the License for the specific language governing permissions and
   ~  limitations under the License.
   -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <solid android:color="@color/colorAccent"/>
+
+  <!-- 分割线的高度 -->
+  <size android:height="3.0px"/>
+
+</shape>
 
 
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:textSize="25sp"
-    android:id="@+id/text_content"
-    android:textColor="@color/green"
-    android:text="@string/drop_content"
-    />

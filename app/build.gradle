@@ -42,4 +42,5 @@ dependencies {
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.0.1'
   compile 'com.android.support:recyclerview-v7:24.2.1'
   compile 'com.bobomee.android:common:1.4.9'
+  compile 'com.bobomee.android:recyclerviewhelper:1.0.5'
 }

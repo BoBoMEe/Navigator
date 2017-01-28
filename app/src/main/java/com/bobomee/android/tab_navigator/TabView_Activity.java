@@ -1,24 +1,22 @@
 package com.bobomee.android.tab_navigator;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.BounceInterpolator;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.bobomee.android.navigator.adapter.AdapterBase;
+import com.bobomee.android.navigator.dropdown.TabContainer;
+import com.bobomee.android.navigator.tab.TabView;
 import com.bobomee.android.navigator.tab.interfaces.ITabGroup;
 import com.bobomee.android.navigator.tab.interfaces.ITabView;
 import com.bobomee.android.navigator.tab.interfaces.OnTabGroupCheckedChangeListener;
-import com.bobomee.android.navigator.dropdown.TabContainer;
-import com.bobomee.android.navigator.tab.TabView;
+import com.bobomee.android.tab_navigator.animator.ObjectAnimatorUtils;
 import com.bobomee.android.tab_navigator.vp.ContentFragmentAdapter;
 import com.bobomee.android.tab_navigator.vp.MainTabFragment;
 import java.util.ArrayList;
@@ -99,14 +97,7 @@ public class TabView_Activity extends AppCompatActivity {
         commonTabView.addOnCheckedChangeListener((tabView, isChecked) -> {
           if (isChecked) {
             View vtabView = (View) tabView;
-            ObjectAnimator scaleX = ObjectAnimator.ofFloat(vtabView, View.SCALE_X, 1f, .5f, 1f);
-            ObjectAnimator scaleY = ObjectAnimator.ofFloat(vtabView, View.SCALE_Y, 1f, .5f, 1f);
-            ObjectAnimator alpha = ObjectAnimator.ofFloat(vtabView, View.ALPHA, 1f, .5f, 1f);
-
-            AnimatorSet animatorSet = new AnimatorSet();
-            animatorSet.playTogether(scaleX, scaleY, alpha);
-            animatorSet.setInterpolator(new BounceInterpolator());
-            animatorSet.start();
+            ObjectAnimatorUtils.object_animator(vtabView);
           }
         });
 
@@ -120,22 +111,20 @@ public class TabView_Activity extends AppCompatActivity {
   }
 
   private void setTabContainerListener(TabContainer mTabGroup) {
-    mTabGroup.addOnCheckedChangeListener(new OnTabGroupCheckedChangeListener() {
-      @Override public void onCheckedChange(ITabGroup group, int checkedId) {
-        switch (checkedId) {
-          case R.id.tab_chat:
-            setCurrentFragment(TAB_CHAT);
-            break;
-          case R.id.tb_pic:
-            setCurrentFragment(TAB_PIC);
-            break;
-          case R.id.tb_app:
-            setCurrentFragment(TAB_APP);
-            break;
-          case R.id.tb_user:
-            setCurrentFragment(TAB_USER);
-            break;
-        }
+    mTabGroup.addOnCheckedChangeListener((group, checkedId) -> {
+      switch (checkedId) {
+        case R.id.tab_chat:
+          setCurrentFragment(TAB_CHAT);
+          break;
+        case R.id.tb_pic:
+          setCurrentFragment(TAB_PIC);
+          break;
+        case R.id.tb_app:
+          setCurrentFragment(TAB_APP);
+          break;
+        case R.id.tb_user:
+          setCurrentFragment(TAB_USER);
+          break;
       }
     });
   }

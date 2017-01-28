@@ -22,7 +22,6 @@ import android.os.Build.VERSION_CODES;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.RelativeLayout;
 import com.bobomee.android.navigator.adapter.interfaces.IAdapter;
 import com.bobomee.android.navigator.expandable.ExpandableRelativeLayout;
 
@@ -67,8 +66,7 @@ public class ExpandableContainer extends ExpandableRelativeLayout {
 
     for (int i = 0; i < mTAdapter.getCount(); ++i) {
       View tabView = mTAdapter.getDropView(i, this, mTAdapter.getItem(i));
-      RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(-1, -2);
-      addView(tabView, i, layoutParams);
+      addView(tabView, i);
     }
 
     invalidate();

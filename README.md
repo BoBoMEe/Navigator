@@ -178,6 +178,11 @@ mDropDownMenu.setTabAdapter(new AdapterDropBase<String>(mTitles) {
         lExpandableRelativeLayout.checkState(0, true);
       }
     });
+    
+    //
+    mDropDownMenu.setInterpolator(Utils.createInterpolator(Utils.ANTICIPATE_OVERSHOOT_INTERPOLATOR));
+    boolean lExpanded = mDropDownMenu.isExpanded();//
+    //mDropDownMenu.toggle();
 ```
 
 

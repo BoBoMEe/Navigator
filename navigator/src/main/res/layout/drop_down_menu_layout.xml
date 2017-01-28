@@ -17,17 +17,20 @@
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     >
-
   <com.bobomee.android.navigator.dropdown.TabContainer
       android:id="@+id/drop_tab_container"
       android:layout_width="match_parent"
       android:layout_height="50dp"
       />
-
-  <com.bobomee.android.navigator.dropdown.ExpandableContainer
+  <RelativeLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+    <com.bobomee.android.navigator.dropdown.ExpandableContainer
       android:id="@+id/expandable_layout_container"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       />
+  </RelativeLayout>
 
 </merge>                                                

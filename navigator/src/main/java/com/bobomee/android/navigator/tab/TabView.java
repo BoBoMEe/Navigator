@@ -128,9 +128,12 @@ public class TabView extends RelativeLayout implements ITabView {
     mTabViewCheckedChange.addListener(listener);
   }
 
-  @Override public void removeOnCheckedChangeListener(OnTabViewCheckedChangeListener listener) {
-    if (null == mTabViewCheckedChange) return;
-    mTabViewCheckedChange.removeListener(listener);
+  @Override public boolean removeOnCheckedChangeListener(OnTabViewCheckedChangeListener listener) {
+    if (null != mTabViewCheckedChange) {
+      return mTabViewCheckedChange.removeListener(listener);
+    } else {
+      return false;
+    }
   }
 
   ///////////////////////////////////state////////////

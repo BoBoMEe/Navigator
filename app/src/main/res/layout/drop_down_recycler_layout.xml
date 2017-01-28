@@ -15,13 +15,12 @@
   ~  limitations under the License.
   -->
 
-
-<TextView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recycler_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textSize="25sp"
-    android:id="@+id/text_content"
-    android:textColor="@color/green"
-    android:text="@string/drop_content"
+    android:background="@color/recycler_color"
+    android:orientation="vertical"
     />
+  
+  

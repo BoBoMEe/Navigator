@@ -28,7 +28,7 @@ public interface ITabView extends Checkable {
 
   void addOnCheckedChangeListener(OnTabViewCheckedChangeListener listener);
 
-  void removeOnCheckedChangeListener(OnTabViewCheckedChangeListener listener);
+  boolean removeOnCheckedChangeListener(OnTabViewCheckedChangeListener listener);
 
   /**
    * {@link android.view.View#setId(int)}
