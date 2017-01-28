@@ -21,12 +21,12 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import com.bobomee.android.navigator.R;
 import com.bobomee.android.navigator.adapter.interfaces.IAdapter;
 import com.bobomee.android.navigator.dropdown.interfaces.Expandable;
+import com.bobomee.android.navigator.expandable.interfaces.ExpandableLayoutListenerAdapter;
 import com.bobomee.android.navigator.tab.TabGroup;
 import com.bobomee.android.navigator.tab.TabView;
 import com.bobomee.android.navigator.tab.interfaces.ITabGroup;
@@ -42,6 +42,7 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
 
   private TabContainer mTabContainer;
   private ExpandableContainer mExpandableRelativeLayout;
+  private int actionPos;
 
   public DropDownMenu(Context context) {
     super(context);
@@ -78,6 +79,7 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
           boolean lChecked = lITabView.isChecked();
 
           int lPosition = lTabGroup.indexOfChild(lITabView);
+          actionPos = lPosition;
 
           if (null != mExpandableRelativeLayout) {
             mExpandableRelativeLayout.checkState(lPosition, lChecked);
@@ -104,14 +106,38 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
 
   @Override public void toggle() {
     if (null != mExpandableRelativeLayout) mExpandableRelativeLayout.toggle();
+    if (null != mTabContainer && null != mExpandableRelativeLayout) {
+      mExpandableRelativeLayout.addExpandableLayoutListener(new ExpandableLayoutListenerAdapter() {
+        @Override public void onAnimationEnd() {
+          super.onAnimationEnd();
+          mTabContainer.setCheckedStateForView(mExpandableRelativeLayout.isExpanded(), actionPos);
+        }
+      });
+    }
   }
 
   @Override public void expand() {
     if (null != mExpandableRelativeLayout) mExpandableRelativeLayout.expand();
+    if (null != mTabContainer && null != mExpandableRelativeLayout) {
+      mExpandableRelativeLayout.addExpandableLayoutListener(new ExpandableLayoutListenerAdapter() {
+        @Override public void onAnimationEnd() {
+          super.onAnimationEnd();
+          mTabContainer.setCheckedStateForView(mExpandableRelativeLayout.isExpanded(), actionPos);
+        }
+      });
+    }
   }
 
   @Override public void collapse() {
     if (null != mExpandableRelativeLayout) mExpandableRelativeLayout.collapse();
+    if (null != mTabContainer && null != mExpandableRelativeLayout) {
+     mExpandableRelativeLayout.addExpandableLayoutListener(new ExpandableLayoutListenerAdapter() {
+       @Override public void onAnimationEnd() {
+         super.onAnimationEnd();
+         mTabContainer.setCheckedStateForView(mExpandableRelativeLayout.isExpanded(), actionPos);
+       }
+     });
+    }
   }
 
   @Override public boolean isExpanded() {

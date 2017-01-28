@@ -17,12 +17,13 @@ Android首页底部常用tab切换控件,借鉴了`Adapter`和`AdapterView`的�
 
 ## Quick Overview
 
-![image](gif/demo.gif)
+![image](gif/demo1.gif)  <br/>
+![image](gif/demo2.gif)
 
 ## Import
 
 ```groovy
-compile 'com.bobomee.android:navigator:1.2'
+compile 'com.bobomee.android:navigator:1.3'
 ```
 
 ## Simple

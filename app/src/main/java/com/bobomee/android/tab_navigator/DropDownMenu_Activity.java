@@ -95,7 +95,7 @@ public class DropDownMenu_Activity extends AppCompatActivity {
 
           if (isChecked) {
             View vtabView = (View) tabView;
-            ObjectAnimatorUtils.object_rotate(vtabView);
+            ObjectAnimatorUtils.object_animator(vtabView);
           }
         });
 
