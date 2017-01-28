@@ -40,12 +40,14 @@ public class RecyclerAdapterProvider {
 
     @BindView(R.id.textView) TextView mTextView;
     @BindView(R.id.image) ImageView mImage;
+    private View root;
 
     @Override public int getLayoutResId() {
       return R.layout.layout_tab_txt_checkbox;
     }
 
     @Override public void bindViews(View root) {
+      this.root = root;
       ButterKnife.bind(this, root);
     }
 
@@ -56,6 +58,8 @@ public class RecyclerAdapterProvider {
     @Override public void handleData(RecyclerModel pRecyclerModel, int position) {
       mTextView.setText(pRecyclerModel.getText());
       mImage.setVisibility(pRecyclerModel.isChecked()?View.VISIBLE:View.GONE);
+      mTextView.setSelected(pRecyclerModel.isChecked());
+      root.setSelected(pRecyclerModel.isChecked());
     }
   }
 

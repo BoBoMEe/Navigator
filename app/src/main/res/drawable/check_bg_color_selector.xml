@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright (C) 2017.  BoBoMEe(wbwjx115@gmail.com)
   ~
@@ -14,13 +14,15 @@
   ~  See the License for the specific language governing permissions and
   ~  limitations under the License.
   -->
-
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/recycler_view"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/white"
-    />
-  
-  
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+  <item android:state_selected="false">
+    <shape>
+      <solid android:color="@color/white"/>
+    </shape>
+  </item>
+  <item android:state_selected="true">
+    <shape>
+      <solid android:color="@color/selected_bg"/>
+    </shape>
+  </item>
+</selector>

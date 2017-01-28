@@ -23,8 +23,9 @@
       android:layout_height="50dp"
       />
   <RelativeLayout
+      android:background="@color/black_p50"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="match_parent"
       >
     <com.bobomee.android.navigator.dropdown.ExpandableContainer
       android:id="@+id/expandable_layout_container"
