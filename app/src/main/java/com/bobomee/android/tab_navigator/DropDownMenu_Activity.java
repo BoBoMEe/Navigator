@@ -21,19 +21,16 @@ import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.OnHierarchyChangeListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
-import android.widget.RelativeLayout.LayoutParams;
+import android.widget.Space;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.bobomee.android.common.util.DisplayUtil;
 import com.bobomee.android.navigator.adapter.AdapterBase;
 import com.bobomee.android.navigator.adapter.AdapterDropBase;
 import com.bobomee.android.navigator.dropdown.DropDownMenu;
@@ -43,12 +40,8 @@ import com.bobomee.android.navigator.expandable.Utils;
 import com.bobomee.android.navigator.expandable.interfaces.ExpandableLayoutListenerAdapter;
 import com.bobomee.android.navigator.tab.TabGroup;
 import com.bobomee.android.navigator.tab.TabView;
-import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClickSupport;
 import com.bobomee.android.tab_navigator.animator.ObjectAnimatorUtils;
-import com.bobomee.android.tab_navigator.recyclerview.HorizontalDividerItemDecoration.Builder;
-import com.bobomee.android.tab_navigator.recyclerview.RecyclerAdapterProvider;
-import com.bobomee.android.tab_navigator.recyclerview.RecyclerAdapterProvider.RecyclerAdapter;
-import com.bobomee.android.tab_navigator.recyclerview.RecyclerModel;
+import com.bobomee.android.tab_navigator.recyclerview.RecyclerProvider;
 import com.bobomee.android.tab_navigator.tabview.DropTabView;
 import com.bobomee.android.tab_navigator.tabview.ItemTabView;
 import java.util.ArrayList;
@@ -66,11 +59,13 @@ public class DropDownMenu_Activity extends AppCompatActivity {
   @BindView(R.id.drop_down_menu) DropDownMenu mDropDownMenu;
   @BindView(R.id.text_content) TextView mTextContent;
   private List<String> mTitles;
+  private DropDownMenu_Activity mDropDownMenu_activity;
 
   @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_drop_down_menu_sample);
     ButterKnife.bind(this);
+    mDropDownMenu_activity = this;
 
     initData();
 
@@ -108,57 +103,27 @@ public class DropDownMenu_Activity extends AppCompatActivity {
 
       @Override public View getDropView(int position, ViewGroup parent, String object) {
 
-        RecyclerView inflate = (RecyclerView) View.inflate(DropDownMenu_Activity.this,
-            R.layout.drop_down_recycler_layout, null);
+        View lView;
 
-        LayoutParams lLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT);
-
-        inflate.setLayoutManager(new LinearLayoutManager(DropDownMenu_Activity.this));
-
-        List<RecyclerModel> lRecyclerModelList;
-
-        if (position == 0) {
-          lRecyclerModelList = RecyclerModel.getModels(5);
-          lLayoutParams.bottomMargin = 300;
-        } else if (position == 1) {
-          lRecyclerModelList = RecyclerModel.getModels(15);
-          lLayoutParams.bottomMargin = 300;
-        } else if (position == 2) {
-          lRecyclerModelList = RecyclerModel.getModels(25);
-          lLayoutParams.bottomMargin = 600;
-        } else {
-          lRecyclerModelList = RecyclerModel.getModels(5);
-          lLayoutParams.bottomMargin = 800;
+        switch (position) {
+          case 0:
+            lView = RecyclerProvider.provideLinearLayoutRecycler(mDropDownMenu_activity, 300);
+            break;
+          case 1:
+            lView = RecyclerProvider.provideLinearLayoutRecycler(mDropDownMenu_activity, 500);
+            break;
+          case 2:
+            lView = RecyclerProvider.provideLinearLayoutRecycler(mDropDownMenu_activity, 600);
+            break;
+          case 3:
+            lView = RecyclerProvider.provideLinearLayoutRecycler(mDropDownMenu_activity, 800);
+            break;
+          default:
+            lView = new Space(DropDownMenu_Activity.this);
+            break;
         }
 
-        inflate.setLayoutParams(lLayoutParams);
-
-        RecyclerAdapter lAdapter = RecyclerAdapterProvider.createAdapter(lRecyclerModelList);
-
-        inflate.addItemDecoration(new Builder(DropDownMenu_Activity.this)//divider 颜色
-            .colorResId(R.color.colorPrimary).size(2)//高度
-            .margin(DisplayUtil.dp2px(12.f))//边距
-            .build());
-        inflate.setAdapter(lAdapter);
-
-        ItemClickSupport lItemClickSupport = ItemClickSupport.from(inflate).add();
-        lItemClickSupport.addOnItemClickListener((parent1, view, position1, id) -> {
-
-          ObjectAnimatorUtils.object_left_right(view);
-
-          RecyclerModel lRecyclerModel = lAdapter.getData().get(position1);
-
-          lRecyclerModel.setChecked(!lRecyclerModel.isChecked());
-
-          lAdapter.notifyItemChanged(position1);
-        });
-        
-        inflate.setOnClickListener(v -> {
-          
-        });
-
-        return inflate;
+        return lView;
       }
     });
 
@@ -246,7 +211,6 @@ public class DropDownMenu_Activity extends AppCompatActivity {
     ///
     mDropDownMenu.setInterpolator(
         Utils.createInterpolator(Utils.ANTICIPATE_OVERSHOOT_INTERPOLATOR));
-
   }
 
   private void initTabContainer1() {
@@ -256,9 +220,8 @@ public class DropDownMenu_Activity extends AppCompatActivity {
 
         itemTabView.setText(object);
         itemTabView.setId(position);
-        itemTabView.addOnCheckedChangeListener((tabView, isChecked) -> {
-          ObjectAnimatorUtils.object_animator((View) tabView);
-        });
+        itemTabView.addOnCheckedChangeListener(
+            (tabView, isChecked) -> ObjectAnimatorUtils.object_animator((View) tabView));
 
         return itemTabView;
       }
