@@ -16,9 +16,13 @@
   -->
 
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
   <com.bobomee.android.navigator.dropdown.TabContainer
       android:id="@+id/drop_tab_container"
+      app:divider="@drawable/drop_down_menu_tab_divider"
+      app:showDividers="middle"
+      app:dividerPadding="10dp"
       android:layout_width="match_parent"
       android:layout_height="50dp"
       />

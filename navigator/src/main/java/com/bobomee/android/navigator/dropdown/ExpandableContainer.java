@@ -93,20 +93,20 @@ public class ExpandableContainer extends ExpandableRelativeLayout {
 
   public void checkState(int position, boolean checked) {
 
-    int lChildCount = getChildCount();
-    for (int i = 0; i < lChildCount; i++) {
-      View lChildAt = getChildAt(i);
-      if (i == position) {
-        lChildAt.setVisibility(checked ? VISIBLE : GONE);
-      } else {
-        lChildAt.setVisibility(GONE);
-      }
-    }
-
     if (checked) {
       expand();
     } else {
       collapse();
+    }
+
+    int lChildCount = getChildCount();
+    for (int i = 0; i < lChildCount; i++) {
+      View lChildAt = getChildAt(i);
+      if (i == position) {
+        lChildAt.setVisibility(checked ? VISIBLE : INVISIBLE);
+      } else {
+        lChildAt.setVisibility(INVISIBLE);
+      }
     }
   }
 }

@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.bobomee.android.navigator.tab.TabView;
 import com.bobomee.android.tab_navigator.R;
@@ -19,6 +20,7 @@ import com.bobomee.android.tab_navigator.R;
 public class DropTabView extends TabView {
   TextView textView;
   View bottomLine;
+  private ImageView mRightImage;
 
   public DropTabView(Context context) {
     this(context, null);
@@ -37,6 +39,8 @@ public class DropTabView extends TabView {
     View view =  LayoutInflater.from(getContext()).inflate(R.layout.layout_tab_drop_down,this, true);
     textView = (TextView) view.findViewById(R.id.textView);
     bottomLine = view.findViewById(R.id.bottomLine);
+    mRightImage = (ImageView) view.findViewById(R.id.iv_tab_img);
+
   }
 
 
@@ -52,10 +56,29 @@ public class DropTabView extends TabView {
       bottomLine.setVisibility(VISIBLE);
     } else {
       icon = getResources().getDrawable(R.drawable.ic_dropdown_normal);
-      bottomLine.setVisibility(GONE);
+      bottomLine.setVisibility(INVISIBLE);
     }
-    textView.setCompoundDrawablesWithIntrinsicBounds(null, null, icon, null);
+
+    mRightImage.setImageDrawable(icon);
   }
 
+  public View getBottomLine() {
+    return bottomLine;
+  }
 
+  public void setBottomLine(View pBottomLine) {
+    bottomLine = pBottomLine;
+  }
+
+  public ImageView getRightImage() {
+    return mRightImage;
+  }
+
+  public TextView getTextView() {
+    return textView;
+  }
+
+  public void setTextView(TextView pTextView) {
+    textView = pTextView;
+  }
 }

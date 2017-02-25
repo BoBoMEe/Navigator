@@ -16,7 +16,7 @@
   -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <solid android:color="@color/colorAccent"/>
+  <solid android:color="@color/tab_under_line"/>
 
   <!-- 分割线的高度 -->
   <size android:height="3.0px"/>

@@ -82,16 +82,16 @@ public class DropDownMenu_Activity extends AppCompatActivity {
         dropdownButton.setId(position);
 
         dropdownButton.addOnCheckedChangeListener((tabView, isChecked) -> {
-          TabView lTabView = (TabView) tabView;
+          DropTabView lTabView = (DropTabView) tabView;
           ViewGroup lViewGroup = (ViewGroup) lTabView.getParent();
           int index = lViewGroup.indexOfChild(lTabView);
 
           Log.d("BoBoMEe", "Tab CheckedChange, index :  " + index + " ,isChecked : " + isChecked);
 
           if (isChecked) {
-            View vtabView = (View) tabView;
-            ObjectAnimatorUtils.object_animator(vtabView);
+            ObjectAnimatorUtils.object_animator(lTabView.getTextView());
           }
+          ObjectAnimatorUtils.object_rotate(lTabView.getRightImage(), isChecked);
         });
 
         dropdownButton.removeOnCheckedChangeListener((tabView, isChecked) -> {

@@ -62,7 +62,7 @@ public class RecyclerProvider {
     
     //init divider
     inflate.addItemDecoration(new Builder(pContext)//divider 颜色
-        .colorResId(R.color.colorPrimary).size(2)//高度
+        .colorResId(R.color.tab_under_line).size(2)//高度
         .margin(DisplayUtil.dp2px(12.f))//边距
         .build());
 

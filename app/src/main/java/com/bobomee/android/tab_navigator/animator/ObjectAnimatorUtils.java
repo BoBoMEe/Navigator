@@ -44,16 +44,13 @@ public class ObjectAnimatorUtils {
     animatorSet.start();
   }
 
-  public static void object_rotate(View vtabView) {
-    ObjectAnimator scaleX = ObjectAnimator.ofFloat(vtabView, View.SCALE_X, 1f, .5f, 1f);
-    ObjectAnimator scaleY = ObjectAnimator.ofFloat(vtabView, View.SCALE_Y, 1f, .5f, 1f);
+  public static void object_rotate(View vtabView, boolean checked) {
     ObjectAnimator alpha = ObjectAnimator.ofFloat(vtabView, View.ALPHA, 1f, .5f, 1f);
-    ObjectAnimator rotate = ObjectAnimator.ofFloat(vtabView, View.ROTATION, 0f, 360f, 0f);
+    ObjectAnimator rotate =
+        ObjectAnimator.ofFloat(vtabView, View.ROTATION, checked ? 0f : 180f, checked ? 180f : 0f);
 
     AnimatorSet animatorSet = new AnimatorSet();
-    animatorSet.playTogether(scaleX, scaleY, alpha, rotate);
-    animatorSet.setInterpolator(Utils.createInterpolator(Utils.OVERSHOOT_INTERPOLATOR));
-    animatorSet.setDuration(1500);
+    animatorSet.playTogether(alpha, rotate);
     animatorSet.start();
   }
 

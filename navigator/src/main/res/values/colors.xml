@@ -17,4 +17,5 @@
 
 <resources>
   <color name="black_p50">#7f000000</color>
+  <color name="tab_line">#FFEEEEEE</color>
 </resources>
