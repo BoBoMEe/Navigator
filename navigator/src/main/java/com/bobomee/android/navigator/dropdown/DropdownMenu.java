@@ -23,6 +23,7 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.RelativeLayout;
 import com.bobomee.android.navigator.R;
 import com.bobomee.android.navigator.adapter.interfaces.IAdapter;
 import com.bobomee.android.navigator.dropdown.interfaces.Expandable;
@@ -43,6 +44,7 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
   private TabContainer mTabContainer;
   private ExpandableContainer mExpandableRelativeLayout;
   private int actionPos;
+  private RelativeLayout mExpandableParent;
 
   public DropDownMenu(Context context) {
     super(context);
@@ -69,6 +71,8 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
     mTabContainer = (TabContainer) lInflate.findViewById(R.id.drop_tab_container);
     mExpandableRelativeLayout =
         (ExpandableContainer) lInflate.findViewById(R.id.expandable_layout_container);
+    mExpandableParent = (RelativeLayout) lInflate.findViewById(R.id.expandable_parent_releative);
+    mExpandableParent.setVisibility(INVISIBLE);
 
     mTabContainer.addOnCheckedChangeListener(new OnTabGroupCheckedChangeListener() {
       @Override public void onCheckedChange(ITabGroup group, int checkedId) {
@@ -87,6 +91,19 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
         }
       }
     });
+    
+    mExpandableRelativeLayout.addExpandableLayoutListener(new ExpandableLayoutListenerAdapter() {
+      @Override public void onPreClose() {
+        super.onPreClose();
+        mExpandableParent.setVisibility(INVISIBLE);
+      }
+
+      @Override public void onPreOpen() {
+        super.onPreOpen();
+        mExpandableParent.setVisibility(VISIBLE);
+      }
+    });
+    
   }
 
   public <T> void setTabAdapter(final IAdapter<T> _tAdapter) {

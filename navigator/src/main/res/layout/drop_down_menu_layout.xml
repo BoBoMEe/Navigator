@@ -29,6 +29,7 @@
   <RelativeLayout
       android:background="@color/black_p50"
       android:layout_width="match_parent"
+      android:id="@+id/expandable_parent_releative"
       android:layout_height="match_parent"
       >
     <com.bobomee.android.navigator.dropdown.ExpandableContainer
