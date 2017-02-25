@@ -23,6 +23,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.OnHierarchyChangeListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
@@ -207,8 +208,15 @@ public class DropDownMenu_Activity extends AppCompatActivity {
     });
 
     ///
-    mDropDownMenu.setInterpolator(
-        Utils.createInterpolator(Utils.ANTICIPATE_OVERSHOOT_INTERPOLATOR));
+    mDropDownMenu.setInterpolator(Utils.createInterpolator(Utils.LINEAR_INTERPOLATOR));
+
+    mDropDownMenu.getExpandableParent().setOnClickListener(new OnClickListener() {
+      @Override public void onClick(View v) {
+        if (mDropDownMenu.isExpanded()) {
+          mDropDownMenu.collapse();
+        }
+      }
+    });
   }
 
   private void initTabContainer1() {

@@ -19,11 +19,10 @@ package com.bobomee.android.navigator.dropdown;
 import android.animation.TimeInterpolator;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
+import android.view.ViewGroup;
 import com.bobomee.android.navigator.R;
 import com.bobomee.android.navigator.adapter.interfaces.IAdapter;
 import com.bobomee.android.navigator.dropdown.interfaces.Expandable;
@@ -39,13 +38,13 @@ import com.bobomee.android.navigator.tab.interfaces.OnTabGroupCheckedChangeListe
  * @author bobomee.
  */
 
-public class DropDownMenu extends FrameLayout implements Expandable {
+public class DropDownMenu extends LinearLayoutCompat implements Expandable {
 
   private TabContainer mTabContainer;
   private ExpandableContainer mExpandableRelativeLayout;
   private int actionPos;
-  private RelativeLayout mExpandableParent;
-  private FrameLayout mContentContainer;
+  private ViewGroup mExpandableParent;
+  private View mContent;
 
   public DropDownMenu(Context context) {
     super(context);
@@ -63,15 +62,17 @@ public class DropDownMenu extends FrameLayout implements Expandable {
   }
 
   private void init() {
+    setOrientation(VERTICAL);
+  }
 
-    final View lInflate =
-        LayoutInflater.from(getContext()).inflate(R.layout.drop_down_menu_layout, this, true);
-
-    mTabContainer = (TabContainer) lInflate.findViewById(R.id.drop_tab_container);
+  @Override protected void onFinishInflate() {
+    super.onFinishInflate();
+    
+    mTabContainer = (TabContainer) findViewById(R.id.drop_tab_container);
     mExpandableRelativeLayout =
-        (ExpandableContainer) lInflate.findViewById(R.id.expandable_layout_container);
-    mExpandableParent = (RelativeLayout) lInflate.findViewById(R.id.expandable_parent_releative);
-    mContentContainer = (FrameLayout)lInflate.findViewById(R.id.content_container); 
+        (ExpandableContainer) findViewById(R.id.expandable_layout_container);
+    mExpandableParent =  (ViewGroup) findViewById(R.id.expandable_parent);
+    mContent = findViewById(R.id.content);
     mExpandableParent.setVisibility(INVISIBLE);
     initListener();
   }
@@ -183,11 +184,11 @@ public class DropDownMenu extends FrameLayout implements Expandable {
     return actionPos;
   }
 
-  public FrameLayout getContentContainer() {
-    return mContentContainer;
+  public View getContent() {
+    return mContent;
   }
 
-  public RelativeLayout getExpandableParent() {
+  public ViewGroup getExpandableParent() {
     return mExpandableParent;
   }
 }

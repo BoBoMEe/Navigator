@@ -15,21 +15,10 @@
   ~  limitations under the License.
   -->
 
+<resources>
 
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
-  <TextView
-      xmlns:android="http://schemas.android.com/apk/res/android"
-      android:id="@+id/text_content"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="@string/drop_content"
-      android:textColor="@color/black"
-      android:textSize="25sp"
-      />
-</ScrollView>
-  
-
+  <item name="drop_tab_container" type="id"/>
+  <item name="expandable_layout_container" type="id"/>
+  <item name="expandable_parent" type="id"/>
+  <item name="content" type="id"/>
+</resources>

@@ -7,7 +7,7 @@
     <item name="green" type="color">#FF3BBD79</item>
     <color name="black">#222222</color>
     <color name="white">#FFF</color>
-    <color name="selected_bg">#E7E7E7</color>
+    <color name="selected_bg">#FAFAFA</color>
     
     
 </resources>
