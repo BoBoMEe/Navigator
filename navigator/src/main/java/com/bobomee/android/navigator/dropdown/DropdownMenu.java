@@ -19,10 +19,10 @@ package com.bobomee.android.navigator.dropdown;
 import android.animation.TimeInterpolator;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import com.bobomee.android.navigator.R;
 import com.bobomee.android.navigator.adapter.interfaces.IAdapter;
@@ -39,12 +39,13 @@ import com.bobomee.android.navigator.tab.interfaces.OnTabGroupCheckedChangeListe
  * @author bobomee.
  */
 
-public class DropDownMenu extends LinearLayoutCompat implements Expandable {
+public class DropDownMenu extends FrameLayout implements Expandable {
 
   private TabContainer mTabContainer;
   private ExpandableContainer mExpandableRelativeLayout;
   private int actionPos;
   private RelativeLayout mExpandableParent;
+  private FrameLayout mContentContainer;
 
   public DropDownMenu(Context context) {
     super(context);
@@ -63,8 +64,6 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
 
   private void init() {
 
-    setOrientation(VERTICAL);
-
     final View lInflate =
         LayoutInflater.from(getContext()).inflate(R.layout.drop_down_menu_layout, this, true);
 
@@ -72,8 +71,12 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
     mExpandableRelativeLayout =
         (ExpandableContainer) lInflate.findViewById(R.id.expandable_layout_container);
     mExpandableParent = (RelativeLayout) lInflate.findViewById(R.id.expandable_parent_releative);
+    mContentContainer = (FrameLayout)lInflate.findViewById(R.id.content_container); 
     mExpandableParent.setVisibility(INVISIBLE);
+    initListener();
+  }
 
+  private void initListener() {
     mTabContainer.addOnCheckedChangeListener(new OnTabGroupCheckedChangeListener() {
       @Override public void onCheckedChange(ITabGroup group, int checkedId) {
         TabGroup lTabGroup = (TabGroup) group;
@@ -91,7 +94,7 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
         }
       }
     });
-    
+
     mExpandableRelativeLayout.addExpandableLayoutListener(new ExpandableLayoutListenerAdapter() {
       @Override public void onPreClose() {
         super.onPreClose();
@@ -103,7 +106,6 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
         mExpandableParent.setVisibility(VISIBLE);
       }
     });
-    
   }
 
   public <T> void setTabAdapter(final IAdapter<T> _tAdapter) {
@@ -148,12 +150,12 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
   @Override public void collapse() {
     if (null != mExpandableRelativeLayout) mExpandableRelativeLayout.collapse();
     if (null != mTabContainer && null != mExpandableRelativeLayout) {
-     mExpandableRelativeLayout.addExpandableLayoutListener(new ExpandableLayoutListenerAdapter() {
-       @Override public void onAnimationEnd() {
-         super.onAnimationEnd();
-         mTabContainer.setCheckedStateForView(mExpandableRelativeLayout.isExpanded(), actionPos);
-       }
-     });
+      mExpandableRelativeLayout.addExpandableLayoutListener(new ExpandableLayoutListenerAdapter() {
+        @Override public void onAnimationEnd() {
+          super.onAnimationEnd();
+          mTabContainer.setCheckedStateForView(mExpandableRelativeLayout.isExpanded(), actionPos);
+        }
+      });
     }
   }
 
@@ -175,5 +177,17 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
 
   @Override public void setInterpolator(@NonNull TimeInterpolator interpolator) {
     if (null != mExpandableRelativeLayout) mExpandableRelativeLayout.setInterpolator(interpolator);
+  }
+
+  public int getActionPos() {
+    return actionPos;
+  }
+
+  public FrameLayout getContentContainer() {
+    return mContentContainer;
+  }
+
+  public RelativeLayout getExpandableParent() {
+    return mExpandableParent;
   }
 }

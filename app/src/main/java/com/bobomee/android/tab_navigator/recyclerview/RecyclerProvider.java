@@ -24,7 +24,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout.LayoutParams;
 import com.bobomee.android.common.util.DisplayUtil;
 import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClickSupport;
-import com.bobomee.android.tab_navigator.DropDownMenu_Activity;
 import com.bobomee.android.tab_navigator.R;
 import com.bobomee.android.tab_navigator.animator.ObjectAnimatorUtils;
 import com.bobomee.android.tab_navigator.recyclerview.HorizontalDividerItemDecoration.Builder;
@@ -62,7 +61,7 @@ public class RecyclerProvider {
     
     //init divider
     inflate.addItemDecoration(new Builder(pContext)//divider 颜色
-        .colorResId(R.color.tab_under_line).size(2)//高度
+        .colorResId(R.color.tab_line_color).size(2)//高度
         .margin(DisplayUtil.dp2px(12.f))//边距
         .build());
 

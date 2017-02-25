@@ -17,10 +17,10 @@
   -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-  <solid android:color="@color/tab_under_line"/>
+  <solid android:color="@color/tab_line_color"/>
 
   <!-- 分割线的高度 -->
-  <size android:width="3.0px"/>
+  <size android:height="3.0px"/>
 
 </shape>
 

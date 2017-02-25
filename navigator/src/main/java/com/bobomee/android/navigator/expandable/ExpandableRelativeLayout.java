@@ -29,6 +29,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver;
 import android.view.animation.LinearInterpolator;
 import android.widget.RelativeLayout;
@@ -41,7 +43,7 @@ import java.util.List;
 
 public class ExpandableRelativeLayout extends RelativeLayout implements ExpandableLayout {
 
-  private int duration;
+  private int duration ;
   private TimeInterpolator interpolator = new LinearInterpolator();
   private int orientation;
   /**
@@ -467,10 +469,11 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
     valueAnimator.setInterpolator(interpolator);
     valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
       @Override public void onAnimationUpdate(final ValueAnimator animator) {
+        ViewGroup.LayoutParams lLayoutParams = getLayoutParams();
         if (isVertical()) {
-          getLayoutParams().height = (int) animator.getAnimatedValue();
+          lLayoutParams.height = (int) animator.getAnimatedValue();
         } else {
-          getLayoutParams().width = (int) animator.getAnimatedValue();
+          lLayoutParams.width = (int) animator.getAnimatedValue();
         }
         requestLayout();
       }

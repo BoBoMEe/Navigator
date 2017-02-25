@@ -27,10 +27,8 @@ import android.view.ViewGroup;
 import android.view.ViewGroup.OnHierarchyChangeListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Space;
-import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import com.bobomee.android.navigator.adapter.AdapterBase;
 import com.bobomee.android.navigator.adapter.AdapterDropBase;
 import com.bobomee.android.navigator.dropdown.DropDownMenu;
@@ -57,7 +55,6 @@ public class DropDownMenu_Activity extends AppCompatActivity {
 
   @BindView(R.id.tab_container1) TabContainer mTabContainer1;
   @BindView(R.id.drop_down_menu) DropDownMenu mDropDownMenu;
-  @BindView(R.id.text_content) TextView mTextContent;
   private List<String> mTitles;
   private DropDownMenu_Activity mDropDownMenu_activity;
 
@@ -74,6 +71,7 @@ public class DropDownMenu_Activity extends AppCompatActivity {
   }
 
   private void initTabContainer() {
+
     mDropDownMenu.setTabAdapter(new AdapterDropBase<String>(mTitles) {
       @Override public View getView(int position, ViewGroup parent, String object) {
         DropTabView dropdownButton = new DropTabView(getApplicationContext());
@@ -232,12 +230,6 @@ public class DropDownMenu_Activity extends AppCompatActivity {
     mTitles = new ArrayList<>();
     for (int i = 0; i < 4; ++i) {
       mTitles.add("第" + i + "个");
-    }
-  }
-
-  @OnClick(R.id.text_content) public void onClick() {
-    if (mDropDownMenu.isExpanded()) {
-      mDropDownMenu.collapse();
     }
   }
 }
