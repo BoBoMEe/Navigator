@@ -35,12 +35,12 @@ public interface Expandable {
   /**
    * Starts expand animation.
    */
-  void expand();
+  void expand(int position);
 
   /**
    * Starts collapse animation.
    */
-  void collapse();
+  void collapse(int position);
 
   /**
    * Gets state of expanse.
@@ -52,9 +52,10 @@ public interface Expandable {
   /**
    * Sets state of expanse.
    *
+   * @param position The postion of the expand view
    * @param expanded The layout is visible if expanded is true
    */
-  void setExpanded(final boolean expanded);
+  void setExpanded(int position,final boolean expanded);
 
   /**
    * Sets the length of the animation.

@@ -26,6 +26,7 @@ import butterknife.ButterKnife;
 import com.bobomee.android.common.adapter.CommonRcvAdapter;
 import com.bobomee.android.common.adapter.interfaces.AdapterItem;
 import com.bobomee.android.tab_navigator.R;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -57,13 +58,16 @@ public class RecyclerAdapterProvider {
 
     @Override public void handleData(RecyclerModel pRecyclerModel, int position) {
       mTextView.setText(pRecyclerModel.getText());
-      mImage.setVisibility(pRecyclerModel.isChecked()?View.VISIBLE:View.GONE);
+      mImage.setVisibility(pRecyclerModel.isChecked() ? View.VISIBLE : View.GONE);
       mTextView.setSelected(pRecyclerModel.isChecked());
       root.setSelected(pRecyclerModel.isChecked());
     }
   }
 
-  public static class RecyclerAdapter extends CommonRcvAdapter<RecyclerModel> {
+  public static class RecyclerAdapter extends CommonRcvAdapter<RecyclerModel>
+      implements CheckedDataProvider<RecyclerModel>, CheckData<RecyclerModel> {
+
+    private List<RecyclerModel> mCheckedDatas = new ArrayList<>();
 
     public RecyclerAdapter(@Nullable List<RecyclerModel> data) {
       super(data);
@@ -71,6 +75,25 @@ public class RecyclerAdapterProvider {
 
     @NonNull @Override public AdapterItem<RecyclerModel> createItem(int type) {
       return new RecyclerAdapterItem();
+    }
+
+    @Override public List<RecyclerModel> provideCheckedDatas() {
+      return mCheckedDatas;
+    }
+
+    @Override public void checkedData(int position) {
+
+      RecyclerModel lRecyclerModel = getData().get(position);
+
+      lRecyclerModel.setChecked(!lRecyclerModel.isChecked());
+
+      if (lRecyclerModel.isChecked()) {
+        mCheckedDatas.add(lRecyclerModel);
+      } else {
+        mCheckedDatas.remove(lRecyclerModel);
+      }
+
+      notifyItemChanged(position);
     }
   }
 

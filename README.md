@@ -22,7 +22,7 @@ Android首页底部常用tab切换控件,借鉴了`Adapter`和`AdapterView`的�
 ## Import
 
 ```groovy
-compile 'com.bobomee.android:navigator:1.4'
+compile 'com.bobomee.android:navigator:1.6'
 ```
 
 ## Simple
@@ -67,6 +67,16 @@ mDropDownMenu.setTabAdapter(new AdapterDropBase<String>(mTitles) {
         return dropDownView;
       }
     });
+    
+mDropDownMenu.addDropDownMenuCheckedListener(new DropDownMenuCheckedListener() {
+      @Override public void onCheckedChange(int position, boolean checked) {
+        Log.d("BoBoMEe", "onCheckedChange: pos : " + position + ", checked: " + checked);
+// get cheaked data or set tabview
+      }
+    });
+    
+//set the init state
+mDropDownMenu.setExpanded(0, true);
 ```
 
 - 全部API用法Demo： [DropDownMenu_Activity.java](https://github.com/BoBoMEe/Tab_Navigator/blob/master/app/src/main/java/com/bobomee/android/tab_navigator/DropDownMenu_Activity.java)

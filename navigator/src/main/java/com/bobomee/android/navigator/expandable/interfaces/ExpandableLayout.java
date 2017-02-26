@@ -20,11 +20,57 @@ import android.animation.TimeInterpolator;
 import android.support.annotation.IntDef;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.bobomee.android.navigator.dropdown.interfaces.Expandable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-public interface ExpandableLayout extends Expandable {
+public interface ExpandableLayout {
+
+  /**
+   * Starts animation the state of the view to the inverse of its current state.
+   */
+  void toggle();
+
+  /**
+   * Starts expand animation.
+   */
+  void expand();
+
+  /**
+   * Starts collapse animation.
+   */
+  void collapse();
+
+  /**
+   * Gets state of expanse.
+   *
+   * @return true if the layout is visible
+   */
+  boolean isExpanded();
+
+  /**
+   * Sets state of expanse.
+   *
+   * @param expanded The layout is visible if expanded is true
+   */
+  void setExpanded(final boolean expanded);
+
+  /**
+   * Sets the length of the animation.
+   * The default duration is 300 milliseconds.
+   *
+   * @param duration duration time
+   */
+  void setDuration(final int duration);
+
+  /**
+   * The time interpolator used in calculating the elapsed fraction of this animation. The
+   * interpolator determines whether the animation runs with linear or non-linear motion,
+   * such as acceleration and deceleration.
+   * The default value is  {@link android.view.animation.AccelerateDecelerateInterpolator}
+   *
+   * @param interpolator the animation   interpolator
+   */
+  void setInterpolator(@NonNull final TimeInterpolator interpolator);
 
   /**
    * Duration of expand animation

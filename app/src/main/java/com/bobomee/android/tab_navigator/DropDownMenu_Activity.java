@@ -25,7 +25,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.view.ViewGroup.OnHierarchyChangeListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Space;
 import butterknife.BindView;
@@ -35,11 +34,11 @@ import com.bobomee.android.navigator.adapter.AdapterDropBase;
 import com.bobomee.android.navigator.dropdown.DropDownMenu;
 import com.bobomee.android.navigator.dropdown.ExpandableContainer;
 import com.bobomee.android.navigator.dropdown.TabContainer;
+import com.bobomee.android.navigator.dropdown.interfaces.DropDownMenuCheckedListener;
 import com.bobomee.android.navigator.expandable.Utils;
-import com.bobomee.android.navigator.expandable.interfaces.ExpandableLayoutListenerAdapter;
-import com.bobomee.android.navigator.tab.TabGroup;
-import com.bobomee.android.navigator.tab.TabView;
 import com.bobomee.android.tab_navigator.animator.ObjectAnimatorUtils;
+import com.bobomee.android.tab_navigator.recyclerview.CheckedDataProvider;
+import com.bobomee.android.tab_navigator.recyclerview.RecyclerModel;
 import com.bobomee.android.tab_navigator.recyclerview.RecyclerProvider;
 import com.bobomee.android.tab_navigator.tabview.DropTabView;
 import com.bobomee.android.tab_navigator.tabview.ItemTabView;
@@ -82,19 +81,10 @@ public class DropDownMenu_Activity extends AppCompatActivity {
 
         dropdownButton.addOnCheckedChangeListener((tabView, isChecked) -> {
           DropTabView lTabView = (DropTabView) tabView;
-          ViewGroup lViewGroup = (ViewGroup) lTabView.getParent();
-          int index = lViewGroup.indexOfChild(lTabView);
-
-          Log.d("BoBoMEe", "Tab CheckedChange, index :  " + index + " ,isChecked : " + isChecked);
-
           if (isChecked) {
             ObjectAnimatorUtils.object_animator(lTabView.getTextView());
           }
           ObjectAnimatorUtils.object_rotate(lTabView.getRightImage(), isChecked);
-        });
-
-        dropdownButton.removeOnCheckedChangeListener((tabView, isChecked) -> {
-          if (mDropDownMenu.isExpanded()) mDropDownMenu.toggle();
         });
 
         return dropdownButton;
@@ -126,73 +116,6 @@ public class DropDownMenu_Activity extends AppCompatActivity {
       }
     });
 
-    mDropDownMenu.setExpanded(false);
-
-    TabContainer lTabContainer = mDropDownMenu.getTabContainer();
-    ExpandableContainer lExpandableRelativeLayout = mDropDownMenu.getExpandableRelativeLayout();
-
-    //////
-    lExpandableRelativeLayout.addExpandableLayoutListener(new ExpandableLayoutListenerAdapter() {
-      @Override public void onAnimationEnd() {
-        super.onAnimationEnd();
-        Log.d("BoBoMEe", "onAnimationEnd: ");
-      }
-
-      @Override public void onAnimationStart() {
-        super.onAnimationStart();
-        Log.d("BoBoMEe", "onAnimationStart: ");
-      }
-
-      @Override public void onClosed() {
-        super.onClosed();
-        Log.d("BoBoMEe", "onClosed: ");
-      }
-
-      @Override public void onOpened() {
-        super.onOpened();
-        Log.d("BoBoMEe", "onOpened: ");
-      }
-
-      @Override public void onPreClose() {
-        super.onPreClose();
-        Log.d("BoBoMEe", "onPreClose: ");
-      }
-
-      @Override public void onPreOpen() {
-        super.onPreOpen();
-        Log.d("BoBoMEe", "onPreOpen: ");
-      }
-    });
-
-    lExpandableRelativeLayout.removeExpandableLayoutListener(new ExpandableLayoutListenerAdapter() {
-    });
-
-    ////////
-    lTabContainer.addOnCheckedChangeListener((group, checkedId) -> {
-
-      TabGroup tabGroup = (TabGroup) group;
-      TabView tabview = (TabView) tabGroup.findViewById(checkedId);
-      int index = tabGroup.indexOfChild(tabview);
-      boolean lChecked = tabview.isChecked();
-
-      Log.d("BoBoMEe", "Container CheckedChange , index : " + index + " , lChecked : " + lChecked);
-    });
-
-    lTabContainer.removeOnCheckedChangeListener((group, checkedId) -> {
-
-    });
-
-    ////
-    lTabContainer.setOnHierarchyChangeListener(new OnHierarchyChangeListener() {
-      @Override public void onChildViewAdded(View parent, View child) {
-        Log.d("BoBoMEe", "onChildViewAdded: ");
-      }
-
-      @Override public void onChildViewRemoved(View parent, View child) {
-        Log.d("BoBoMEe", "onChildViewRemoved: ");
-      }
-    });
-
     /////
     mDropDownMenu.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
       @Override public void onGlobalLayout() {
@@ -202,8 +125,31 @@ public class DropDownMenu_Activity extends AppCompatActivity {
           mDropDownMenu.getViewTreeObserver().removeOnGlobalLayoutListener(this);
         }
 
-        lTabContainer.setCheckedStateForView(true, 0);
-        lExpandableRelativeLayout.checkState(0, true);
+        mDropDownMenu.setExpanded(0, true);
+      }
+    });
+
+    mDropDownMenu.addDropDownMenuCheckedListener(new DropDownMenuCheckedListener() {
+      @Override public void onCheckedChange(int position, boolean checked) {
+        Log.d("BoBoMEe", "onCheckedChange: pos : " + position + ", checked: " + checked);
+
+        if (!checked) {
+          ExpandableContainer lExpandableRelativeLayout =
+              mDropDownMenu.getExpandableRelativeLayout();
+          CheckedDataProvider<RecyclerModel> lCheckedDataProvider =
+              RecyclerProvider.provideView(DropDownMenu_Activity.this, lExpandableRelativeLayout,
+                  position);
+          if (null != lCheckedDataProvider) {
+
+            List<RecyclerModel> lRecyclerModels =
+                RecyclerProvider.provideCheckedDatas(lCheckedDataProvider);
+
+            TabContainer lTabContainer = mDropDownMenu.getTabContainer();
+
+            DropTabView lChildAt = (DropTabView) lTabContainer.getChildAt(position);
+            lChildAt.setText(lRecyclerModels.size()+"");
+          }
+        }
       }
     });
 
@@ -212,9 +158,7 @@ public class DropDownMenu_Activity extends AppCompatActivity {
 
     mDropDownMenu.getExpandableParent().setOnClickListener(new OnClickListener() {
       @Override public void onClick(View v) {
-        if (mDropDownMenu.isExpanded()) {
-          mDropDownMenu.collapse();
-        }
+        mDropDownMenu.toggle();
       }
     });
   }

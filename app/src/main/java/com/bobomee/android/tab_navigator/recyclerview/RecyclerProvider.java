@@ -17,12 +17,14 @@
 package com.bobomee.android.tab_navigator.recyclerview;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout.LayoutParams;
 import com.bobomee.android.common.util.DisplayUtil;
+import com.bobomee.android.navigator.dropdown.ExpandableContainer;
 import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClickSupport;
 import com.bobomee.android.tab_navigator.R;
 import com.bobomee.android.tab_navigator.animator.ObjectAnimatorUtils;
@@ -68,16 +70,29 @@ public class RecyclerProvider {
     //init item click
     ItemClickSupport lItemClickSupport = ItemClickSupport.from(inflate).add();
     lItemClickSupport.addOnItemClickListener((parent1, view, position1, id) -> {
-
       ObjectAnimatorUtils.object_left_right(view);
-
-      RecyclerModel lRecyclerModel = lAdapter.getData().get(position1);
-
-      lRecyclerModel.setChecked(!lRecyclerModel.isChecked());
-
-      lAdapter.notifyItemChanged(position1);
+      lAdapter.checkedData(position1);
     });
 
     return inflate;
+  }
+
+  public static List<RecyclerModel> provideCheckedDatas(
+      @NonNull CheckedDataProvider<RecyclerModel> pCheckedDataProvider) {
+    return pCheckedDataProvider.provideCheckedDatas();
+  }
+
+  @SuppressWarnings("unchecked") public static CheckedDataProvider<RecyclerModel> provideView(Context pContext,
+      ExpandableContainer pExpandableContainer, int position) {
+
+    CheckDataProvideRecycler<RecyclerModel> lRecyclerView =
+        new CheckDataProvideRecycler<RecyclerModel>(pContext);
+    View lChildAt = pExpandableContainer.getChildAt(position);
+
+    if (lChildAt instanceof CheckDataProvideRecycler) {
+      lRecyclerView = (CheckDataProvideRecycler<RecyclerModel>) lChildAt;
+    }
+
+    return lRecyclerView;
   }
 }
