@@ -18,11 +18,10 @@ package com.bobomee.android.navigator.dropdown.interfaces;
 
 /**
  * Project ID：400YF17050
- * Resume:     监听tab是否checked<br/>
+ * Resume:     监听tab是否checked
  *
  * @author 汪波
  * @version 1.0
- * @see
  * @since 2017/2/26.汪波.
  */
 public interface DropDownMenuCheckedListener {

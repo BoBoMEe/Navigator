@@ -18,11 +18,10 @@ package com.bobomee.android.navigator.dropdown;
 
 /**
  * Project ID：400YF17050
- * Resume:     <br/>
+ * Resume:    用于保存位置和 check 状态的bean
  *
  * @author 汪波
  * @version 1.0
- * @see
  * @since 2017/2/26.汪波.
  */
 public class CheckObj {

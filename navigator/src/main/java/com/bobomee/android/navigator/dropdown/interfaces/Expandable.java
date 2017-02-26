@@ -34,11 +34,13 @@ public interface Expandable {
 
   /**
    * Starts expand animation.
+   * @param position 当前的position
    */
   void expand(int position);
 
   /**
    * Starts collapse animation.
+   * @param position 当前的position
    */
   void collapse(int position);
 
