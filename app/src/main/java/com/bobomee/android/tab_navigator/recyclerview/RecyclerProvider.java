@@ -18,6 +18,7 @@ package com.bobomee.android.tab_navigator.recyclerview;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -61,6 +62,41 @@ public class RecyclerProvider {
     RecyclerAdapter lAdapter = RecyclerAdapterProvider.createAdapter(lRecyclerModelList);
     inflate.setAdapter(lAdapter);
     
+    //init divider
+    inflate.addItemDecoration(new Builder(pContext)//divider 颜色
+        .colorResId(R.color.tab_line_color).size(2)//高度
+        .margin(DisplayUtil.dp2px(12.f))//边距
+        .build());
+
+    //init item click
+    ItemClickSupport lItemClickSupport = ItemClickSupport.from(inflate).add();
+    lItemClickSupport.addOnItemClickListener((parent1, view, position1, id) -> {
+      ObjectAnimatorUtils.object_left_right(view);
+      lAdapter.checkedData(position1);
+    });
+
+    return inflate;
+  }
+
+
+  public static RecyclerView provideGridLayoutRecycler(Context pContext, int bottomMargin) {
+
+    //init view
+    RecyclerView inflate =
+        (RecyclerView) View.inflate(pContext, R.layout.drop_down_recycler_layout, null);
+    inflate.setLayoutManager(new GridLayoutManager(pContext,2));
+
+    //init layoutparams
+    LayoutParams lLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.MATCH_PARENT);
+    lLayoutParams.bottomMargin = bottomMargin;
+    inflate.setLayoutParams(lLayoutParams);
+
+    //init adapter
+    List<RecyclerModel> lRecyclerModelList = RecyclerModel.getModels(15);
+    RecyclerAdapter lAdapter = RecyclerAdapterProvider.createAdapter(lRecyclerModelList);
+    inflate.setAdapter(lAdapter);
+
     //init divider
     inflate.addItemDecoration(new Builder(pContext)//divider 颜色
         .colorResId(R.color.tab_line_color).size(2)//高度

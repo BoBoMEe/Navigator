@@ -99,13 +99,13 @@ public class DropDownMenu_Activity extends AppCompatActivity {
             lView = RecyclerProvider.provideLinearLayoutRecycler(mDropDownMenu_activity, 300);
             break;
           case 1:
-            lView = RecyclerProvider.provideLinearLayoutRecycler(mDropDownMenu_activity, 500);
+            lView = RecyclerProvider.provideGridLayoutRecycler(mDropDownMenu_activity, 500);
             break;
           case 2:
             lView = RecyclerProvider.provideLinearLayoutRecycler(mDropDownMenu_activity, 600);
             break;
           case 3:
-            lView = RecyclerProvider.provideLinearLayoutRecycler(mDropDownMenu_activity, 800);
+            lView = RecyclerProvider.provideGridLayoutRecycler(mDropDownMenu_activity, 800);
             break;
           default:
             lView = new Space(DropDownMenu_Activity.this);
