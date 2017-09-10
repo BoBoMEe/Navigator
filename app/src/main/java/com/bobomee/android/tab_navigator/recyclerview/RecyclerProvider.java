@@ -21,6 +21,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout.LayoutParams;
@@ -71,6 +72,7 @@ public class RecyclerProvider {
     //init item click
     ItemClickSupport lItemClickSupport = ItemClickSupport.from(inflate).add();
     lItemClickSupport.addOnItemClickListener((parent1, view, position1, id) -> {
+      Log.d("BoBoMEe", "checked position:"+position1);
       ObjectAnimatorUtils.object_left_right(view);
       lAdapter.checkedData(position1);
     });
@@ -106,6 +108,7 @@ public class RecyclerProvider {
     //init item click
     ItemClickSupport lItemClickSupport = ItemClickSupport.from(inflate).add();
     lItemClickSupport.addOnItemClickListener((parent1, view, position1, id) -> {
+      Log.d("BoBoMEe", "checked position:"+position1);
       ObjectAnimatorUtils.object_left_right(view);
       lAdapter.checkedData(position1);
     });

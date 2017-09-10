@@ -31,7 +31,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.bobomee.android.navigator.adapter.AdapterBase;
 import com.bobomee.android.navigator.adapter.AdapterDropBase;
-import com.bobomee.android.navigator.dropdown.DropDownMenu;
+import com.bobomee.android.navigator.dropdown.DropDownMenu1;
 import com.bobomee.android.navigator.dropdown.ExpandableContainer;
 import com.bobomee.android.navigator.dropdown.TabContainer;
 import com.bobomee.android.navigator.dropdown.interfaces.DropDownMenuCheckedListener;
@@ -54,7 +54,7 @@ import java.util.List;
 public class DropDownMenu_Activity extends AppCompatActivity {
 
   @BindView(R.id.tab_container1) TabContainer mTabContainer1;
-  @BindView(R.id.drop_down_menu) DropDownMenu mDropDownMenu;
+  @BindView(R.id.drop_down_menu) DropDownMenu1 mDropDownMenu;
   private List<String> mTitles;
   private DropDownMenu_Activity mDropDownMenu_activity;
 

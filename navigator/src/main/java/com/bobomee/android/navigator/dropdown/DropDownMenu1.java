@@ -40,7 +40,7 @@ import com.bobomee.android.navigator.tab.interfaces.OnTabGroupCheckedChangeListe
  * @author bobomee.
  */
 
-public class DropDownMenu extends LinearLayoutCompat implements Expandable {
+public class DropDownMenu1 extends LinearLayoutCompat implements Expandable {
 
   private TabContainer mTabContainer;
   private ExpandableContainer mExpandableRelativeLayout;
@@ -62,17 +62,17 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
     mDropDownMenuCheckedChange.removeListener(pDropDownMenuCheckedListener);
   }
 
-  public DropDownMenu(Context context) {
+  public DropDownMenu1(Context context) {
     super(context);
     init();
   }
 
-  public DropDownMenu(Context context, AttributeSet attrs) {
+  public DropDownMenu1(Context context, AttributeSet attrs) {
     super(context, attrs);
     init();
   }
 
-  public DropDownMenu(Context context, AttributeSet attrs, int defStyleAttr) {
+  public DropDownMenu1(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
     init();
   }
