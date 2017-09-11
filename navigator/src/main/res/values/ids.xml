@@ -20,5 +20,4 @@
   <item name="drop_tab_container" type="id"/>
   <item name="expandable_layout_container" type="id"/>
   <item name="expandable_parent" type="id"/>
-  <item name="content" type="id"/>
 </resources>

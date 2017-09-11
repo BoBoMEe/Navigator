@@ -15,12 +15,19 @@
   ~  limitations under the License.
   -->
 
-<com.bobomee.android.tab_navigator.recyclerview.CheckDataProvideRecycler xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/recycler_view"
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/white"
-    />
-  
-  
+    >
+  <com.bobomee.android.tab_navigator.recyclerview.CheckDataProvideRecycler
+      android:id="@+id/recycler_view"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/white"
+      android:orientation="vertical"
+      />
+</RelativeLayout>
+
+

@@ -23,55 +23,22 @@
   <com.bobomee.android.navigator.dropdown.TabContainer
       android:id="@+id/tab_container1"
       android:layout_width="match_parent"
+      android:background="@color/colorAccent"
       android:layout_height="wrap_content"
       android:layout_alignParentBottom="true"
       android:elevation="10dp"
       />
 
+  <include
+      layout="@layout/drop_down_text_layout"
+      android:id="@+id/content"
+      />
 
-  <com.bobomee.android.navigator.dropdown.DropDownMenu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:app="http://schemas.android.com/apk/res-auto"
+  <com.bobomee.android.navigator.dropdown.DropDownMenu
+      android:layout_above="@id/tab_container1"
       android:id="@+id/drop_down_menu"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="vertical"
-      app:divider="@drawable/drop_down_menu_divider"
-      app:showDividers="middle"
-      >
-    <com.bobomee.android.navigator.dropdown.TabContainer
-        android:id="@id/drop_tab_container"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:divider="@drawable/drop_down_menu_tab_divider"
-        app:dividerPadding="10dp"
-        app:showDividers="middle"
-        />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
-      <include
-          layout="@layout/drop_down_text_layout"
-          android:id="@id/content"
-          />
-
-      <RelativeLayout
-          android:id="@id/expandable_parent"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:background="@color/black_p50"
-          >
-        <com.bobomee.android.navigator.dropdown.ExpandableContainer
-            android:id="@id/expandable_layout_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
-      </RelativeLayout>
-    </FrameLayout>
-
-
-  </com.bobomee.android.navigator.dropdown.DropDownMenu>
-
+      android:layout_height="match_parent"
+      />
 
 </RelativeLayout>

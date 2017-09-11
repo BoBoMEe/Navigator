@@ -28,9 +28,9 @@ public class CheckObj {
   private int position;
   private boolean checked;
 
-  public CheckObj(boolean pChecked, int pPosition) {
-    checked = pChecked;
-    position = pPosition;
+  public CheckObj(boolean checked, int position) {
+    this.checked = checked;
+    this.position = position;
   }
 
   public boolean isChecked() {
@@ -54,20 +54,20 @@ public class CheckObj {
     checked = pChecked;
   }
 
-  @Override public boolean equals(Object lpO) {
-    if (this == lpO) return true;
-    if (lpO == null || getClass() != lpO.getClass()) return false;
+  @Override public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
 
-    CheckObj llCheckObj = (CheckObj) lpO;
+    CheckObj checkObj = (CheckObj) o;
 
-    if (position != llCheckObj.position) return false;
-    return checked == llCheckObj.checked;
+    if (position != checkObj.position) return false;
+    return checked == checkObj.checked;
   }
 
   @Override public int hashCode() {
-    int lresult = position;
-    lresult = 31 * lresult + (checked ? 1 : 0);
-    return lresult;
+    int result = position;
+    result = 31 * result + (checked ? 1 : 0);
+    return result;
   }
 
   @Override public String toString() {

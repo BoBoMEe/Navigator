@@ -47,7 +47,7 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
   // when true, mOnCheckedChangeListener discards events
   private boolean mProtectFromCheckedChange = false;
   private PassThroughHierarchyChangeListener mPassThroughListener;
-  private TabGroupCheckedChange mTabGroupCheckedChange = new TabGroupCheckedChange();
+  private TabGroupCheckedChange mTabGroupCheckedChange;
 
   /**
    * {@inheritDoc}
@@ -160,7 +160,7 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
 
   private void setCheckedId(int viewId) {
     mCheckedId = viewId;
-    mTabGroupCheckedChange.onCheckedChange(this, viewId);
+    if (null != mTabGroupCheckedChange) mTabGroupCheckedChange.onCheckedChange(this, viewId);
   }
 
   public void setCheckedStateForView(int viewId, boolean checked) {
@@ -286,7 +286,11 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
   }
 
   @Override public boolean removeOnCheckedChangeListener(OnTabGroupCheckedChangeListener listener) {
-    return mTabGroupCheckedChange.removeListener(listener);
+    if (null != mTabGroupCheckedChange) {
+      return mTabGroupCheckedChange.removeListener(listener);
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -296,6 +300,14 @@ public class TabGroup extends LinearLayoutCompat implements ITabGroup {
    * @param listener the callback to call on checked state change
    */
   public void addOnCheckedChangeListener(OnTabGroupCheckedChangeListener listener) {
+    if (null == mTabGroupCheckedChange) mTabGroupCheckedChange = new TabGroupCheckedChange();
     mTabGroupCheckedChange.addListener(listener);
+  }
+
+  @Override protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    if (null != mTabGroupCheckedChange) {
+      mTabGroupCheckedChange.clearOnTabGroupCheckedChangeListener();
+    }
   }
 }

@@ -117,4 +117,9 @@ public class ExpandableChange extends ListenerImpl<ExpandableLayoutListener> {
   public void onClosed() {
     listening(CLOSEED);
   }
+
+  public void clearExpandableLayoutListener() {
+    List<ExpandableLayoutListener> from = from();
+    from.clear();
+  }
 }

@@ -24,9 +24,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout.LayoutParams;
 import com.bobomee.android.common.util.DisplayUtil;
-import com.bobomee.android.navigator.dropdown.ExpandableContainer;
 import com.bobomee.android.recyclerviewhelper.selectclick.click.ItemClickSupport;
 import com.bobomee.android.tab_navigator.R;
 import com.bobomee.android.tab_navigator.animator.ObjectAnimatorUtils;
@@ -45,34 +43,34 @@ import java.util.List;
  */
 public class RecyclerProvider {
 
-  public static RecyclerView provideLinearLayoutRecycler(Context pContext, int bottomMargin) {
-    
-    //init view
-    RecyclerView inflate =
-        (RecyclerView) View.inflate(pContext, R.layout.drop_down_recycler_layout, null);
-    inflate.setLayoutManager(new LinearLayoutManager(pContext));
+  public static View provideLinearLayoutRecycler(Context pContext) {
 
-    //init layoutparams
-    LayoutParams lLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-        ViewGroup.LayoutParams.MATCH_PARENT);
-    lLayoutParams.bottomMargin = bottomMargin;
-    inflate.setLayoutParams(lLayoutParams);
+    //init view
+    View inflate = View.inflate(pContext, R.layout.drop_down_recycler_layout, null);
+    RecyclerView recyclerView = (RecyclerView) inflate.findViewById(R.id.recycler_view);
+
+    ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
+    layoutParams.height = 500;
+    layoutParams.width = -1;
+    recyclerView.setLayoutParams(layoutParams);
+
+    recyclerView.setLayoutManager(new LinearLayoutManager(pContext));
 
     //init adapter
-    List<RecyclerModel> lRecyclerModelList = RecyclerModel.getModels(15);
+    List<RecyclerModel> lRecyclerModelList = RecyclerModel.getModels(100);
     RecyclerAdapter lAdapter = RecyclerAdapterProvider.createAdapter(lRecyclerModelList);
-    inflate.setAdapter(lAdapter);
-    
+    recyclerView.setAdapter(lAdapter);
+
     //init divider
-    inflate.addItemDecoration(new Builder(pContext)//divider 颜色
+    recyclerView.addItemDecoration(new Builder(pContext)//divider 颜色
         .colorResId(R.color.tab_line_color).size(2)//高度
         .margin(DisplayUtil.dp2px(12.f))//边距
         .build());
 
     //init item click
-    ItemClickSupport lItemClickSupport = ItemClickSupport.from(inflate).add();
+    ItemClickSupport lItemClickSupport = ItemClickSupport.from(recyclerView).add();
     lItemClickSupport.addOnItemClickListener((parent1, view, position1, id) -> {
-      Log.d("BoBoMEe", "checked position:"+position1);
+      Log.d("BoBoMEe", "checked position:" + position1);
       ObjectAnimatorUtils.object_left_right(view);
       lAdapter.checkedData(position1);
     });
@@ -80,35 +78,34 @@ public class RecyclerProvider {
     return inflate;
   }
 
-
-  public static RecyclerView provideGridLayoutRecycler(Context pContext, int bottomMargin) {
+  public static View provideGridLayoutRecycler(Context pContext) {
 
     //init view
-    RecyclerView inflate =
-        (RecyclerView) View.inflate(pContext, R.layout.drop_down_recycler_layout, null);
-    inflate.setLayoutManager(new GridLayoutManager(pContext,2));
+    View inflate = View.inflate(pContext, R.layout.drop_down_recycler_layout, null);
+    RecyclerView recyclerView = (RecyclerView) inflate.findViewById(R.id.recycler_view);
 
-    //init layoutparams
-    LayoutParams lLayoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-        ViewGroup.LayoutParams.MATCH_PARENT);
-    lLayoutParams.bottomMargin = bottomMargin;
-    inflate.setLayoutParams(lLayoutParams);
+    ViewGroup.LayoutParams layoutParams = recyclerView.getLayoutParams();
+    layoutParams.height = 300;
+    layoutParams.width = -1;
+    recyclerView.setLayoutParams(layoutParams);
+
+    recyclerView.setLayoutManager(new GridLayoutManager(pContext, 2));
 
     //init adapter
-    List<RecyclerModel> lRecyclerModelList = RecyclerModel.getModels(15);
+    List<RecyclerModel> lRecyclerModelList = RecyclerModel.getModels(50);
     RecyclerAdapter lAdapter = RecyclerAdapterProvider.createAdapter(lRecyclerModelList);
-    inflate.setAdapter(lAdapter);
+    recyclerView.setAdapter(lAdapter);
 
     //init divider
-    inflate.addItemDecoration(new Builder(pContext)//divider 颜色
+    recyclerView.addItemDecoration(new Builder(pContext)//divider 颜色
         .colorResId(R.color.tab_line_color).size(2)//高度
         .margin(DisplayUtil.dp2px(12.f))//边距
         .build());
 
     //init item click
-    ItemClickSupport lItemClickSupport = ItemClickSupport.from(inflate).add();
+    ItemClickSupport lItemClickSupport = ItemClickSupport.from(recyclerView).add();
     lItemClickSupport.addOnItemClickListener((parent1, view, position1, id) -> {
-      Log.d("BoBoMEe", "checked position:"+position1);
+      Log.d("BoBoMEe", "checked position:" + position1);
       ObjectAnimatorUtils.object_left_right(view);
       lAdapter.checkedData(position1);
     });
@@ -121,17 +118,12 @@ public class RecyclerProvider {
     return pCheckedDataProvider.provideCheckedDatas();
   }
 
-  @SuppressWarnings("unchecked") public static CheckedDataProvider<RecyclerModel> provideView(Context pContext,
-      ExpandableContainer pExpandableContainer, int position) {
+  @SuppressWarnings("unchecked")
+  public static CheckedDataProvider<RecyclerModel> provideView(Context pContext,
+      ViewGroup viewGroup, int position) {
 
-    CheckDataProvideRecycler<RecyclerModel> lRecyclerView =
-        new CheckDataProvideRecycler<RecyclerModel>(pContext);
-    View lChildAt = pExpandableContainer.getChildAt(position);
+    View lChildAt = viewGroup.getChildAt(position);
 
-    if (lChildAt instanceof CheckDataProvideRecycler) {
-      lRecyclerView = (CheckDataProvideRecycler<RecyclerModel>) lChildAt;
-    }
-
-    return lRecyclerView;
+    return (CheckDataProvideRecycler<RecyclerModel>) lChildAt.findViewById(R.id.recycler_view);
   }
 }

@@ -74,8 +74,8 @@ public class ExpandableContainer extends ExpandableRelativeLayout {
 
   private IAdapter mTAdapter;
 
-  public <T> void setTabAdapter(IAdapter<T> _tAdapter) {
-    if (mTAdapter == _tAdapter) {
+  public <T> void setTabAdapter(IAdapter<T> adapter) {
+    if (mTAdapter == adapter) {
       return;
     }
 
@@ -83,7 +83,7 @@ public class ExpandableContainer extends ExpandableRelativeLayout {
       mTAdapter.unregisterDataSetObserver(mDataSetObserver);
     }
 
-    mTAdapter = _tAdapter;
+    mTAdapter = adapter;
 
     if (null != mTAdapter) {
       mTAdapter.registerDataSetObserver(mDataSetObserver);
@@ -99,13 +99,13 @@ public class ExpandableContainer extends ExpandableRelativeLayout {
       collapse();
     }
 
-    int lChildCount = getChildCount();
-    for (int i = 0; i < lChildCount; i++) {
-      View lChildAt = getChildAt(i);
+    int childCount = getChildCount();
+    for (int i = 0; i < childCount; i++) {
+      View childAt = getChildAt(i);
       if (i == position) {
-        lChildAt.setVisibility(checked ? VISIBLE : INVISIBLE);
+        childAt.setVisibility(checked ? VISIBLE : INVISIBLE);
       } else {
-        lChildAt.setVisibility(INVISIBLE);
+        childAt.setVisibility(INVISIBLE);
       }
     }
   }

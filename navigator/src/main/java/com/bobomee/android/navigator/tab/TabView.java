@@ -199,4 +199,9 @@ public class TabView extends RelativeLayout implements ITabView {
     removeAllViews();
     addView(_contentView);
   }
+
+  @Override protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    if (null != mTabViewCheckedChange) mTabViewCheckedChange.clearOnTabViewCheckedChangeListener();
+  }
 }

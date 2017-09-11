@@ -16,6 +16,8 @@
 
 package com.bobomee.android.navigator.dropdown.interfaces;
 
+import android.view.ViewGroup;
+
 /**
  * Project ID：400YF17050
  * Resume:     监听tab是否checked
@@ -26,5 +28,5 @@ package com.bobomee.android.navigator.dropdown.interfaces;
  */
 public interface DropDownMenuCheckedListener {
 
-  void onCheckedChange(int position, boolean checked);
+  void onCheckedChange(ViewGroup tabContainer, ViewGroup dropContainer, int tabPos, boolean opened);
 }

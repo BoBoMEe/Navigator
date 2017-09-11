@@ -29,20 +29,24 @@ public class ListenerImpl<ListenerType> implements IListener<ListenerType> {
 
   private List<ListenerType> mListenerTypes;
 
-  @Override public void addListener(ListenerType _listenerType) {
+  @Override public void addListener(ListenerType listenerType) {
 
     if (null == mListenerTypes) {
       mListenerTypes = new ArrayList<>();
     }
-    if (!mListenerTypes.contains(_listenerType)) mListenerTypes.add(_listenerType);
+    if (!mListenerTypes.contains(listenerType)) mListenerTypes.add(listenerType);
   }
 
-  @Override public boolean removeListener(ListenerType _listenerType) {
-    return mListenerTypes.remove(_listenerType);
+  @Override public boolean removeListener(ListenerType listenerType) {
+    if (null != mListenerTypes) {
+      return mListenerTypes.remove(listenerType);
+    } else {
+      return false;
+    }
   }
 
   public List<ListenerType> from() {
-    return mListenerTypes;
+    return null == mListenerTypes ? new ArrayList<ListenerType>() : mListenerTypes;
   }
 
   public boolean hasListener() {

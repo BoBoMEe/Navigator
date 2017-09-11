@@ -16,6 +16,7 @@
 
 package com.bobomee.android.navigator.dropdown.interfaces;
 
+import android.view.ViewGroup;
 import com.bobomee.android.navigator.listener.ListenerImpl;
 import java.util.List;
 
@@ -29,15 +30,21 @@ import java.util.List;
  */
 public class DropDownMenuCheckedChange extends ListenerImpl<DropDownMenuCheckedListener> {
 
-  public void onCheckedChange(int position, boolean checked) {
-    List<DropDownMenuCheckedListener> lFrom = from();
+  public void onCheckedChange(ViewGroup tabContainer, ViewGroup dropContainer, int tabPos,
+      boolean opened) {
+    List<DropDownMenuCheckedListener> from = from();
 
-    if (null != lFrom && !lFrom.isEmpty()) {
-      for (DropDownMenuCheckedListener lDropDownMenuCheckedListener : lFrom) {
-        if (null != lDropDownMenuCheckedListener) {
-          lDropDownMenuCheckedListener.onCheckedChange(position, checked);
+    if (null != from && !from.isEmpty()) {
+      for (DropDownMenuCheckedListener dropDownMenuCheckedListener : from) {
+        if (null != dropDownMenuCheckedListener) {
+          dropDownMenuCheckedListener.onCheckedChange(tabContainer, dropContainer, tabPos, opened);
         }
       }
     }
+  }
+
+  public void clearDropDownMenuCheckedListener(){
+    List<DropDownMenuCheckedListener> from = from();
+    from.clear();
   }
 }

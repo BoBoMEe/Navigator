@@ -28,13 +28,18 @@ import java.util.List;
 public class TabGroupCheckedChange extends ListenerImpl<OnTabGroupCheckedChangeListener> {
 
   public void onCheckedChange(ITabGroup group, int position) {
-    List<OnTabGroupCheckedChangeListener> lFrom = from();
-    if (lFrom != null && !lFrom.isEmpty()) {
-      for (OnTabGroupCheckedChangeListener lOnTabGroupCheckedChangeListener : lFrom) {
+    List<OnTabGroupCheckedChangeListener> from = from();
+    if (from != null && !from.isEmpty()) {
+      for (OnTabGroupCheckedChangeListener lOnTabGroupCheckedChangeListener : from) {
         if (null != lOnTabGroupCheckedChangeListener) {
           lOnTabGroupCheckedChangeListener.onCheckedChange(group, position);
         }
       }
     }
+  }
+
+  public void clearOnTabGroupCheckedChangeListener() {
+    List<OnTabGroupCheckedChangeListener> from = from();
+    from.clear();
   }
 }

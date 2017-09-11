@@ -30,7 +30,6 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver;
 import android.view.animation.LinearInterpolator;
 import android.widget.RelativeLayout;
@@ -43,7 +42,7 @@ import java.util.List;
 
 public class ExpandableRelativeLayout extends RelativeLayout implements ExpandableLayout {
 
-  private int duration ;
+  private int duration;
   private TimeInterpolator interpolator = new LinearInterpolator();
   private int orientation;
   /**
@@ -71,7 +70,7 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
    */
   private int closePosition = 0;
 
-  private ExpandableChange mExpandableChange = new ExpandableChange();
+  private ExpandableChange mExpandableChange;
   private ExpandableSavedState savedState;
   private boolean isExpanded;
   private int layoutSize = 0;
@@ -273,11 +272,19 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
   }
 
   @Override public void addExpandableLayoutListener(@NonNull ExpandableLayoutListener listener) {
+    if (null == mExpandableChange) {
+      mExpandableChange = new ExpandableChange();
+    }
     mExpandableChange.addListener(listener);
   }
 
-  @Override public boolean removeExpandableLayoutListener(@NonNull ExpandableLayoutListener listener) {
-    return mExpandableChange.removeListener(listener);
+  @Override
+  public boolean removeExpandableLayoutListener(@NonNull ExpandableLayoutListener listener) {
+    if (null != mExpandableChange) {
+      return mExpandableChange.removeListener(listener);
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -320,8 +327,8 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
   }
 
   /**
-   * @see #move(int, long, TimeInterpolator)
    * @param position move child at position
+   * @see #move(int, long, TimeInterpolator)
    */
   public void move(int position) {
     move(position, duration, interpolator);
@@ -332,8 +339,8 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
    * Sets 0 to duration if you want to move immediately.
    *
    * @param interpolator use the default interpolator if the argument is null.
-   * @param position  move child at position
-   * @param duration  move time 
+   * @param position move child at position
+   * @param duration move time
    */
   public void move(int position, long duration, @Nullable TimeInterpolator interpolator) {
     if (isAnimating || 0 > position || layoutSize < position) return;
@@ -408,8 +415,8 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
    * Gets the width from left of layout if orientation is horizontal.
    * Gets the height from top of layout if orientation is vertical.
    *
-   * @see #closePosition
    * @return closePosition
+   * @see #closePosition
    */
   public int getClosePosition() {
     return closePosition;
@@ -418,9 +425,9 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
   /**
    * Sets the close position directly.
    *
+   * @param position the close position
    * @see #closePosition
    * @see #setClosePositionIndex(int)
-   * @param position the close position
    */
   public void setClosePosition(final int position) {
     this.closePosition = position;
@@ -428,6 +435,7 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
 
   /**
    * Gets the current position.
+   *
    * @return current position
    */
   public int getCurrentPosition() {
@@ -437,9 +445,9 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
   /**
    * Sets close position using index of child view.
    *
+   * @param childIndex close position of child
    * @see #closePosition
    * @see #setClosePosition(int)
-   * @param childIndex close position of child 
    */
   public void setClosePositionIndex(final int childIndex) {
     this.closePosition = getChildPosition(childIndex);
@@ -481,31 +489,34 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
     valueAnimator.addListener(new AnimatorListenerAdapter() {
       @Override public void onAnimationStart(Animator animator) {
         isAnimating = true;
-        if (!mExpandableChange.hasListener()) return;
+        if (null != mExpandableChange) {
+          if (!mExpandableChange.hasListener()) return;
 
-        mExpandableChange.onAnimationStart();
-        if (layoutSize == to) {
-          mExpandableChange.onPreOpen();
-          return;
-        }
-        if (closePosition == to) {
-          mExpandableChange.onPreClose();
+          mExpandableChange.onAnimationStart();
+          if (layoutSize == to) {
+            mExpandableChange.onPreOpen();
+            return;
+          }
+          if (closePosition == to) {
+            mExpandableChange.onPreClose();
+          }
         }
       }
 
       @Override public void onAnimationEnd(Animator animator) {
         isAnimating = false;
         isExpanded = to > closePosition;
+        if (null != mExpandableChange) {
+          if (!mExpandableChange.hasListener()) return;
 
-        if (!mExpandableChange.hasListener()) return;
-
-        mExpandableChange.onAnimationEnd();
-        if (to == layoutSize) {
-          mExpandableChange.onOpened();
-          return;
-        }
-        if (to == closePosition) {
-          mExpandableChange.onClosed();
+          mExpandableChange.onAnimationEnd();
+          if (to == layoutSize) {
+            mExpandableChange.onOpened();
+            return;
+          }
+          if (to == closePosition) {
+            mExpandableChange.onClosed();
+          }
         }
       }
     });
@@ -516,13 +527,15 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
    * Notify listeners
    */
   private void notifyListeners() {
-    if (!mExpandableChange.hasListener()) return;
+    if (null != mExpandableChange) {
+      if (!mExpandableChange.hasListener()) return;
 
-    mExpandableChange.onAnimationStart();
-    if (isExpanded) {
-      mExpandableChange.onPreOpen();
-    } else {
-      mExpandableChange.onPreClose();
+      mExpandableChange.onAnimationStart();
+      if (isExpanded) {
+        mExpandableChange.onPreOpen();
+      } else {
+        mExpandableChange.onPreClose();
+      }
     }
     mGlobalLayoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
       @Override public void onGlobalLayout() {
@@ -531,15 +544,21 @@ public class ExpandableRelativeLayout extends RelativeLayout implements Expandab
         } else {
           getViewTreeObserver().removeOnGlobalLayoutListener(mGlobalLayoutListener);
         }
-
-        mExpandableChange.onAnimationEnd();
-        if (isExpanded) {
-          mExpandableChange.onOpened();
-        } else {
-          mExpandableChange.onClosed();
+        if (null != mExpandableChange) {
+          mExpandableChange.onAnimationEnd();
+          if (isExpanded) {
+            mExpandableChange.onOpened();
+          } else {
+            mExpandableChange.onClosed();
+          }
         }
       }
     };
     getViewTreeObserver().addOnGlobalLayoutListener(mGlobalLayoutListener);
+  }
+
+  @Override protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    if (null != mExpandableChange) mExpandableChange.clearExpandableLayoutListener();
   }
 }

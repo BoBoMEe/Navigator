@@ -24,7 +24,7 @@ package com.bobomee.android.navigator.listener;
 
 public interface IListener<ListenerType> {
 
-  void addListener(ListenerType _listenerType);
+  void addListener(ListenerType listenerType);
 
-  boolean removeListener(ListenerType _listenerType);
+  boolean removeListener(ListenerType listenerType);
 }

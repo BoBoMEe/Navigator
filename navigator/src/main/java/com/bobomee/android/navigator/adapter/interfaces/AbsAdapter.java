@@ -28,7 +28,7 @@ import java.util.List;
  * @author bobomee.
  */
 
-public abstract class TAdapter<T> implements IAdapter<T> {
+public abstract class AbsAdapter<T> implements IAdapter<T> {
   private final DataSetObservable mDataSetObservable = new DataSetObservable();
 
   public void registerDataSetObserver(DataSetObserver observer) {
@@ -58,14 +58,14 @@ public abstract class TAdapter<T> implements IAdapter<T> {
 
   protected final List<T> mDatas;
 
-  public TAdapter(List<T> mDatas) {
+  public AbsAdapter(List<T> mDatas) {
     if (null == mDatas) {
       mDatas = new ArrayList<>();
     }
     this.mDatas = mDatas;
   }
 
-  public TAdapter(T[] mStrs) {
+  public AbsAdapter(T[] mStrs) {
     List<T> mDatas = new ArrayList<>();
     if (null != mStrs) {
       mDatas.addAll(Arrays.asList(mStrs));
@@ -79,5 +79,22 @@ public abstract class TAdapter<T> implements IAdapter<T> {
 
   @Override public T getItem(int position) {
     return mDatas.get(position);
+  }
+
+  public void addItem(T t) {
+    this.mDatas.add(t);
+    notifyDataSetChanged();
+  }
+
+  public void remove(T t) {
+    if (this.mDatas.indexOf(t) < 0) return;
+    this.mDatas.remove(t);
+    notifyDataSetChanged();
+  }
+
+  public void remove(int index) {
+    if (index < 0 || index > getCount() - 1) return;
+    this.mDatas.remove(index);
+    notifyDataSetChanged();
   }
 }

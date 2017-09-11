@@ -20,13 +20,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     >
   <TextView
       xmlns:android="http://schemas.android.com/apk/res/android"
       android:id="@+id/text_content"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="@string/drop_content"
+      tools:text="@string/drop_content"
       android:textColor="@color/black"
       android:textSize="25sp"
       />

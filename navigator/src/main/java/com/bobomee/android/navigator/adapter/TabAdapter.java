@@ -2,6 +2,7 @@ package com.bobomee.android.navigator.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;
+import com.bobomee.android.navigator.adapter.interfaces.AbsAdapter;
 import java.util.List;
 
 /**
@@ -10,13 +11,13 @@ import java.util.List;
  * @author bobomee.
  */
 
-public abstract class AdapterBase<T> extends AdapterDropBase<T> {
+public abstract class TabAdapter<T> extends AbsAdapter<T> {
 
-  protected AdapterBase(List<T> mDatas) {
+  protected TabAdapter(List<T> mDatas) {
     super(mDatas);
   }
 
-  protected AdapterBase(T[] mStrs) {
+  protected TabAdapter(T[] mStrs) {
     super(mStrs);
   }
 

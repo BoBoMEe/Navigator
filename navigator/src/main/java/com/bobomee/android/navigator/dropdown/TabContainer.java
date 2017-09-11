@@ -70,8 +70,8 @@ public class TabContainer extends TabGroup {
 
   private IAdapter mTAdapter;
 
-  public <T> void setTabAdapter(IAdapter<T> _tAdapter) {
-    if (mTAdapter == _tAdapter) {
+  public <T> void setTabAdapter(IAdapter<T> adapter) {
+    if (mTAdapter == adapter) {
       return;
     }
 
@@ -79,7 +79,7 @@ public class TabContainer extends TabGroup {
       mTAdapter.unregisterDataSetObserver(mDataSetObserver);
     }
 
-    mTAdapter = _tAdapter;
+    mTAdapter = adapter;
 
     if (null != mTAdapter) {
       mTAdapter.registerDataSetObserver(mDataSetObserver);

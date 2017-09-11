@@ -21,20 +21,16 @@ import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.Space;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import com.bobomee.android.navigator.adapter.AdapterBase;
-import com.bobomee.android.navigator.adapter.AdapterDropBase;
+import com.bobomee.android.navigator.adapter.TabAdapter;
+import com.bobomee.android.navigator.adapter.DropDownMenuAdapter;
 import com.bobomee.android.navigator.dropdown.DropDownMenu;
-import com.bobomee.android.navigator.dropdown.ExpandableContainer;
 import com.bobomee.android.navigator.dropdown.TabContainer;
-import com.bobomee.android.navigator.dropdown.interfaces.DropDownMenuCheckedListener;
 import com.bobomee.android.navigator.expandable.Utils;
 import com.bobomee.android.tab_navigator.animator.ObjectAnimatorUtils;
 import com.bobomee.android.tab_navigator.recyclerview.CheckedDataProvider;
@@ -72,7 +68,7 @@ public class DropDownMenu_Activity extends AppCompatActivity {
 
   private void initTabContainer() {
 
-    mDropDownMenu.setTabAdapter(new AdapterDropBase<String>(mTitles) {
+    mDropDownMenu.setTabAdapter(new DropDownMenuAdapter<String>(mTitles) {
       @Override public View getView(int position, ViewGroup parent, String object) {
         DropTabView dropdownButton = new DropTabView(getApplicationContext());
 
@@ -80,11 +76,11 @@ public class DropDownMenu_Activity extends AppCompatActivity {
         dropdownButton.setId(position);
 
         dropdownButton.addOnCheckedChangeListener((tabView, isChecked) -> {
-          DropTabView lTabView = (DropTabView) tabView;
+          DropTabView tabView1 = (DropTabView) tabView;
           if (isChecked) {
-            ObjectAnimatorUtils.object_animator(lTabView.getTextView());
+            ObjectAnimatorUtils.object_animator(tabView1.getTextView());
           }
-          ObjectAnimatorUtils.object_rotate(lTabView.getRightImage(), isChecked);
+          ObjectAnimatorUtils.object_rotate(tabView1.getRightImage(), isChecked);
         });
 
         return dropdownButton;
@@ -92,27 +88,27 @@ public class DropDownMenu_Activity extends AppCompatActivity {
 
       @Override public View getDropView(int position, ViewGroup parent, String object) {
 
-        View lView;
+        View view;
 
         switch (position) {
           case 0:
-            lView = RecyclerProvider.provideLinearLayoutRecycler(mDropDownMenu_activity, 300);
+            view = RecyclerProvider.provideLinearLayoutRecycler(mDropDownMenu_activity);
             break;
           case 1:
-            lView = RecyclerProvider.provideGridLayoutRecycler(mDropDownMenu_activity, 500);
+            view = RecyclerProvider.provideGridLayoutRecycler(mDropDownMenu_activity);
             break;
           case 2:
-            lView = RecyclerProvider.provideLinearLayoutRecycler(mDropDownMenu_activity, 600);
+            view = RecyclerProvider.provideLinearLayoutRecycler(mDropDownMenu_activity);
             break;
           case 3:
-            lView = RecyclerProvider.provideGridLayoutRecycler(mDropDownMenu_activity, 800);
+            view = RecyclerProvider.provideGridLayoutRecycler(mDropDownMenu_activity);
             break;
           default:
-            lView = new Space(DropDownMenu_Activity.this);
+            view = new Space(mDropDownMenu_activity);
             break;
         }
 
-        return lView;
+        return view;
       }
     });
 
@@ -129,42 +125,27 @@ public class DropDownMenu_Activity extends AppCompatActivity {
       }
     });
 
-    mDropDownMenu.addDropDownMenuCheckedListener(new DropDownMenuCheckedListener() {
-      @Override public void onCheckedChange(int position, boolean checked) {
-        Log.d("BoBoMEe", "onCheckedChange: pos : " + position + ", checked: " + checked);
+    mDropDownMenu.addDropDownMenuCheckedListener((tabContainer, dropContainer, tabPos, opened) -> {
+      if (!opened) {
+        CheckedDataProvider<RecyclerModel> checkedDataProvider =
+            RecyclerProvider.provideView(DropDownMenu_Activity.this, dropContainer, tabPos);
+        if (null != checkedDataProvider) {
 
-        if (!checked) {
-          ExpandableContainer lExpandableRelativeLayout =
-              mDropDownMenu.getExpandableRelativeLayout();
-          CheckedDataProvider<RecyclerModel> lCheckedDataProvider =
-              RecyclerProvider.provideView(DropDownMenu_Activity.this, lExpandableRelativeLayout,
-                  position);
-          if (null != lCheckedDataProvider) {
+          List<RecyclerModel> recyclerModels =
+              RecyclerProvider.provideCheckedDatas(checkedDataProvider);
 
-            List<RecyclerModel> lRecyclerModels =
-                RecyclerProvider.provideCheckedDatas(lCheckedDataProvider);
-
-            TabContainer lTabContainer = mDropDownMenu.getTabContainer();
-
-            DropTabView lChildAt = (DropTabView) lTabContainer.getChildAt(position);
-            lChildAt.setText(lRecyclerModels.size()+"");
-          }
+          DropTabView lChildAt = (DropTabView) tabContainer.getChildAt(tabPos);
+          lChildAt.setText(recyclerModels.size() + "");
         }
       }
     });
 
     ///
     mDropDownMenu.setInterpolator(Utils.createInterpolator(Utils.LINEAR_INTERPOLATOR));
-
-    mDropDownMenu.getExpandableParent().setOnClickListener(new OnClickListener() {
-      @Override public void onClick(View v) {
-        mDropDownMenu.toggle();
-      }
-    });
   }
 
   private void initTabContainer1() {
-    mTabContainer1.setTabAdapter(new AdapterBase<String>(mTitles) {
+    mTabContainer1.setTabAdapter(new TabAdapter<String>(mTitles) {
       @Override public View getView(int position, ViewGroup parent, String object) {
         ItemTabView itemTabView = new ItemTabView(getApplicationContext());
 

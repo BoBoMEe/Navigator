@@ -21,6 +21,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.bobomee.android.navigator.R;
@@ -46,20 +47,26 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
   private ExpandableContainer mExpandableRelativeLayout;
 
   private ViewGroup mExpandableParent;
-  private View mContent;
 
   private CheckObj mCheckObj = new CheckObj(false, 0);
 
-  private DropDownMenuCheckedChange mDropDownMenuCheckedChange = new DropDownMenuCheckedChange();
+  private DropDownMenuCheckedChange mDropDownMenuCheckedChange;
 
   public void addDropDownMenuCheckedListener(
       DropDownMenuCheckedListener pDropDownMenuCheckedListener) {
+    if (null == mDropDownMenuCheckedChange) {
+      mDropDownMenuCheckedChange = new DropDownMenuCheckedChange();
+    }
     mDropDownMenuCheckedChange.addListener(pDropDownMenuCheckedListener);
   }
 
-  public void removeDropDownMenuCheckedListener(
+  public boolean removeDropDownMenuCheckedListener(
       DropDownMenuCheckedListener pDropDownMenuCheckedListener) {
-    mDropDownMenuCheckedChange.removeListener(pDropDownMenuCheckedListener);
+    if (null != mDropDownMenuCheckedChange) {
+      return mDropDownMenuCheckedChange.removeListener(pDropDownMenuCheckedListener);
+    } else {
+      return false;
+    }
   }
 
   public DropDownMenu(Context context) {
@@ -79,45 +86,54 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
 
   private void init() {
     setOrientation(VERTICAL);
-  }
-
-  @Override protected void onFinishInflate() {
-    super.onFinishInflate();
-    
+    LayoutInflater.from(getContext()).inflate(R.layout.dropdown_menu_layout, this);
     mTabContainer = (TabContainer) findViewById(R.id.drop_tab_container);
+
     mExpandableRelativeLayout =
         (ExpandableContainer) findViewById(R.id.expandable_layout_container);
-    mExpandableParent =  (ViewGroup) findViewById(R.id.expandable_parent);
-    mContent = findViewById(R.id.content);
+    mExpandableParent = (ViewGroup) findViewById(R.id.expandable_parent);
     mExpandableParent.setVisibility(INVISIBLE);
+
+    mExpandableParent.setOnClickListener(new OnClickListener() {
+      @Override public void onClick(View v) {
+        toggle();
+      }
+    });
+
     initListener();
   }
 
   private void initListener() {
     mTabContainer.addOnCheckedChangeListener(new OnTabGroupCheckedChangeListener() {
       @Override public void onCheckedChange(ITabGroup group, int checkedId) {
-        TabGroup lTabGroup = (TabGroup) group;
-        TabView lITabView = (TabView) lTabGroup.findViewById(checkedId);
+        TabGroup tabGroup = (TabGroup) group;
+        TabView tabView = (TabView) tabGroup.findViewById(checkedId);
 
-        if (null != lITabView) {
-          boolean lChecked = lITabView.isChecked();
+        if (null != tabView) {
+          boolean checked = tabView.isChecked();
 
-          int lPosition = lTabGroup.indexOfChild(lITabView);
+          int index = tabGroup.indexOfChild(tabView);
           //notify last
 
-          if (mCheckObj.isChecked() && lChecked) {
-            int lPosition1 = mCheckObj.getPosition();
-            mDropDownMenuCheckedChange.onCheckedChange(lPosition1, false);
+          if (mCheckObj.isChecked() && checked) {
+            int position = mCheckObj.getPosition();
+            if (null != mDropDownMenuCheckedChange) {
+              mDropDownMenuCheckedChange.onCheckedChange(mTabContainer, mExpandableRelativeLayout,
+                  position, false);
+            }
           }
 
           //notify current
-          mDropDownMenuCheckedChange.onCheckedChange(lPosition, lChecked);
+          if (null != mDropDownMenuCheckedChange) {
+            mDropDownMenuCheckedChange.onCheckedChange(mTabContainer, mExpandableRelativeLayout,
+                index, checked);
+          }
 
           // init value
-          mCheckObj.set(lPosition, lChecked);
-          
+          mCheckObj.set(index, checked);
+
           if (null != mExpandableRelativeLayout) {
-            mExpandableRelativeLayout.checkState(lPosition, lChecked);
+            mExpandableRelativeLayout.checkState(index, checked);
           }
         }
       }
@@ -138,18 +154,18 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
         super.onAnimationEnd();
         if (null != mTabContainer) {
           int position = mCheckObj.getPosition();
-          boolean lChecked = mExpandableRelativeLayout.isExpanded();
-          mTabContainer.setCheckedStateForView(lChecked, position);
+          boolean checked = mExpandableRelativeLayout.isExpanded();
+          mTabContainer.setCheckedStateForView(checked, position);
         }
         mCheckObj.setChecked(mExpandableRelativeLayout.isExpanded());
       }
     });
   }
 
-  public <T> void setTabAdapter(final IAdapter<T> _tAdapter) {
+  public <T> void setTabAdapter(final IAdapter<T> adapter) {
     if (null != mTabContainer) {
-      mTabContainer.setTabAdapter(_tAdapter);
-      mExpandableRelativeLayout.setTabAdapter(_tAdapter);
+      mTabContainer.setTabAdapter(adapter);
+      mExpandableRelativeLayout.setTabAdapter(adapter);
     }
   }
 
@@ -178,7 +194,6 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
     if (null != mTabContainer && null != mExpandableRelativeLayout) {
       mTabContainer.setCheckedStateForView(true, position);
       mExpandableRelativeLayout.checkState(position, true);
-
     }
     mCheckObj.set(position, true);
   }
@@ -187,7 +202,6 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
     if (null != mTabContainer && null != mExpandableRelativeLayout) {
       mTabContainer.setCheckedStateForView(false, position);
       mExpandableRelativeLayout.checkState(position, false);
-      
     }
     mCheckObj.set(position, false);
   }
@@ -208,19 +222,10 @@ public class DropDownMenu extends LinearLayoutCompat implements Expandable {
     if (null != mExpandableRelativeLayout) mExpandableRelativeLayout.setInterpolator(interpolator);
   }
 
-  public View getContent() {
-    return mContent;
-  }
-
-  public ViewGroup getExpandableParent() {
-    return mExpandableParent;
-  }
-
-  public ExpandableContainer getExpandableRelativeLayout() {
-    return mExpandableRelativeLayout;
-  }
-
-  public TabContainer getTabContainer() {
-    return mTabContainer;
+  @Override protected void onDetachedFromWindow() {
+    super.onDetachedFromWindow();
+    if (null != mDropDownMenuCheckedChange) {
+      mDropDownMenuCheckedChange.clearDropDownMenuCheckedListener();
+    }
   }
 }

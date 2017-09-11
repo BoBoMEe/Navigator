@@ -10,12 +10,10 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.bobomee.android.navigator.adapter.AdapterBase;
+import com.bobomee.android.navigator.adapter.TabAdapter;
 import com.bobomee.android.navigator.dropdown.TabContainer;
 import com.bobomee.android.navigator.tab.TabView;
-import com.bobomee.android.navigator.tab.interfaces.ITabGroup;
 import com.bobomee.android.navigator.tab.interfaces.ITabView;
-import com.bobomee.android.navigator.tab.interfaces.OnTabGroupCheckedChangeListener;
 import com.bobomee.android.tab_navigator.animator.ObjectAnimatorUtils;
 import com.bobomee.android.tab_navigator.vp.ContentFragmentAdapter;
 import com.bobomee.android.tab_navigator.vp.MainTabFragment;
@@ -38,7 +36,7 @@ public class TabView_Activity extends AppCompatActivity {
   @BindView(R.id.tg_tab) TabContainer mTabGroup;
   @BindView(R.id.tab_container) TabContainer mTabContainer;
 
-  private AdapterBase<String> mTabAdapter;
+  private TabAdapter<String> mTabAdapter;
   private List<String> mTitles;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +78,7 @@ public class TabView_Activity extends AppCompatActivity {
       }
     });
 
-    mTabContainer.setTabAdapter(mTabAdapter = new AdapterBase<String>(mTitles) {
+    mTabContainer.setTabAdapter(mTabAdapter = new TabAdapter<String>(mTitles) {
 
       @Override public View getView(int position, ViewGroup parent, String object) {
 
